@@ -1,14 +1,9 @@
 public abstract class Interactables {
 
-    Player player = new Player();
-    Mobs mob = new Mobs(Tile tile);
+    private Player = player;
+    private Mob = mob;
 
+    public abstract void interactMob(Mobs mob);
 
-    public void interactMob(Mobs mob){
-        this.mob = mob;
-    }
-
-    public void interactPlayer(Player player){
-    this.player = player;
-    }
+    public abstract void interactPlayer(Player player);
 }
