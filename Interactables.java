@@ -1,7 +1,7 @@
 public abstract class Interactables {
 
-    private Player = player;
-    private Mob = mob;
+    protected Player player;
+    protected Mob mob;
 
     public abstract void interactMob(Mobs mob);
 
