@@ -1,4 +1,4 @@
-public class Interactables {
+public abstract class Interactables {
 
     Player player = new Player();
     Mobs mob = new Mobs(Tile tile);
