@@ -15,17 +15,17 @@ public class Frog extends Mobs{
         d[frog] = 0;
         // put all vertices in priority queue, Q, in d[i] decreasing order
         // while !Empty(Q){
-            u = ExtractCheapest(Q);
-            S[u] = true;
-            for ea vertex i adj to u{
-                if (S[i] != true && d[i] > d[u]+1){
-                    remove i from Q;
-                    d[i] = d[u] + 1;
-                    pred[i] = u;
-                    insert i into Q acc to its d[i];
-                }
+        u = ExtractCheapest(Q);
+        S[u] = true;
+        for ea vertex i adj to u{
+            if (S[i] != true && d[i] > d[u]+1){
+                remove i from Q;
+                d[i] = d[u] + 1;
+                pred[i] = u;
+                insert i into Q acc to its d[i];
             }
         }
-        
     }
+    
 }
+
