@@ -25,4 +25,8 @@ public class Player {
     public int getInventory() {
         return this.inventory;
     }
+
+    public void interactMob() {
+        // Need to check if same tile as mob and trigger event
+    }
 }

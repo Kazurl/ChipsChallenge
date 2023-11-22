@@ -28,5 +28,8 @@ public class Scheduler
 
     public void togglePause(boolean pause) {
         paused = pause;
+        // Include method body for pausing ticks
     }
+
+    // Include method for ticks incrementation and send to map
 }

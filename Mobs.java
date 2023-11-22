@@ -8,5 +8,6 @@ public class Mobs extends Actors{
 
     public void interactPlayer(Player player) {
         // update this method
+        // Need to check if same tile as player and trigger event
     }
 }
