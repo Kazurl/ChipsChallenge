@@ -3,7 +3,7 @@ public class Mobs extends Actors{
 
     public class Mobs(Tile tile) {
         super();
-        currentTile = tile;
+        this.currentTile = tile;
     }
 
     public void interactPlayer(Player player) {

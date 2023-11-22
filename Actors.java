@@ -13,8 +13,8 @@ public class Actors {
     private Direction direction;
 
     public Actors() {
-        actorLocationX = 0;
-        actorLocationY = 0;
+        this.actorLocationX = 0;
+        this.actorLocationY = 0;
     }
 
     public int getLocationX() {

@@ -5,9 +5,9 @@ public class Scheduler
     private boolean paused;
 
     public Scheduler() {
-        ticks = 0;
-        paused = false;
-        levelWon = false;
+        this.ticks = 0;
+        this.paused = false;
+        this.levelWon = false;
     }
 
     public int getTick() {

@@ -17,7 +17,7 @@ public class Map<O> {
         this.tileLayerMap  = new ArrayList[height][width];
         this.boardWidth = width;
         this.boardHeight = height;
-        this.currentTime = 0;
+        this.currentTime = 0; //------Maybe get the time i.e. ticks from the Scheduler Class------
         this.timeLimit = timeLimit;
     }
 
