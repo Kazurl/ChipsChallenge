@@ -8,6 +8,11 @@ public class Player {
     private boolean isMoving;
     private Tile nextTile;
     private int[] inventory;
+    boolean deadOrAlive;
+
+    public Player() {
+        super();
+    }
 
     public void setDirection(Direction direction){
 
@@ -18,11 +23,14 @@ public class Player {
     }
 
     public boolean isAlive() {
-        boolean deadOrAlive;
         return deadOrAlive;
     }
 
-    public int getInventory() {
+    public void setAlive(boolean status) {
+
+    }
+
+    public int[] getInventory() {
         return this.inventory;
     }
 
