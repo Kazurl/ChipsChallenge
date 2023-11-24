@@ -2,7 +2,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Arrays;
 
-public class Frog extends Mobs{
+public class Frog extends Mob{
     final static int TRAVERSED = 2;
     final static int PATH = 3;
     private int[][] map;

@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Actors {
+public class Actor {
     enum Direction{
         UP,
         DOWN,
@@ -15,7 +15,7 @@ public class Actors {
     private Direction direction;
     private int[][] map;
 
-    public Actors() {
+    public Actor() {
         this.actorLocationX = 0;
         this.actorLocationY = 0;
     }
