@@ -1,7 +1,12 @@
-public class Item{
+public class Item {
 
-    public int itemLocationX, itemLocationY;
+    public int itemLocationX;
+    public int itemLocationY;
 
+    public Item(int itemLocationX, int itemLocationY) {
+        this.itemLocationX = itemLocationX;
+        this.itemLocationY = itemLocationY;
+    }
 
     public void setX(int locationX) {
         this.itemLocationX = locationX;
