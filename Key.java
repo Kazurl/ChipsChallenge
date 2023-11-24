@@ -1,4 +1,5 @@
-public class Keys extends Items{
+public class Key extends Item{
+
     private int numOfKeys;
 
     public void interactPlayer(Player player){
