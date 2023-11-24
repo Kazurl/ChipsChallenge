@@ -10,6 +10,7 @@ public class Player {
     private Tile nextTile;
     private int[] inventory;
     boolean deadOrAlive;
+    public int playerLocationX, playerLocationY;
 
     public Player() {
         super();
@@ -17,6 +18,22 @@ public class Player {
 
     public void setDirection(Direction direction){
 
+    }
+
+    public void setX(int locationX) {
+        this.playerLocationX = locationX;
+    }
+
+    public void setY(int locationY) {
+        this.playerLocationY = locationY;
+    }
+
+    public int getX() {
+        return this.playerLocationX;
+    }
+
+    public int getY(int locationY) {
+        return this.playerLocationY;
     }
 
     public Tile getCurrTile() {
@@ -35,11 +52,24 @@ public class Player {
 
     }
 
-    public int[] getInventory() {
+    public Object[] getInventory() {
         return this.inventory;
     }
 
-    public void interactMob() {
-        // Need to check if same tile as mob and trigger event
+    //add keys or chips to inventory if there is space
+    public void addToInventory(Object newObject){
+        for(int i=0;i<= inventory.length;i++){
+            if (inventory[i] == null) {
+                inventory[i] = newObject;
+            }
+        }
+
+    }
+
+    public void interactMob(Mobs mob) {
+        if ((playerLocationX == mob.mobLocationX)&&(playerLocationY == mob.mobLocationY)){
+            deadOrAlive = false;
+
+        }
     }
 }
