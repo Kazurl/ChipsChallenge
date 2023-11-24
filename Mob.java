@@ -1,9 +1,9 @@
 public class Mob extends Actor{
 
-    private Tile currentTile;
+    private Tile currentTile, nextTile;
     public int mobLocationX, mobLocationY;
 
-    public class Mob(Tiles tile) {
+    public Mob(Tile tile) {
         super();
         this.currentTile = tile;
     }
@@ -24,8 +24,19 @@ public class Mob extends Actor{
         return this.mobLocationY;
     }
 
+    public Tile getNextTile() {
+        return this.nextTile;
+    }
+
+    public Tile getCurrTile() {
+        return this.currentTile;
+    }
+
     public void interactPlayer(Player player) {
         // update this method
         // Need to check if same tile as player and trigger event
+        if (this.nextTile == player.getCurrTile()) {
+
+        }
     }
 }

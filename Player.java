@@ -6,8 +6,9 @@ public class Player {
         RIGHT
     }
     private boolean isMoving;
-    private Tiles nextTile;
-    private Object[] inventory;
+    private Tile currTile;
+    private Tile nextTile;
+    private int[] inventory;
     boolean deadOrAlive;
     public int playerLocationX, playerLocationY;
 
@@ -35,7 +36,11 @@ public class Player {
         return this.playerLocationY;
     }
 
-    public Tiles getNextTile() {
+    public Tile getCurrTile() {
+        return this.currTile;
+    }
+
+    public Tile getNextTile() {
         return this.nextTile;
     }
 
