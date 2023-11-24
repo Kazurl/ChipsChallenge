@@ -6,6 +6,7 @@ public class Player {
         RIGHT
     }
     private boolean isMoving;
+    private Tile currTile;
     private Tile nextTile;
     private int[] inventory;
     boolean deadOrAlive;
@@ -16,6 +17,10 @@ public class Player {
 
     public void setDirection(Direction direction){
 
+    }
+
+    public Tile getCurrTile() {
+        return this.currTile;
     }
 
     public Tile getNextTile() {

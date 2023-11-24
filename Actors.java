@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Actors {
     enum Direction{
         UP,
@@ -11,6 +13,7 @@ public class Actors {
     private int ticksPerMove;
     private int lastMoveTick;
     private Direction direction;
+    private int[][] map;
 
     public Actors() {
         this.actorLocationX = 0;
@@ -40,5 +43,16 @@ public class Actors {
 
     public void update() {
         // Need to update this method
+        // Idea will be that direction will be randomly selected using RNG, then set next tile of actor to be 1 tile in that chosen direction
+
+    }
+
+        // To print out the state of map
+    public String toString() {
+        String str = "";
+        for (int[] row : map) {
+            str = Arrays.toString(row) + "\n";
+        }
+        return str;
     }
 }
