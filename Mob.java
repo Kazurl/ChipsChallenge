@@ -1,9 +1,9 @@
-public class Mobs extends Actors{
+public class Mob extends Actor{
 
-    private Tiles currentTile;
+    private Tile currentTile;
     public int mobLocationX, mobLocationY;
 
-    public class Mobs(Tiles tile) {
+    public class Mob(Tiles tile) {
         super();
         this.currentTile = tile;
     }
