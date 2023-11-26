@@ -1,77 +1,65 @@
-import java.util.ArrayList;
-
-public class Map<O> {
+public class Map {
 
     private int boardWidth;
     private int boardHeight;
-    private int currentTime;
-    private int timeLimit;
+    private int timeLeft;
 
-    private ArrayList<Actors>[][] actorLayerMap
-    //private ArrayList<{Name of Interactables class (proably Interactables)}>[][] interactableLayerMap
-    private ArrayList<Tiles>[][] tileLayerMap
+    private Player playerStored;
+    private Actor[][] actorLayerMap;
+    private Item[][] itemLayerMap;
+    private Tile[][] tileLayerMap;
 
-    public Map (int timeLimit, int width, int height){
-        this.actorLayerMap  = new ArrayList[height][width];
-        //this.interactablesLayerMap  = new ArrayList[height][width];
-        this.tileLayerMap  = new ArrayList[height][width];
+    public Map (int timeLeft,int width, int height, Actor[][] actorMap, Item[][] itemMap, Tile[][] tileMap, Player player){
         this.boardWidth = width;
         this.boardHeight = height;
-        this.currentTime = 0; //------Maybe get the time i.e. ticks from the Scheduler Class------
-        this.timeLimit = timeLimit;
-    }
-
-    public Map (int timeLimit,int width, int height, Actors[][] actorMap/*, Interactables[][] interactableMap*/, Tiles[][] tileMap){
-        this.boardWidth = width;
-        this.boardHeight = height;
-        this.currentTime = 0;
-        this.timeLimit = timeLimit;
+        this.timeLeft = timeLeft;
         this.actorLayerMap  = actorMap;
-        //this.interactablesLayerMap  = interactableMap;
+        this.itemLayerMap  = itemMap;
         this.tileLayerMap  = tileMap;
+        this.playerStored = player;
     }
 
-    public O getPos(int layerNum, int posX, int posY) {
-        switch(layerNum) {
-            case 1:
-                return actorLayerMap[posY][posX];
-            /*
-            case 2:
-                return interactablesLayerMap[posY][posX];
-            */
-            case 3:
-                return tileLayerMap[posY][posX];
-            default:
-                return null;
-        }
-    } 
+    public Player getPlayer() { return playerStored; }
 
-    public void setPos(int layerNum, int posX, int posY, O object) {
-        switch(layerNum) {
-            case 1:
+    public int getTimeLeft() { return timeLeft; }
+
+    public int getBoardHeight() { return boardHeight; }
+
+    public int getBoardWidth() { return boardWidth; }
+
+    public Actor getPosActor(int posX, int posY) {
+        return actorLayerMap[posY][posX];
+    }
+
+    public Item getPosItem(int posX, int posY) { return itemLayerMap[posY][posX]; }
+
+    public Tile getPosTile(int posX, int posY) {
+        return tileLayerMap[posY][posX];
+    }
+
+    public void setTimeLeft(int time) { this.timeLeft = time; }
+    public void setPosActor(int posX, int posY, Actor object) {
                 actorLayerMap[posY][posX] = object;
-            /*
-            case 2:
-                interactableLayerMap[posY][posX] = object;
-            */
-            case 3:
-            tileLayerMap[posY][posX] = object;
-            default:
-                break;
-        }
     }
 
-    public O[] getBoard() {
-        private ArrayList<O[][]>wholeBoard = new ArrayList<>[3];
-        wholeBoard.set(0, actorLayerMap);
-        //wholeBoard.set(1, interactablesLayerMap);
-        wholeBoard.set(2, tileLayerMap);
-        return wholeBoard;
+    public void setPosItem(int posX, int posY, Item object) {
+        itemLayerMap[posY][posX] = object;
     }
 
-    public void setBoard(O[] objects) {
-        actorLayerMap = objects[0];
-        //interactableLayerMap = objects[1];
-        tileLayerMap[posY][posX] = objects[2];
+    public void setPosTile(int posX, int posY, Tile object) {
+        tileLayerMap[posY][posX] = object;
+    }
+
+    public Map getBoard() {
+        return this;
+    }
+
+    public void setBoard(Map newMap) {
+        this.boardWidth = newMap.boardWidth;
+        this.boardHeight = newMap.boardHeight;
+        this.actorLayerMap = newMap.actorLayerMap;
+        this.tileLayerMap = newMap.tileLayerMap;
+        this.itemLayerMap = newMap.itemLayerMap;
+        this.timeLeft = newMap.timeLeft;
     }
 }

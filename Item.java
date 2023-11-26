@@ -20,7 +20,7 @@ public class Item {
         return this.itemLocationX;
     }
 
-    public int getY(int locationY) {
+    public int getY() {
         return this.itemLocationY;
     }
     

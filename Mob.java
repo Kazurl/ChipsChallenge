@@ -3,6 +3,10 @@ public class Mob extends Actor{
     private Tile currentTile, nextTile;
     public int mobLocationX, mobLocationY;
 
+    public Mob() {
+        super();
+    }
+    
     public Mob(Tile tile) {
         super();
         this.currentTile = tile;

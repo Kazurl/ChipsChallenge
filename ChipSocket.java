@@ -1,16 +1,16 @@
 public class ChipSocket extends Tile {
 
-    //Constructor
-    public ChipSocket() {
-        super(true, true);
-    }
-
+  private int ChipAmountNeeded;
   //Constructor
-  public ChipSocket(boolean convertPath) {
-    super(convertPath, true);
+  public ChipSocket(int chips) {
+      super(false, false);
+      this.ChipAmountNeeded = chips;
   }
-  
-  public void setWalkable(boolean walk) {
-    super.setWalkable(walk && ComputerChip.isTrue());
+
+  public int getChipAmountNeeded() {
+      return ChipAmountNeeded;
+  }
+
+  public void Unlock() {
   }
 }

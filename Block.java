@@ -1,4 +1,4 @@
-public class Block{
+public class Block extends Actor {
 
     private boolean onIce;
     private boolean collision = true;

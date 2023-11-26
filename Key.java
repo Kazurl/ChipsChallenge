@@ -6,7 +6,6 @@ public class Key extends Item {
         YELLOW,
         GREEN,
     }
-    private int numOfKeys;
     private Colour keyColour; // Assuming Colour is a class or enum representing colors
 
     public Key(int itemLocationX, int itemLocationY, Colour keyColour) {
@@ -21,8 +20,19 @@ public class Key extends Item {
 
     // Method to interact with the player
     public void interactPlayer(Player player) {
-        player.getInventory();
-        numOfKeys = numOfKeys + 1;
-        player.addToInventory(numOfKeys);
+        switch(this.keyColour){
+            case RED:
+                player.addToInventory("red key");
+                break;
+            case GREEN:
+                player.addToInventory("green key");
+                break;
+            case BLUE:
+                player.addToInventory("blue key");
+                break;
+            case YELLOW:
+                player.addToInventory("yellow key");
+                break;
+        }
     }
 }

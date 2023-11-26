@@ -1,4 +1,4 @@
-public class Player {
+public class Player extends Actor{
     enum Direction {
         UP,
         DOWN,
@@ -8,7 +8,7 @@ public class Player {
     private boolean isMoving;
     private Tile currTile;
     private Tile nextTile;
-    private int[] inventory;
+    private int[] inventory = {/*has red key?*/0,/*has green key?*/0,/*has blue key?*/0,/*has yellow key?*/0,/*how many chips?*/0};;
     boolean deadOrAlive;
     public int playerLocationX, playerLocationY;
 
@@ -32,7 +32,7 @@ public class Player {
         return this.playerLocationX;
     }
 
-    public int getY(int locationY) {
+    public int getY() {
         return this.playerLocationY;
     }
 
@@ -52,24 +52,39 @@ public class Player {
 
     }
 
-    public Object[] getInventory() {
+    public int[] getInventory() {
         return this.inventory;
     }
 
+    public void setInventory(int[] inv) { this.inventory = inv; }
+
     //add keys or chips to inventory if there is space
-    public void addToInventory(Object newObject){
-        for(int i=0;i<= inventory.length;i++){
-            if (inventory[i] == null) {
-                inventory[i] = newObject;
-            }
+    public void addToInventory(String item){
+        switch(item){
+            case "red key":
+                this.inventory[0] = 1;
+                break;
+            case "green key":
+                this.inventory[1] = 1;
+                break;
+            case "blue key":
+                this.inventory[2] = 1;
+                break;
+            case "yellow key":
+                this.inventory[3] = 1;
+                break;
+            case "chip":
+                this.inventory[4] += 1;
+                break;
         }
 
     }
-
+    /*
     public void interactMob(Mobs mob) {
         if ((playerLocationX == mob.mobLocationX)&&(playerLocationY == mob.mobLocationY)){
             deadOrAlive = false;
 
         }
     }
+    */
 }

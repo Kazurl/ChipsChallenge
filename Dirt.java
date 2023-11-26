@@ -4,7 +4,7 @@ public class Dirt extends Tile {
     public Dirt(boolean convertPath) {
       super(convertPath, true);
     }
-
+/* From Freddie: Not working at the moment
     public Player onPlayerWalk; {
     }
 
@@ -21,8 +21,11 @@ public class Dirt extends Tile {
       super.setWalkable(walk);
       if (walk == true) {
         onMobWalk = false;
-    }
+      }
       else {
         onMobWalk = true;
+      }
     }
+  }
+  */
 }

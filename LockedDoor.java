@@ -1,17 +1,10 @@
 public class LockedDoor extends Tile {
-
-    private boolean isLocked;
+//From Freddie: Door doesnt need locked status, if the door has been unlocked it it now a path not a door
     private Key.Colour doorColour;
 
-    public LockedDoor(boolean isLocked, Key.Colour doorColour) {
+    public LockedDoor(Key.Colour doorColour) {
         super(true, false);
-        this.isLocked = isLocked;
         this.doorColour = doorColour;
-    }
-
-    // Getter for isLocked
-    public boolean isLocked() {
-        return isLocked;
     }
 
     // Getter for doorColour
@@ -24,7 +17,6 @@ public class LockedDoor extends Tile {
         // Check if the key's colour matches the door's colour
         if (key.getKeyColour() == doorColour) {
             // Unlock the door and replace it with a walkable path
-            isLocked = false;
             setWalkable(true);
             return true; // Unlock successful
         } else {

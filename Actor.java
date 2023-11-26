@@ -46,7 +46,7 @@ public class Actor {
         // Idea will be that direction will be randomly selected using RNG, then set next tile of actor to be 1 tile in that chosen direction
 
     }
-
+/* From Freddie: Should actor be trying to print the map?
         // To print out the state of map
     public String toString() {
         String str = "";
@@ -55,4 +55,5 @@ public class Actor {
         }
         return str;
     }
+*/
 }

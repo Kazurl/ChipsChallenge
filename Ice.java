@@ -1,27 +1,26 @@
 public class Ice extends Tile{
-
+    //From Freddie: NONE is now a corner type so hasCorner is no longer needed
     public enum CornerType {
+        NONE,
         TOP_LEFT,
         TOP_RIGHT,
         BOTTOM_LEFT,
         BOTTOM_RIGHT
     }
 
-    private boolean hasCorners;
     private CornerType cornerType;
     private int locationX;
     private int locationY;
 
 
     // Constructor for IceTile
-    public Ice(int x, int y, boolean hasCorners, CornerType cornerType) {
+    public Ice(int x, int y, CornerType cornerType) {
         super(true, true);
         this.locationX = x;
         this.locationY = y;
-        this.hasCorners = hasCorners;
         this.cornerType = cornerType;
     }
-
+/*
    // Method to handle player interaction (skating)
    public void onPlayerSkate(Player player) {
     Tile nextTile = player.getNextTile();
@@ -84,7 +83,7 @@ private void deflectPlayer(Player player) {
                 break;
             }
         }
-
+*/
     // Getter for cornerType
     public CornerType getCornerType() {
         return cornerType;

@@ -7,6 +7,9 @@ public class Frog extends Mob{
     final static int PATH = 3;
     private int[][] map;
 
+    // From Freddie: added default constructor for now
+    public Frog() {}
+
     public Frog(Tile tile) {
         super(tile);
     }
