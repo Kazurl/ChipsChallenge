@@ -1,67 +1,49 @@
-/**
- *<ol>
- *      <li>File-name: Tile.java
- *      <li>Purpose of the program: Creates the tiles for map
- *</ol>
- * @author Azmeera, Ffi
- * @version 1.1 - added comments
- */
+public abstract class Tile {
+    
+    //Position:
+    protected int x; //Should it be final? Since position doesn't change?
+    protected int y;
 
+    //Condition:
+    protected boolean collision; //Essentially blocksMovement
 
-public class Tile {
-
-    /**
-     * If tile is walkable by Player and Mobs.
-     */
-    private boolean walkable;
-
-    /**
-     * If Block is allowed to be pushed onto the tile.
-     */
-    private boolean pushable;
-
-    /**
-     * Creates the tile.
-     * @param walkable If the tile is walkable.
-     * @param pushable If the tile is pushable.
-     */
-    //Constructor
-    public Tile(boolean walkable, boolean pushable) {
-        this.walkable = walkable;
-        this.pushable = pushable;
+    public Tile(int x, int y, boolean collision) {
+        this.x = x;
+        this.y = y;
+        this.collision = collision;
     }
 
-    //Getter and Setters:
-
-    /**
-     * 
-     * @return True if tile is walkable, else False.
-     */
-    public boolean getWalkable() {
-        return this.walkable;
+    //Getter:
+    public int getX() {
+        return this.x;
     }
 
-    /**
-     * 
-     * @return True if tile is pushable, else False.
-     */
-    public boolean getPushable() {
-        return this.pushable;
+    public int getY() {
+        return this.y;
     }
 
-    /**
-     * Change the walk boolean.
-     */
-    public void setWalkable(boolean walk) {
-        this.walkable = walk;
+    public boolean hasCollision() {
+        return this.collision;
     }
 
-    /**
-     * 
-     * Change the push boolean.
-     */
-    public void setPushable(boolean push) {
-        this.pushable = push;
+    //Setter:
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
+
+    public String toString() {
+        String output = "The X-position is" + x;
+        output += "\n The Y-position is" + y;
+        output += "\n Initial collision is set to: " + collision;
+        return output;
     }
 
 }

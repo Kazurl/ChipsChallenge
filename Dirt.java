@@ -1,28 +1,31 @@
 public class Dirt extends Tile {
+    
+    //Attribute:
+    private boolean isCompacted;
 
-    //Constructor
-    public Dirt(boolean convertPath) {
-      super(convertPath, true);
+    //Constructor:
+    public Dirt(int x, int y) {
+        super(x, y, false);
+        this.isCompacted = false; //Initial is false
     }
 
-    public Player onPlayerWalk; {
+    //Interact Methods:
+    public void interactPlayer(Player player) {
+        compact(); //If player walk on top then compact.
     }
 
-    public void setWalkable(boolean walk) {
-      super.setWalkable(walk);
-    if (walk == true) {
-      onPlayerWalk = true;
+    public void interactMob(Mob mob) {
+      
+        //Condition where, if the dirt isn't compact, then Mobs cannot walk
+        if (!isCompacted) { 
+            mob.block();
+       } else { 
+            mob.move(); //If compact then mobs are free to walk on it
+       }
+    }
 
-    }
-    else {
-      onPlayerWalk = false;
-    }
-    public Mobs onMobWalk; {
-      super.setWalkable(walk);
-      if (walk == true) {
-        onMobWalk = false;
-    }
-      else {
-        onMobWalk = true;
+    //Other Methods:
+    public void compact() {
+        isCompacted = true; //Dirt becomes Path.
     }
 }

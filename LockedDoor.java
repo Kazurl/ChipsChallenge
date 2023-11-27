@@ -1,34 +1,70 @@
 public class LockedDoor extends Tile {
-
-    private boolean isLocked;
-    private Key.Colour doorColour;
-
-    public LockedDoor(boolean isLocked, Key.Colour doorColour) {
-        super(true, false);
-        this.isLocked = isLocked;
-        this.doorColour = doorColour;
+    
+    //Enum:
+    public enum Colour {
+        red,
+        blue,
+        green,
+        yellow;
     }
 
-    // Getter for isLocked
-    public boolean isLocked() {
-        return isLocked;
+    //Attribute:
+    private boolean doorState;
+    private Colour dColour;
+
+
+    //Constructor:
+    public LockedDoor(int x, int y,Colour dColour) {
+        super(x , y, true); //Set as collision initially
+        this.dColour = dColour;
+        this.doorState = true; //Door is initially locked
     }
 
-    // Getter for doorColour
-    public Key.Colour getDoorColour() {
-        return doorColour;
+    //Getter:
+    public boolean getDoorState() {
+        return this.doorState;
     }
 
-    // Method to unlock the door using a key
-    public boolean unlock(Key key) {
-        // Check if the key's colour matches the door's colour
-        if (key.getKeyColour() == doorColour) {
-            // Unlock the door and replace it with a walkable path
-            isLocked = false;
-            setWalkable(true);
-            return true; // Unlock successful
+    public Colour getDColour() {
+        return this.dColour;
+    }
+
+    //Setter:
+    public void setDoorState(boolean state) {
+        this.doorState = state;
+    }
+
+    public void setDoorColour(Colour colour) {
+        this.dColour = colour;
+    }
+
+    //Interact Methods
+    public void interactPlayer(Player player) {
+
+        //Search in player inventory, if there's keys.
+        //Probs need loop here.
+        //Use unlock() to check if key same and unlock the door.
+
+    }
+
+    public void interactMob(Mob mob) {
+        mob.block();
+    }
+
+
+    //Other method:
+    private boolean unlock(Key key) {
+
+        //Check if key colour is the same as the door
+        if (key.getKeyColour() == dColour) {
+            doorState = false; //Door is opened
+            setCollision(false); //Player can walk over it
+            return true;
         } else {
-            return false; // Key does not match, unlock failed
+            return false;
         }
+
     }
+
+
 }

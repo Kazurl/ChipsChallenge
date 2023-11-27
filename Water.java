@@ -1,24 +1,26 @@
 public class Water extends Tile {
-  //Constructor
-  public WaterTBD(boolean convertPath) {
-    super(convertPath, true);
-  }
-  public Player onPlayerWalk; {
-  }//PLACEHOLDER FOR BLOCK CLASS  
-  public void setWalkable(boolean walk) {
-  super.setWalkable(walk);
-  if (walk == true) {
-    onPlayerWalk = true;
-  }
-  else {
-    onPlayerWalk = false;
-  }
-  public Mobs onMobWalk; {
-    super.setWalkable(walk);
-    if (walk == true) {
-      onMobWalk = false;
-  }
-    else {
-      onMobWalk = true;
-  }
+    
+    //Constructor:
+    public Water(int x, int y) {
+        super(x, y, false); //Cause if true, then interactPlayer cannot happen
+    }
+
+    //Methods:
+    public void interactPlayer(Player player) {
+        
+       player.die(); //Player drowns if enter water  
+    }
+
+    public void interactBlock(Block block) {
+        block.sink(); //Block will sink into the water
+        turnToPath(); //Water becomes path
+    }
+
+    //Other Method:
+
+    //Method that turns Water to Path
+    private void turnToPath(){
+        setCollision(true);
+    }
+
 }

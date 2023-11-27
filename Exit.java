@@ -1,39 +1,35 @@
-public class Exit extends Tile{
-    
-    private int exitX;
-    private int exitY;
+public class Exit extends Tile {
 
+    //Attribute:
+    private boolean levelState; //If true, then level won. Else false.
+
+    //Constructor:
     public Exit(int x, int y) {
-        super(true, false);
-        this.exitX = x;
-        this.exitY = y;
+        super(x, y, false); 
+        this.levelState = false; //Set level hasn't won.
     }
 
-    //Getters
-    public int getExitX() {
-        return exitX;
+    //Interact Methods:
+    public void interactPlayer(Player player) {
+
+        //Condition if time not 0, then change levelState as true. Level won.
+        //IDK this part
+        //Put Main.exitGame() or something here.
+
     }
 
-    public int getExitY() {
-        return exitY;
+    public void interactMob(Mob mob) {
+        mob.block();
     }
 
-    public void setExitX(int x) {
-        this.exitX = x;
+    //For scheduler to stop time if level won
+    public boolean getState() {
+        return this.levelState;
     }
 
-    public void setExitY(int y) {
-        this.exitY = y;
+    //Change state, means level won
+    public boolean changeState() {
+        return this.levelState = true;
     }
-
-    public boolean isPlayerOnExit(Player player) {
-        return player.getX() == getExitX() && player.getY() == getExitY();
-    }
-    
-    /*
-    public boolean isLevelWon(Player player, int time) {
-       //IDK this part
-    }
-    */
 
 }
