@@ -3,7 +3,7 @@ public class LockedDoor extends Tile {
     private Key.Colour doorColour;
 
     public LockedDoor(Key.Colour doorColour) {
-        super(true, false);
+        super(false, false);
         this.doorColour = doorColour;
     }
 

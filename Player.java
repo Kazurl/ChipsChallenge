@@ -56,6 +56,48 @@ public class Player extends Actor{
         return this.inventory;
     }
 
+    public boolean useChips(int num) {
+        if(this.inventory[4] >= num) {
+            this.inventory[4] = this.inventory[4]-num;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean useKey(Key.Colour colour) {
+        if(colour == Key.Colour.RED) {
+            if(this.inventory[0] > 0) {
+                this.inventory[0] -= 1;
+                return true;
+            } else {
+                return false;
+            }
+        } else if(colour == Key.Colour.GREEN) {
+            if(this.inventory[1] > 0) {
+                this.inventory[1] -= 1;
+                return true;
+            } else {
+                return false;
+            }
+        } else if(colour == Key.Colour.BLUE) {
+            if(this.inventory[2] > 0) {
+                this.inventory[2] -= 1;
+                return true;
+            } else {
+                return false;
+            }
+        } else if(colour == Key.Colour.YELLOW) {
+            if(this.inventory[3] > 0) {
+                this.inventory[3] -= 1;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public void setInventory(int[] inv) { this.inventory = inv; }
 
     //add keys or chips to inventory if there is space

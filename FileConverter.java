@@ -6,9 +6,6 @@ import java.util.Scanner;
 public class FileConverter {
     public static Map convertFromFile(String filePath){
 
-        Actor exampleActor = new Actor();
-        Actor[][] exampleActorMap = new Actor[5][5];
-
         File newFile = new File(filePath);
         try {
             Scanner fileReader = new Scanner(newFile);
@@ -31,20 +28,22 @@ public class FileConverter {
                     String nextActor = lineReader.next();
                     switch(nextActor){
                         case "Pl":
-                            givenPlayer .setInventory(newInventory);
+                            givenPlayer.setInventory(newInventory);
+                            givenPlayer.setX(x);
+                            givenPlayer.setY(y);
                             actorFile[y][x] = givenPlayer;
                             break;
                         case "Pb":
-                            actorFile[y][x] = new Mob(); //Pink ball class needed!
+                            actorFile[y][x] = new PinkBall(); // needs its tile
                             break;
                         case "Bg":
-                            actorFile[y][x] = new Mob(); //Bug class needed!
+                            actorFile[y][x] = new Bug(); // needs its tile
                             break;
                         case "Fr":
-                            actorFile[y][x] = new Frog();
+                            actorFile[y][x] = new Frog(); // needs its tile
                             break;
                         case "Bl":
-                            actorFile[y][x] = new Block();
+                            actorFile[y][x] = new Block(); // needs its tile??
                             break;
                         default:
                             break;
@@ -99,13 +98,17 @@ public class FileConverter {
                         case "Wt":
                             tileFile[y][x] = new Water(false);
                             break;
+                        case "Ex":
+                            tileFile[y][x] = new Exit(x,y);
+                            break;
                         default:
                             char[] tileChar = nextTile.toCharArray();
                             switch(tileChar[0]) {
                                 case 'B':
-                                    //Button class needs to be created first!
+                                    tileFile[y][x] = new Buttons(x,y); // // MUST CONNECT THESE < v
                                     break;
                                 case 'T':
+                                    tileFile[y][x] = new Trap(x,y); // MUST CONNECT THESE < ^
                                     break;
                                 case 'S':
                                     int chipAmount = Integer.parseInt(nextTile.substring(1));

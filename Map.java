@@ -21,6 +21,7 @@ public class Map {
 
     public Player getPlayer() { return playerStored; }
 
+
     public int getTimeLeft() { return timeLeft; }
 
     public int getBoardHeight() { return boardHeight; }
