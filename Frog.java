@@ -3,9 +3,10 @@ import java.util.Queue;
 import java.util.Arrays;
 
 public class Frog extends Mob{
-    final static int TRAVERSED = 2;
-    final static int PATH = 3;
-    private int[][] map;
+    final static Actor TRAVERSED = new FrogRoute();
+    final static Actor PATH = new FrogTraversed();
+    private Actor[][] actorLayerMap;
+    private Tile[][] tileLayerMap;
 
     // From Freddie: added default constructor for now
     public Frog() {}
@@ -41,9 +42,17 @@ public class Frog extends Mob{
         }
     }*/
 
-    private boolean checkShortest(int startx, int starty, int playerx, int playery) {
+    private void setMap(Actor[][] givenActorMap, Tile[][]givenTileMap) {
+        this.actorLayerMap = givenActorMap;
+        this.tileLayerMap = givenTileMap;
+    }
+
+    private int[] checkShortest(int startx, int starty, int playerx, int playery) {
         Queue<int[]> Q = new ArrayDeque<>();
         Q.offer(new int[]{startx, starty});
+
+        boolean[][] visited = new boolean[actorLayerMap.length][actorLayerMap[0].length];
+        int [][] prev = new int[actorLayerMap.length][actorLayerMap[0].length]; 
 
         while (!Q.isEmpty()) {
             int[] curr = Q.poll();
@@ -51,10 +60,17 @@ public class Frog extends Mob{
             int col = curr[1];
 
             if (isEnd(row, col, playerx, playery)) {
-                map[row][col] = PATH;
-                return true;
+                int r = row;
+                int c = col;
+                while (r != startx || c != starty) { // Backtracking to find path from end to start
+                    this.actorLayerMap[r][c] = PATH;
+                    int tempr = prev[r][c]/actorLayerMap[0].length;
+                    c = prev[r][c]%actorLayerMap[0].length;
+                    r = tempr;
+                }
+                return new int[] {r,c};
             } else {
-                map[row][col] = TRAVERSED;
+                this.actorLayerMap[row][col] = TRAVERSED;
 
                 int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
                 for (int[] dir : directions) {
@@ -63,13 +79,15 @@ public class Frog extends Mob{
 
                     if (isValid(nextRow, nextCol)) {
                         Q.offer(new int[]{nextRow, nextCol});
-                        map[nextRow][nextCol] = TRAVERSED;
+                        visited[nextRow][nextCol] = true;
+                        prev[nextRow][nextCol] = row * actorLayerMap[0].length + col;   //This provides a unique identifier to figure out where each tile is since it is only 1d
+                        this.actorLayerMap[nextRow][nextCol] = TRAVERSED;
                     }
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
     private boolean isEnd(int row, int col, int playerx, int playery) {
@@ -84,11 +102,11 @@ public class Frog extends Mob{
     }
 
     private boolean isAccessible(int row, int col) {
-        return map[row][col] == 1;
+        return this.tileLayerMap[row][col].getWalkable() ;
     }
 
     private boolean isTraversed(int row, int col) {
-        return map[row][col] == TRAVERSED;
+        return this.actorLayerMap[row][col] == TRAVERSED;
     }
 
     private boolean validHeight(int row, int height) {
