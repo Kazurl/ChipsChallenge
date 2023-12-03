@@ -112,7 +112,7 @@ public class FileConverter {
                                     break;
                                 case 'S':
                                     int chipAmount = Integer.parseInt(nextTile.substring(1));
-                                    tileFile[y][x] = new ChipSocket(tileChar[1]);
+                                    tileFile[y][x] = new ChipSocket(chipAmount);
                                     break;
                                 case 'L':
                                     if(tileChar[1] == '1') {
@@ -273,7 +273,6 @@ public class FileConverter {
             }
     } catch (IOException e) {
         System.out.println("An error occurred.");
-        e.printStackTrace();
     }
     }
 }

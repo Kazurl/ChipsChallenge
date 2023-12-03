@@ -4,6 +4,7 @@ import javafx.scene.input.KeyEvent;
 public class GameLogic {
     private static Map gameMap;
 
+    private static boolean gameWon = false;
     public static void hasDied(KeyCode direction, String how) {
         if(how == "water") {
             //play drown animation
@@ -33,12 +34,20 @@ public class GameLogic {
                 gameMap.setPosItem(currentItem.getX(), currentItem.getY(), null);
             }
         }
-
-        //Check if player is on exit
-        return gameMap.getPosTile(gameMap.getPlayer().getX(), gameMap.getPlayer().getY()) instanceof Exit
-                || gameMap.getPosTile(gameMap.getPlayer().getX(), gameMap.getPlayer().getY()) instanceof Water
+        if(gameMap.getPosTile(gameMap.getPlayer().getX(), gameMap.getPlayer().getY()) instanceof Exit) {
+            setGameWon(true);
+            return true;
+        } else return gameMap.getPosTile(gameMap.getPlayer().getX(), gameMap.getPlayer().getY()) instanceof Water
                 || gameMap.getPosActor(gameMap.getPlayer().getX(), gameMap.getPlayer().getY()) instanceof Mob;
     }
+
+    public static void setGameWon(boolean gameWon) {
+        GameLogic.gameWon = gameWon;
+    }
+    public static boolean getGameWon() {
+        return gameWon;
+    }
+
     public static void movePlayer(KeyEvent event) {
         if(!(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.UP)) {
             return;
@@ -113,11 +122,11 @@ public class GameLogic {
                     || ((Ice) gameMap.getPosTile(playerX+1,playerY)).getCornerType() == Ice.CornerType.BOTTOM_LEFT)) {
                 return false;
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof LockedDoor
-                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX-1,playerY)).getDoorColour())) {
+                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX+1,playerY)).getDoorColour())) {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
                 return true;
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof ChipSocket
-                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX-1,playerY)).getChipAmountNeeded())) {
+                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX+1,playerY)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
                 return true;
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof Dirt) {
@@ -140,11 +149,11 @@ public class GameLogic {
                     || ((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType() == Ice.CornerType.BOTTOM_LEFT)) {
                 return false;
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof LockedDoor
-                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX-1,playerY)).getDoorColour())) {
+                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY-1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
                 return true;
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof ChipSocket
-                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX-1,playerY)).getChipAmountNeeded())) {
+                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX,playerY-1)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
                 return true;
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof Dirt) {
@@ -167,11 +176,11 @@ public class GameLogic {
                     || ((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_LEFT)) {
                 return false;
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof LockedDoor
-                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX-1,playerY)).getDoorColour())) {
+                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY+1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
                 return true;
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof ChipSocket
-                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX-1,playerY)).getChipAmountNeeded())) {
+                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX,playerY+1)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
                 return true;
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Dirt) {

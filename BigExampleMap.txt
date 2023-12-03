@@ -1,5 +1,5 @@
 11,7,600
-1,0,1,0,3
+0,0,1,0,3
 0,0,0,0,0,0,0,0,0,0,0
 0,0,0,0,0,Pb,0,0,0,0,0
 0,0,0,0,0,0,0,0,Pl,0,0
@@ -20,5 +20,5 @@ Pt,Pt,Pt,T1,Pt,Pt,Pt,Pt,Pt,Wl,Wl
 Wl,Wt,Pt,Pt,Pt,Pt,Wt,Pt,Pt,S6,Ex
 I1,Wt,Pt,Pt,Pt,Pt,Pt,B1,Pt,Wl,Wl
 I1,Wt,Wt,Wt,Pt,Pt,Pt,Pt,Pt,Dt,Pt
-I4,I1,I1,L1,Pt,Pt,Pt,Pt,Pt,Dt,Pt
+I4,I1,I1,L3,Pt,Pt,Pt,Pt,Pt,Dt,Pt
 

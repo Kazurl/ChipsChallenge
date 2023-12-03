@@ -22,6 +22,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 import java.util.Scanner;
@@ -160,6 +162,7 @@ public class Main extends Application {
         GameLogic.movePlayer(event);
         if(GameLogic.checkStatus()) {
             drawEnd();
+            return;
         }
         // Redraw game as the player may have moved.
         drawGame();
@@ -178,12 +181,11 @@ public class Main extends Application {
 
         // Create a toolbar with some nice padding and spacing
         HBox toolbar = new HBox();
-        toolbar.setSpacing(10);
+        toolbar.setSpacing(5);
         toolbar.setPadding(new Insets(10, 10, 10, 10));
         root.setTop(toolbar);
 
         // Create the toolbar content
-
 
         // Tick Timeline buttons
         Button startTickTimelineButton = new Button("Start Ticks");
@@ -265,21 +267,12 @@ public class Main extends Application {
     public void drawGame() {
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         // Set the background to gray.
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        //Draw peripherals
-        int[] invToShow = GameLogic.getGameMap().getPlayer().getInventory();
-        gc.drawImage(redKeyImage, GRID_CELL_WIDTH* 0.5, GRID_CELL_HEIGHT * 0.1);
-        gc.drawImage(greenKeyImage, GRID_CELL_WIDTH* 0.6, GRID_CELL_HEIGHT * 0.1);
-        gc.drawImage(blueKeyImage, GRID_CELL_WIDTH* 0.7, GRID_CELL_HEIGHT * 0.1);
-        gc.drawImage(yellowKeyImage, GRID_CELL_WIDTH* 0.8, GRID_CELL_HEIGHT * 0.1);
-        gc.drawImage(compChipImage, GRID_CELL_WIDTH * 0.9, GRID_CELL_HEIGHT * 0.1);
 
         // Draw tiles
         // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
@@ -324,6 +317,8 @@ public class Main extends Application {
                 } else if(GameLogic.getGameMap().getPosTile(x,y) instanceof ChipSocket) {
                     gc.drawImage(chipSocketImage, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
                     //show amount of chips needed
+                    gc.setFill(Color.RED);
+                    gc.fillText(String.valueOf(((ChipSocket) GameLogic.getGameMap().getPosTile(x,y)).getChipAmountNeeded()), (x+0.7) * GRID_CELL_WIDTH, (y+0.59) * GRID_CELL_HEIGHT);
                 }
             }
         }
@@ -360,6 +355,19 @@ public class Main extends Application {
         gc.drawImage(playerImage,
                 GameLogic.getGameMap().getPlayer().getX() * GRID_CELL_WIDTH,
                 GameLogic.getGameMap().getPlayer().getY() * GRID_CELL_HEIGHT);
+
+        //Draw inventory bar
+        int[] invToShow = GameLogic.getGameMap().getPlayer().getInventory();
+        gc.setFill(Color.RED);
+        gc.fillText(" Keys:" + invToShow[0], 0,CANVAS_HEIGHT  - 3, CANVAS_WIDTH/5);
+        gc.setFill(Color.GREEN);
+        gc.fillText("Keys:" + invToShow[1], CANVAS_WIDTH * 0.2,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.setFill(Color.BLUE);
+        gc.fillText("Keys:" + invToShow[2], CANVAS_WIDTH * 0.4,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.setFill(Color.YELLOW);
+        gc.fillText("Keys:" + invToShow[3], CANVAS_WIDTH * 0.6,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.setFill(Color.WHITE);
+        gc.fillText("Chips:" + invToShow[4], CANVAS_WIDTH * 0.8,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
     }
     public void drawEnd() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -367,10 +375,18 @@ public class Main extends Application {
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // Set the background to gray.
+        // Set the background to green.
         gc.setFill(Color.GREEN);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        gc.setFill(Color.BLACK);
+        if(GameLogic.getGameWon()) {
+            gc.fillText("Game Won!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        } else {
+            gc.fillText("Game Lost!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        }
     }
+
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
@@ -382,7 +398,7 @@ public class Main extends Application {
         } while (newMap == null);
         GRID_WIDTH = newMap.getBoardWidth();
         GRID_HEIGHT = newMap.getBoardHeight();
-        CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT;
+        CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
         CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
         GameLogic.setGameMap(newMap);
         /*
