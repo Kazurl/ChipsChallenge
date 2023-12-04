@@ -9,7 +9,7 @@ public class FileConverter {
         File newFile = new File(filePath);
         try {
             Scanner fileReader = new Scanner(newFile);
-            fileReader.useDelimiter("\r\n");
+            fileReader.useDelimiter("\r\n|\n");
             Scanner lineReader = new Scanner(fileReader.next());
             lineReader.useDelimiter(",");
             int width = lineReader.nextInt();
