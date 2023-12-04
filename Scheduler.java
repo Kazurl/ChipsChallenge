@@ -1,6 +1,6 @@
 public class Scheduler 
 {
-    private int ticks;
+    private double ticks; // Time is now in double to account for smaller time changes e.g. milliseconds
     private boolean levelWon;
     private boolean levelLost;
     private boolean paused;
@@ -11,7 +11,7 @@ public class Scheduler
         this.levelWon = false;
     }
 
-    public int getTick() {
+    public double getTick() {
         return this.ticks;
     }
 
@@ -44,9 +44,9 @@ public class Scheduler
     }
 
     // Include method for ticks incrementation and send to map
-    public int updateTick() {
+    public double updateTick(double timer) {
         if (!paused && !levelWon) {
-            this.ticks++;
+            this.ticks += timer;
             return getTick();
         }
         return -1;

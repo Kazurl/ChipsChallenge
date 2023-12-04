@@ -9,7 +9,7 @@ public class Map {
     private Item[][] itemLayerMap;
     private Tile[][] tileLayerMap;
 
-    public Map (int timeLeft,int width, int height, Actor[][] actorMap, Item[][] itemMap, Tile[][] tileMap, Player player){
+    public Map (int timeLeft,int width, int height, Actor[][] actorMap, Item[][] itemMap, Tile[][] tileMap, Player player){ // 
         this.boardWidth = width;
         this.boardHeight = height;
         this.timeLeft = timeLeft;
@@ -27,7 +27,7 @@ public class Map {
 
     public int getBoardWidth() { return boardWidth; }
 
-    public Actor getPosActor(int posX, int posY) {
+    /*public Actor getPosActor(int posX, int posY) {
         return actorLayerMap[posY][posX];
     }
 
@@ -35,7 +35,7 @@ public class Map {
 
     public Tile getPosTile(int posX, int posY) {
         return tileLayerMap[posY][posX];
-    }
+    }*/
 
     public void setTimeLeft(int time) { this.timeLeft = time; }
     public void setPosActor(int posX, int posY, Actor object) {
@@ -52,6 +52,18 @@ public class Map {
 
     public Map getBoard() {
         return this;
+    }
+
+    public Actor[][] getActorMap() {
+        return this.actorLayerMap;
+    }
+
+    public Tile[][] getTileMap() {
+        return this.tileLayerMap;
+    }
+
+    public Item[][] getItemMap() {
+        return itemLayerMap;
     }
 
     public void setBoard(Map newMap) {

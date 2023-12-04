@@ -28,6 +28,10 @@ public class Actor {
         return actorLocationY;
     }
 
+    public int[] getLocation() {
+        return new int[] {actorLocationX, actorLocationY};
+    }
+
     public void setLocation(int x, int y) {
         actorLocationX = x;
         actorLocationY = y;

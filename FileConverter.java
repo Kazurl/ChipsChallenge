@@ -23,6 +23,7 @@ public class FileConverter {
             lineReader.useDelimiter(",");
             int[] newInventory = {lineReader.nextInt(),lineReader.nextInt(),lineReader.nextInt(),lineReader.nextInt(),lineReader.nextInt()};
 
+            // I think maybe need to set the position of the individual actors i.e. players and mobs individually each time they are inserted into the map
             Actor[][] actorFile = new Actor[height][width];
             for (int y = 0; y < height; y++) {
                 lineReader = new Scanner(fileReader.next());
