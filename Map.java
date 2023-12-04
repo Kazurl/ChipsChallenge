@@ -5,6 +5,7 @@ public class Map {
     private int timeLeft;
 
     private Player playerStored;
+    private Frog[] frogsStored; // Getters for individual mob arrays
     private Actor[][] actorLayerMap;
     private Item[][] itemLayerMap;
     private Tile[][] tileLayerMap;
