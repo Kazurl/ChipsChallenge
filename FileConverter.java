@@ -147,7 +147,6 @@ public class FileConverter {
         }
         catch(Exception invalidFile) {
             System.out.println("Invalid File!");
-            invalidFile.printStackTrace();
             return null;
         }
     }
