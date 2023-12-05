@@ -5,12 +5,14 @@ public class Map {
     private int timeLeft;
 
     private Player playerStored;
-    private Frog[] frogsStored; // Getters for individual mob arrays
+    private Frog[] frogStored; // Getters for individual mob arrays
+    private PinkBall[] pinkballStored;
+    private Bug[] bugStored;
     private Actor[][] actorLayerMap;
     private Item[][] itemLayerMap;
     private Tile[][] tileLayerMap;
 
-    public Map (int timeLeft,int width, int height, Actor[][] actorMap, Item[][] itemMap, Tile[][] tileMap, Player player){ // 
+    public Map (int timeLeft,int width, int height, Actor[][] actorMap, Item[][] itemMap, Tile[][] tileMap, Player player, Frog[] frog, PinkBall[] pinkball, Bug[] bug){ // 
         this.boardWidth = width;
         this.boardHeight = height;
         this.timeLeft = timeLeft;
@@ -18,9 +20,18 @@ public class Map {
         this.itemLayerMap  = itemMap;
         this.tileLayerMap  = tileMap;
         this.playerStored = player;
+        this.frogStored = frog;
+        this.pinkballStored = pinkball;
+        this.bugStored = bug;
     }
 
     public Player getPlayer() { return playerStored; }
+
+    public Frog[] getFrogs() { return this.frogStored; }
+
+    public PinkBall[] getPinkBalls() { return this.pinkballStored; }
+
+    public Bug[] getBugs() { return this.bugStored; }
 
     public int getTimeLeft() { return timeLeft; }
 

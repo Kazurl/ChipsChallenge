@@ -13,10 +13,13 @@ public class Main {
         FileConverter.convertToFile(newMap, newMap.getPlayer());
         System.out.println("That is a valid file path, game starting...");
         Scheduler timer = new Scheduler();
+        Frog[] frogs = newMap.getFrogs();
+        PinkBall[] pinkBalls = newMap.getPinkBalls();
+        Bug[] bugs = newMap.getBugs();
         update(timer, newMap);
     }
 
-    private static void update(Scheduler timer, Map map) {
+    private static void update(Scheduler timer, Map map, Frog[] frogs, PinkBall[] pinkBalls, Bug[] bugs) {
         if (timer.updateTick(0.016) == -1) {
             // Start end of game process
             System.out.println("End of game.");
