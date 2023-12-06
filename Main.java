@@ -82,6 +82,12 @@ public class Main extends Application {
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
 
+    /**
+     * The main entry point for the JavaFX application.
+     *
+     * @param primaryStage The primary stage for this application.
+     */
+
     public void start(Stage primaryStage) {
 
         playerImage = new Image("player.png");
@@ -133,6 +139,10 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    /**
+     * Handles the tick event, called periodically. Updates game positions and triggers various actions.
+     */
     public void tick() {
         GameLogic.getGameMap().getSchedule().updateTick();
         GameLogic.updatePositions();
@@ -140,22 +150,33 @@ public class Main extends Application {
             drawEnd();
             return;
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%2 == 0) {
+        // Move player every 3 ticks
+        if(GameLogic.getGameMap().getSchedule().getTick()%3 == 0) {
+
             GameLogic.movePlayer(GameLogic.getNextMove());
             GameLogic.setNextMove(KeyCode.E);
 
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%3 == 0) {
+        // Move PinkBalls every 5 ticks
+        if(GameLogic.getGameMap().getSchedule().getTick()%5 == 0) {
             GameLogic.movePinkBalls();
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
+        // Move Frogs every 10 ticks
+        if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
             GameLogic.moveFrogs();
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%4 == 0) {
+        // Move Bugs every 7 ticks
+        if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
             GameLogic.moveBugs();
         }
         drawGame();
     }
+
+    /**
+     * Handles key events when a key is pressed. Changes behavior based on the pressed key.
+     *
+     * @param event The key event.
+     */
 
     public void processKeyEvent(KeyEvent event) {
         // We change the behaviour depending on the actual key that was pressed.
@@ -165,6 +186,11 @@ public class Main extends Application {
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
         event.consume();
     }
+    /**
+     * Builds the graphical user interface (GUI) for the game.
+     *
+     * @return The root pane of the GUI.
+     */
     private Pane buildGUI() {
         // Create top-level panel that will hold all GUI nodes.
         BorderPane root = new BorderPane();
