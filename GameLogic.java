@@ -6,6 +6,11 @@ public class GameLogic {
     private static KeyCode nextMove;
 
     private static boolean gameWon = false;
+    /**
+     * Marks the player as dead based on the cause of death.
+     *
+     * @param cause The cause of death (e.g., "water").
+     */
     public static void hasDied(String how) {
         gameMap.getPlayer().setAlive(false);
         if(how == "water") {
@@ -16,6 +21,12 @@ public class GameLogic {
             //end game
         }
     }
+    /**
+     * Checks the current status of the game, including the player's condition, collected items,
+     * and whether the player has reached the exit.
+     *
+     * @return True if the game has ended, false otherwise.
+     */
     public static boolean checkStatus() {
         if(!gameMap.getPlayer().isAlive){
             return true;
@@ -46,18 +57,37 @@ public class GameLogic {
                 || gameMap.getPosActor(gameMap.getPlayer().getX(), gameMap.getPlayer().getY()) instanceof Mob;
     }
 
+    /**
+     * Sets the game's win status.
+     *
+     * @param gameWon True if the game is won, false otherwise.
+     */
     public static void setGameWon(boolean gameWon) {
         GameLogic.gameWon = gameWon;
     }
+    /**
+     * Gets the current win status of the game.
+     *
+     * @return True if the game is won, false otherwise.
+     */
     public static boolean getGameWon() {
         return gameWon;
     }
-
+    
+    /**
+     * Moves the player in the specified direction on the game map.
+     *
+     * @param direction The direction in which the player should move (LEFT, RIGHT, UP, or DOWN).
+     * @return True if the player can move in the specified direction, false otherwise.
+     */
     public static boolean movePlayer(KeyCode direction) {
+        // Check if the provided direction is valid
         if(!(direction == KeyCode.LEFT || direction == KeyCode.RIGHT || direction == KeyCode.DOWN || direction == KeyCode.UP)) {
             return false;
         }
+        // Check if the player can move in the specified direction
         if(checkPlayerMove(direction)){
+            // Move the player based on the specified direction
             switch(direction) {
                 case LEFT:
                     gameMap.setPosActor(gameMap.getPlayer().getX(),gameMap.getPlayer().getY(), null);
@@ -87,129 +117,147 @@ public class GameLogic {
         }
         return false;
     }
-
+    /**
+     * Checks if the player can move in the specified direction on the game map.
+     *
+     * @param direction The direction in which the player wants to move (LEFT, RIGHT, UP, or DOWN).
+     * @return True if the player can move in the specified direction, false otherwise.
+     */
     public static boolean checkPlayerMove(KeyCode direction) {
         int playerX = gameMap.getPlayer().getX();
         int playerY = gameMap.getPlayer().getY();
+        
+        // Check if the provided direction is LEFT
         if(direction == KeyCode.LEFT) {
             if(playerX == 0) {
-                return false;
+                return false;// Player is at the left edge of the board
             } else if (gameMap.getPosActor(playerX-1,playerY) instanceof Block) {
                 return blockMove((Block) gameMap.getPosActor(playerX - 1, playerY), direction);
             } else if (gameMap.getPosActor(playerX-1,playerY) instanceof Mob) {
                 hasDied("mob");
-                return false;
+                return false;// Player encounters a Mob
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof Water) {
                 hasDied("water");
-                return true;
+                return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX-1,playerY)).getCornerType() == Ice.CornerType.TOP_RIGHT
                     || ((Ice) gameMap.getPosTile(playerX-1,playerY)).getCornerType() == Ice.CornerType.BOTTOM_RIGHT)) {
-                return false;
+                return false;// Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof LockedDoor
                     && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX-1,playerY)).getDoorColour())) {
                 gameMap.setPosTile(playerX-1,playerY, new Path());
-                return true;
+                return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof ChipSocket
                     && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX-1,playerY)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX-1,playerY, new Path());
-                return true;
+                return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof Dirt) {
                 gameMap.setPosTile(playerX-1,playerY, new Path());
-                return true;
+                return true; // Player encounters Dirt
             } else {
                 return gameMap.getPosTile(playerX-1,playerY).getWalkable();
             }
+            // Check if the provided direction is RIGHT
         } else if(direction == KeyCode.RIGHT) {
             if(playerX == gameMap.getBoardWidth()-1) {
-                return false;
+                return false;// Player is at the right edge of the board
             } else if (gameMap.getPosActor(playerX+1,playerY) instanceof Block) {
                 return blockMove((Block) gameMap.getPosActor(playerX + 1, playerY), direction);
             } else if (gameMap.getPosActor(playerX+1,playerY) instanceof Mob) {
                 hasDied("mob");
-                return false;
+                return false;// Player encounters a Mob
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof Water) {
                 hasDied("water");
-                return true;
+                return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX+1,playerY)).getCornerType() == Ice.CornerType.TOP_LEFT
                     || ((Ice) gameMap.getPosTile(playerX+1,playerY)).getCornerType() == Ice.CornerType.BOTTOM_LEFT)) {
-                return false;
+                return false;// Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof LockedDoor
                     && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX+1,playerY)).getDoorColour())) {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
-                return true;
+                return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof ChipSocket
                     && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX+1,playerY)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
-                return true;
+                return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof Dirt) {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
-                return true;
+                return true;// Player encounters Dirt
             } else {
                 return gameMap.getPosTile(playerX+1,playerY).getWalkable();
             }
+            // Check if the provided direction is UP
         } else if(direction == KeyCode.UP) {
             if(playerY == 0) {
-                return false;
+                return false;// Player is at the top edge of the board
             } else if (gameMap.getPosActor(playerX,playerY-1) instanceof Block) {
                 return blockMove((Block) gameMap.getPosActor(playerX, playerY -1), direction);
             } else if (gameMap.getPosActor(playerX,playerY-1) instanceof Mob) {
                 hasDied("mob");
-                return false;
+                return false;// Player encounters a Mob
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof Water) {
                 hasDied("water");
-                return true;
+                return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType() == Ice.CornerType.BOTTOM_RIGHT
                     || ((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType() == Ice.CornerType.BOTTOM_LEFT)) {
-                return false;
+                return false;// Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof LockedDoor
                     && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY-1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
-                return true;
+                return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof ChipSocket
                     && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX,playerY-1)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
-                return true;
+                return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof Dirt) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
-                return true;
+                return true;// Player encounters Dirt
             } else {
                 return gameMap.getPosTile(playerX,playerY-1).getWalkable();
             }
+            // Check if the provided direction is DOWN
         } else if(direction == KeyCode.DOWN) {
             if(playerY == gameMap.getBoardHeight()-1) {
-                return false;
+                return false;// Player is at the buttom edge of the board
             } else if (gameMap.getPosActor(playerX,playerY+1) instanceof Block) {
                 return blockMove((Block) gameMap.getPosActor(playerX, playerY +1), direction);
             } else if (gameMap.getPosActor(playerX,playerY+1) instanceof Mob) {
                 hasDied("mob");
-                return false;
+                return false;// Player encounters a Mob
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Water) {
                 hasDied("water");
-                return true;
+                return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_RIGHT
                     || ((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_LEFT)) {
-                return false;
+                return false;// Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof LockedDoor
                     && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY+1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
-                return true;
+                return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof ChipSocket
                     && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX,playerY+1)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
-                return true;
+                return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Dirt) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
-                return true;
+                return true;// Player encounters Dirt
             } else {
                 return gameMap.getPosTile(playerX,playerY+1).getWalkable();
             }
         }
         return true;
     }
+
+    /**
+     * Attempts to move the specified block in the given direction on the game map.
+     *
+     * @param block The block to be moved.
+     * @param direction The direction in which the block should be moved (LEFT, RIGHT, UP, or DOWN).
+     * @return True if the block is successfully moved, false otherwise.
+     */
     public static boolean blockMove(Block block, KeyCode direction) {
         int blockX = block.getLocationX();
         int blockY = block.getLocationY();
