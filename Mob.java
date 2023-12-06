@@ -24,7 +24,7 @@ public class Mob extends Actor{
         return this.mobLocationX;
     }
 
-    public int getY(int locationY) {
+    public int getY() {
         return this.mobLocationY;
     }
 

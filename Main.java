@@ -2,6 +2,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -10,12 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -77,6 +73,7 @@ public class Main extends Application {
     private Image TRIceImage;
     private Image BLIceImage;
     private Image BRIceImage;
+    private Image blockImage;
 
     // X and Y coordinate of player on the grid.
     private int playerX;
@@ -88,12 +85,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         playerImage = new Image("player.png");
-        dirtImage = new Image("dirt.png");
+        dirtImage = new Image("dirt2.png");
         iconImage = new Image("icon.png");
         bugImage = new Image("Bug.png");
         buttonImage = new Image("Button.png");
-        chipSocketImage = new Image("ChipSocket.png");
-        compChipImage = new Image("CompChip.png");
+        chipSocketImage = new Image("Socket.png");
+        compChipImage = new Image("computer chip.png");
         exitImage = new Image("Exit.png");
         frogImage = new Image("Frog.png");
         iceImage = new Image("Ice.png");
@@ -101,19 +98,20 @@ public class Main extends Application {
         greenKeyImage = new Image("greenKey.png");
         blueKeyImage = new Image("blueKey.png");
         yellowKeyImage = new Image("yellowKey.png");
-        redLockedDoorImage = new Image("redLockedDoor.png");
+        redLockedDoorImage = new Image("RedLock.png");
         greenLockedDoorImage = new Image("greenLockedDoor.png");
-        blueLockedDoorImage = new Image("blueLockedDoor.png");
-        yellowLockedDoorImage = new Image("yellowLockedDoor.png");
+        blueLockedDoorImage = new Image("BlueLock.png");
+        yellowLockedDoorImage = new Image("YellowLock.png");
         pinkBallImage = new Image("PinkBall.png");
         trapImage = new Image("Trap.png");
         wallImage = new Image("Wall.png");
         waterImage = new Image("Water.png");
         pathImage = new Image("path.png");
-        TLIceImage = new Image("IceTL.png");
-        TRIceImage = new Image("IceTR.png");
-        BLIceImage = new Image("IceBL.png");
-        BRIceImage = new Image("IceBR.png");
+        TLIceImage = new Image("IceTopLeft.png");
+        TRIceImage = new Image("IceTopRight.png");
+        BLIceImage = new Image("IceaBottomLeft.png");
+        BRIceImage = new Image("IceBottomRight.png");
+        blockImage = new Image("Block.png");
         // Build the GUI
         Pane root = buildGUI();
 
@@ -137,36 +135,33 @@ public class Main extends Application {
         primaryStage.show();
     }
     public void tick() {
-        //Mobs move
-        // We then redraw the whole canvas.
-        drawGame();
-    }
-    public void canvasDragDroppedOccured(DragEvent event) {
-        double x = event.getX();
-        double y = event.getY();
-
-        // Print a string showing the location.
-        String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
-        System.out.println(s);
-
-        // Draw an icon at the dropped location.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Draw the image so the top-left corner is where we dropped.
-        gc.drawImage(iconImage, x, y);
-        // Draw the image so the center is where we dropped.
-        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y - iconImage.getHeight() / 2.0);
-    }
-
-    public void processKeyEvent(KeyEvent event) {
-        // We change the behaviour depending on the actual key that was pressed.
-        GameLogic.movePlayer(event);
+        GameLogic.updatePositions();
         if(GameLogic.checkStatus()) {
             drawEnd();
             return;
         }
-        // Redraw game as the player may have moved.
-        drawGame();
+        if(GameLogic.getGameMap().getSchedule().getTick()%3 == 0) {
+            GameLogic.movePlayer(GameLogic.getNextMove());
+            GameLogic.setNextMove(KeyCode.E);
 
+        }
+        if(GameLogic.getGameMap().getSchedule().getTick()%5 == 0) {
+            GameLogic.movePinkBalls();
+        }
+        if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
+            GameLogic.moveFrogs();
+        }
+        if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
+            GameLogic.moveBugs();
+        }
+        drawGame();
+    }
+
+    public void processKeyEvent(KeyEvent event) {
+        // We change the behaviour depending on the actual key that was pressed.
+        if(!(GameLogic.getGameMap().getPosTile(GameLogic.getGameMap().getPlayer().getX(),GameLogic.getGameMap().getPlayer().getY()) instanceof Ice)) {
+            GameLogic.setNextMove(event.getCode());
+        }
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
         event.consume();
     }
@@ -190,11 +185,17 @@ public class Main extends Application {
         // Tick Timeline buttons
         Button startTickTimelineButton = new Button("Start Ticks");
         Button stopTickTimelineButton = new Button("Stop Ticks");
+        Button saveButton = new Button("Save & Quit");
         // We add both buttons at the same time to the timeline (we could have done this in two steps).
-        toolbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
+        toolbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, saveButton);
         // Stop button is disabled by default
         stopTickTimelineButton.setDisable(true);
 
+        // save behaviour
+        saveButton.setOnAction(e -> {
+            FileConverter.convertToFile(GameLogic.getGameMap());
+            Platform.exit();
+        });
         // Set up the behaviour of the buttons.
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
@@ -209,57 +210,12 @@ public class Main extends Application {
             tickTimeline.stop();
             startTickTimelineButton.setDisable(false);
         });
-
-        // Setup a draggable image.
-        ImageView draggableImage = new ImageView();
-        draggableImage.setImage(iconImage);
-        toolbar.getChildren().add(draggableImage);
-
-        // This code setup what happens when the dragging starts on the image.
-        // You probably don't need to change this (unless you wish to do more advanced things).
-        draggableImage.setOnDragDetected(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                // Mark the drag as started.
-                // We do not use the transfer mode (this can be used to indicate different forms
-                // of drags operations, for example, moving files or copying files).
-                Dragboard db = draggableImage.startDragAndDrop(TransferMode.ANY);
-
-                // We have to put some content in the clipboard of the drag event.
-                // We do not use this, but we could use it to store extra data if we wished.
-                ClipboardContent content = new ClipboardContent();
-                content.putString("Hello");
-                db.setContent(content);
-
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
-
         // This code allows the canvas to receive a dragged object within its bounds.
         // You probably don't need to change this (unless you wish to do more advanced things).
-        canvas.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                // Mark the drag as acceptable if the source was the draggable image.
-                // (for example, we don't want to allow the user to drag things or files into our application)
-                if (event.getGestureSource() == draggableImage) {
-                    // Mark the drag event as acceptable by the canvas.
-                    event.acceptTransferModes(TransferMode.ANY);
-                    // Consume the event. This means we mark it as dealt with.
-                    event.consume();
-                }
-            }
-        });
+
 
         // This code allows the canvas to react to a dragged object when it is finally dropped.
         // You probably don't need to change this (unless you wish to do more advanced things).
-        canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                // We call this method which is where the bulk of the behaviour takes place.
-                canvasDragDroppedOccured(event);
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
 
         // Finally, return the border pane we built up.
         return root;
@@ -318,7 +274,7 @@ public class Main extends Application {
                     gc.drawImage(chipSocketImage, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
                     //show amount of chips needed
                     gc.setFill(Color.RED);
-                    gc.fillText(String.valueOf(((ChipSocket) GameLogic.getGameMap().getPosTile(x,y)).getChipAmountNeeded()), (x+0.7) * GRID_CELL_WIDTH, (y+0.59) * GRID_CELL_HEIGHT);
+                    gc.fillText(String.valueOf(((ChipSocket) GameLogic.getGameMap().getPosTile(x,y)).getChipAmountNeeded()), (x+0.45) * GRID_CELL_WIDTH, (y+0.59) * GRID_CELL_HEIGHT);
                 }
             }
         }
@@ -341,20 +297,24 @@ public class Main extends Application {
             }
         }
         // Draw player at current location // COULD CAUSE PROBLEMS IF ACTOR MOVEMENT IS DONE WRONG
-                for (int y = 0; y < GRID_HEIGHT; y++) {
-                    for (int x = 0; x < GRID_WIDTH; x++) {
-                        if(GameLogic.getGameMap().getPosActor(x,y) instanceof Frog) {
-                            gc.drawImage(frogImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                        } else if(GameLogic.getGameMap().getPosActor(x,y) instanceof Bug) {
-                            gc.drawImage(bugImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                        } else if(GameLogic.getGameMap().getPosActor(x,y) instanceof PinkBall) {
-                            gc.drawImage(pinkBallImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                        }
-                    }
+        for (int y = 0; y < GRID_HEIGHT; y++) {
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                if(GameLogic.getGameMap().getPosActor(x,y) instanceof Frog) {
+                    gc.drawImage(frogImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                } else if(GameLogic.getGameMap().getPosActor(x,y) instanceof Bug) {
+                    gc.drawImage(bugImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                } else if(GameLogic.getGameMap().getPosActor(x,y) instanceof PinkBall) {
+                    gc.drawImage(pinkBallImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                } else if(GameLogic.getGameMap().getPosActor(x,y) instanceof Block) {
+                    gc.drawImage(blockImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
                 }
-        gc.drawImage(playerImage,
-                GameLogic.getGameMap().getPlayer().getX() * GRID_CELL_WIDTH,
-                GameLogic.getGameMap().getPlayer().getY() * GRID_CELL_HEIGHT);
+            }
+        }
+        if(GameLogic.getGameMap().getPlayer().isAlive()) {
+            gc.drawImage(playerImage,
+                    GameLogic.getGameMap().getPlayer().getX() * GRID_CELL_WIDTH,
+                    GameLogic.getGameMap().getPlayer().getY() * GRID_CELL_HEIGHT);
+        }
 
         //Draw inventory bar
         int[] invToShow = GameLogic.getGameMap().getPlayer().getInventory();
