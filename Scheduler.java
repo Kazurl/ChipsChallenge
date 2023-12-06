@@ -12,7 +12,7 @@ public class Scheduler
 
     public Scheduler() {
         this.ticks = 0;
-        this.paused = false;
+        this.paused = true;
         this.levelWon = false;
     }
 
@@ -78,6 +78,16 @@ public class Scheduler
         paused = !paused;
         // Include method body for pausing ticks
         
+    }
+    public void pause() {
+        paused = true;
+        // Include method body for pausing ticks
+
+    }
+    public void unPause() {
+        paused = false;
+        // Include method body for pausing ticks
+
     }
     /**
      * Updates the game tick if the game is not paused and the level has not been won.

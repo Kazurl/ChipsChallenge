@@ -59,11 +59,24 @@ public class FileConverter {
                             char[] mobChar = nextActor.toCharArray();
                             switch(mobChar[0]) {
                                 case 'B':
-                                    char bugDirection = mobChar[1];
                                     Bug bug = new Bug();
                                     bug.setX(x);
                                     bug.setY(y);
                                     switch(mobChar[1]) {
+                                        case '1':
+                                            bug.setDirection(KeyCode.UP);
+                                            break;
+                                        case '2':
+                                            bug.setDirection(KeyCode.DOWN);
+                                            break;
+                                        case '3':
+                                            bug.setDirection(KeyCode.LEFT);
+                                            break;
+                                        default:
+                                            bug.setDirection(KeyCode.RIGHT);
+                                            break;
+                                    }
+                                    switch(mobChar[2]) {
                                         case '1':
                                             bug.setFollow(true);
                                             break;
@@ -194,6 +207,9 @@ public class FileConverter {
                             break;
                     }
                 }
+            }
+            for(int i = 0; i <givenFrogs.length; i++) {
+                givenFrogs[i].setMap(actorFile, tileFile);
             }
             return new Map(timeLeft, width,height,actorFile, itemFile, tileFile, givenPlayer, givenFrogs, givenBugs, givenPinkBalls,givenBlocks);
         }

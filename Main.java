@@ -123,7 +123,7 @@ public class Main extends Application {
 
         // Register a tick method to be called periodically.
         // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(200), event -> tick()));
         // Loop the timeline forever
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
@@ -134,23 +134,24 @@ public class Main extends Application {
         primaryStage.show();
     }
     public void tick() {
+        GameLogic.getGameMap().getSchedule().updateTick();
         GameLogic.updatePositions();
         if(GameLogic.checkStatus()) {
             drawEnd();
             return;
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%3 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%2 == 0) {
             GameLogic.movePlayer(GameLogic.getNextMove());
             GameLogic.setNextMove(KeyCode.E);
 
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%5 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%3 == 0) {
             GameLogic.movePinkBalls();
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
             GameLogic.moveFrogs();
         }
-        if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%4 == 0) {
             GameLogic.moveBugs();
         }
         drawGame();
@@ -199,6 +200,7 @@ public class Main extends Application {
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);
+            GameLogic.getGameMap().getSchedule().unPause();
             tickTimeline.play();
             stopTickTimelineButton.setDisable(false);
         });
@@ -206,6 +208,7 @@ public class Main extends Application {
         stopTickTimelineButton.setOnAction(e -> {
             // Stop the tick timeline and enable/disable buttons as appropriate.
             stopTickTimelineButton.setDisable(true);
+            GameLogic.getGameMap().getSchedule().pause();
             tickTimeline.stop();
             startTickTimelineButton.setDisable(false);
         });

@@ -372,7 +372,7 @@ public class GameLogic {
         if (actorDirection == KeyCode.LEFT) {
             if(corner == Ice.CornerType.NONE) {
                 if(!movePlayer(actorDirection)){
-                    icePlayer(swapDirection(actorDirection), corner);
+                    icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_LEFT) {
                 icePlayer(KeyCode.DOWN, corner);
@@ -384,7 +384,7 @@ public class GameLogic {
         } else if (actorDirection == KeyCode.RIGHT) {
            if(corner == Ice.CornerType.NONE) {
                if(!movePlayer(actorDirection)){
-                   icePlayer(swapDirection(actorDirection), corner);
+                   icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                }
            } else if(corner == Ice.CornerType.TOP_RIGHT) {
                icePlayer(KeyCode.DOWN, corner);
@@ -396,7 +396,7 @@ public class GameLogic {
        } else if (actorDirection == KeyCode.UP) {
             if(corner == Ice.CornerType.NONE) {
                 if(!movePlayer(actorDirection)){
-                    icePlayer(swapDirection(actorDirection), corner);
+                    icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_RIGHT) {
                 icePlayer(KeyCode.LEFT, corner);
@@ -408,7 +408,7 @@ public class GameLogic {
         } else if (actorDirection == KeyCode.DOWN) {
             if(corner == Ice.CornerType.NONE) {
                 if(!movePlayer(actorDirection)){
-                    icePlayer(swapDirection(actorDirection), corner);
+                    icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.BOTTOM_RIGHT) {
                 icePlayer(KeyCode.LEFT, corner);
@@ -423,7 +423,7 @@ public class GameLogic {
         if (actorDirection == KeyCode.LEFT) {
             if(corner == Ice.CornerType.NONE) {
                 if(!blockMove(block, actorDirection)){
-                    iceBlock(block, swapDirection(actorDirection), corner);
+                    iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_LEFT) {
                 iceBlock(block, KeyCode.DOWN, corner);
@@ -435,7 +435,7 @@ public class GameLogic {
         } else if (actorDirection == KeyCode.RIGHT) {
             if(corner == Ice.CornerType.NONE) {
                 if(!blockMove(block, actorDirection)){
-                    iceBlock(block, swapDirection(actorDirection), corner);
+                    iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_RIGHT) {
                 iceBlock(block, KeyCode.DOWN, corner);
@@ -447,7 +447,7 @@ public class GameLogic {
         } else if (actorDirection == KeyCode.UP) {
             if(corner == Ice.CornerType.NONE) {
                 if(!blockMove(block, actorDirection)){
-                    iceBlock(block, swapDirection(actorDirection), corner);
+                    iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_RIGHT) {
                 iceBlock(block, KeyCode.LEFT, corner);
@@ -459,7 +459,7 @@ public class GameLogic {
         } else if (actorDirection == KeyCode.DOWN) {
             if(corner == Ice.CornerType.NONE) {
                 if(!blockMove(block, actorDirection)){
-                    iceBlock(block, swapDirection(actorDirection), corner);
+                    iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.BOTTOM_RIGHT) {
                 iceBlock(block, KeyCode.LEFT, corner);
@@ -471,16 +471,16 @@ public class GameLogic {
         }
     }
 
-    public static KeyCode swapDirection(KeyCode direction) {
+    public static KeyCode turnLeft(KeyCode direction) {
         switch (direction) {
             case LEFT:
-                return KeyCode.RIGHT;
-            case RIGHT:
-                return KeyCode.LEFT;
-            case UP:
                 return KeyCode.DOWN;
-            default:
+            case RIGHT:
                 return KeyCode.UP;
+            case UP:
+                return KeyCode.LEFT;
+            default:
+                return KeyCode.RIGHT;
         }
     }
 
@@ -519,6 +519,8 @@ public class GameLogic {
                 if(ball.getX() == 0) {
                     ball.setDirection(KeyCode.RIGHT);
                     movePinkBall(ball, true);
+                } else if(gameMap.getPosActor(ballX-1, ballY) instanceof Player) {
+                    hasDied("ball");
                 } else if(gameMap.getPosActor(ballX -1,ballY) == null) {
                     if (gameMap.getPosTile(ballX-1, ballY) instanceof Path
                             || gameMap.getPosTile(ballX-1, ballY) instanceof Trap
@@ -539,6 +541,8 @@ public class GameLogic {
                 if(ball.getX() == gameMap.getBoardWidth()-1) {
                     ball.setDirection(KeyCode.LEFT);
                     movePinkBall(ball, true);
+                } else if(gameMap.getPosActor(ballX+1, ballY) instanceof Player) {
+                    hasDied("ball");
                 } else if(gameMap.getPosActor(ballX +1,ballY) == null) {
                     if (gameMap.getPosTile(ballX+1, ballY) instanceof Path
                             || gameMap.getPosTile(ballX+1, ballY) instanceof Trap
@@ -559,6 +563,8 @@ public class GameLogic {
                 if(ball.getY() == 0) {
                     ball.setDirection(KeyCode.DOWN);
                     movePinkBall(ball, true);
+                } else if(gameMap.getPosActor(ballX, ballY-1) instanceof Player) {
+                    hasDied("ball");
                 } else if(gameMap.getPosActor(ballX,ballY-1) == null) {
                     if (gameMap.getPosTile(ballX, ballY - 1) instanceof Path
                             || gameMap.getPosTile(ballX, ballY - 1) instanceof Trap
@@ -579,8 +585,9 @@ public class GameLogic {
                 if(ball.getY() == gameMap.getBoardHeight()-1) {
                     ball.setDirection(KeyCode.UP);
                     movePinkBall(ball, true);
-                } else
-                if(gameMap.getPosActor(ballX,ballY+1) == null) {
+                } else if(gameMap.getPosActor(ballX, ballY+1) instanceof Player) {
+                    hasDied("ball");
+                } else if(gameMap.getPosActor(ballX,ballY+1) == null) {
                     if (gameMap.getPosTile(ballX, ballY + 1) instanceof Path
                             || gameMap.getPosTile(ballX, ballY + 1) instanceof Trap
                             || gameMap.getPosTile(ballX, ballY + 1) instanceof Buttons) {
@@ -600,9 +607,134 @@ public class GameLogic {
     }
 
     public static void moveBugs() {
+        Bug[] bugs = gameMap.getBugsStored();
+        for(int i = 0; i < bugs.length; i++) {
+            moveBug(bugs[i],0);
+        }
+    }
+    public static void moveBug(Bug bug, int turns) {
+        int bugX = bug.getX();
+        int bugY = bug.getY();
+        if(bug.getFollow()){
+            //follow left
+            switch(bug.getDirection()) {
+                case LEFT:
+                    if(bug.getY() == gameMap.getBoardHeight()-1) {
+                        if(turns != 3) {
+                            bug.setDirection(KeyCode.UP);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if(gameMap.getPosActor(bugX, bugY+1) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX, bugY+1) == null) {
+                        if (gameMap.getPosTile(bugX, bugY+1) instanceof Path
+                                || gameMap.getPosTile(bugX, bugY+1) instanceof Trap
+                                || gameMap.getPosTile(bugX, bugY+1) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setY(bugY+1);
+                            bug.setDirection(KeyCode.DOWN);
+                            gameMap.setPosActor(bugX,bugY+1, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.UP);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if(turns != 3) {
+                        bug.setDirection(KeyCode.UP);
+                        moveBug(bug, turns+1);
+                    }
+                    break;
+                case UP:
+                    if(bug.getX() == 0) {
+                        if(turns != 3) {
+                            bug.setDirection(KeyCode.RIGHT);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if(gameMap.getPosActor(bugX-1, bugY) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX-1, bugY) == null) {
+                        if (gameMap.getPosTile(bugX-1, bugY) instanceof Path
+                                || gameMap.getPosTile(bugX-1, bugY) instanceof Trap
+                                || gameMap.getPosTile(bugX-1, bugY) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setX(bugX-1);
+                            bug.setDirection(KeyCode.LEFT);
+                            gameMap.setPosActor(bugX-1,bugY, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.RIGHT);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if(turns != 3) {
+                        bug.setDirection(KeyCode.RIGHT);
+                        moveBug(bug, turns+1);
+                    }
+                    return;
+                case RIGHT:
+                    if(bug.getY() == 0) {
+                        if(turns != 3) {
+                            bug.setDirection(KeyCode.DOWN);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if(gameMap.getPosActor(bugX, bugY-1) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX, bugY-1) == null) {
+                        if (gameMap.getPosTile(bugX, bugY-1) instanceof Path
+                                || gameMap.getPosTile(bugX, bugY-1) instanceof Trap
+                                || gameMap.getPosTile(bugX, bugY-1) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setY(bugY-1);
+                            bug.setDirection(KeyCode.UP);
+                            gameMap.setPosActor(bugX,bugY-1, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.DOWN);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if(turns != 3) {
+                        bug.setDirection(KeyCode.DOWN);
+                        moveBug(bug, turns+1);
+                    }
+                    return;
+                case DOWN:
+                    if(bug.getX() == gameMap.getBoardWidth()-1) {
+                        if(turns != 3) {
+                            bug.setDirection(KeyCode.LEFT);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if(gameMap.getPosActor(bugX+1, bugY) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX+1, bugY) == null) {
+                        if (gameMap.getPosTile(bugX+1, bugY) instanceof Path
+                                || gameMap.getPosTile(bugX+1, bugY) instanceof Trap
+                                || gameMap.getPosTile(bugX+1, bugY) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setX(bugX+1);
+                            bug.setDirection(KeyCode.RIGHT);
+                            gameMap.setPosActor(bugX+1,bugY, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.LEFT);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if(turns != 3) {
+                        bug.setDirection(KeyCode.LEFT);
+                        moveBug(bug, turns+1);
+                    }
+                    return;
+            }
+        } else {
+            //follow right
+        }
     }
 
     public static void moveFrogs() {
+        /*
+        Frog[] frogs = gameMap.getFrogsStored();
+        for(int i = 0; i < frogs.length; i++) {
+          int[] newCords = frogs[i].checkShortest(frogs[i].getX(),frogs[i].getY(),
+                  gameMap.getPlayer().getX(),gameMap.getPlayer().getY());
+          gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), null);
+          frogs[i].setLocation(newCords[0], newCords[1]);
+            gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), frogs[i]);
+        }
+         */
     }
 
     public static void updatePositions() {
