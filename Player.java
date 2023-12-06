@@ -9,11 +9,12 @@ public class Player extends Actor{
     private Tile currTile;
     private Tile nextTile;
     private int[] inventory = {/*has red key?*/0,/*has green key?*/0,/*has blue key?*/0,/*has yellow key?*/0,/*how many chips?*/0};;
-    boolean deadOrAlive;
+    boolean isAlive;
     public int playerLocationX, playerLocationY;
 
     public Player() {
         super();
+        this.isAlive = true;
     }
 
     public void setDirection(Direction direction){
@@ -45,11 +46,11 @@ public class Player extends Actor{
     }
 
     public boolean isAlive() {
-        return deadOrAlive;
+        return isAlive;
     }
 
     public void setAlive(boolean status) {
-
+        this.isAlive = status;
     }
 
     public int[] getInventory() {

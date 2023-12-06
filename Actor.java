@@ -1,18 +1,12 @@
-import java.util.Arrays;
+import javafx.scene.input.KeyCode;
 
 public class Actor {
-    enum Direction{
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    }
 
     private int actorLocationX;
     private int actorLocationY;
     private int ticksPerMove;
     private int lastMoveTick;
-    private Direction direction;
+    private KeyCode direction;
     private int[][] map;
 
     public Actor() {
@@ -33,11 +27,11 @@ public class Actor {
         actorLocationY = y;
     }
 
-    public Direction getDirection() {
+    public KeyCode getDirection() {
         return direction;
     }
 
-    public void setDirection(Direction dir) {
+    public void setDirection(KeyCode dir) {
         direction = dir;
     }
 

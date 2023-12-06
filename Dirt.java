@@ -2,7 +2,7 @@ public class Dirt extends Tile {
 
     //Constructor
     public Dirt(boolean convertPath) {
-      super(convertPath, true);
+      super(convertPath, false);
     }
 /* From Freddie: Not working at the moment
     public Player onPlayerWalk; {
