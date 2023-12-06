@@ -86,7 +86,6 @@ public class Main extends Application {
 
         playerImage = new Image("player.png");
         dirtImage = new Image("dirt2.png");
-        iconImage = new Image("icon.png");
         bugImage = new Image("Bug.png");
         buttonImage = new Image("Button.png");
         chipSocketImage = new Image("Socket.png");
