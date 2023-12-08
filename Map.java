@@ -12,12 +12,19 @@ public class Map {
     private Frog[] frogsStored;
     private Bug[] bugsStored;
     private PinkBall[] pinkBallsStored;
+    private Buttons[] buttonsStored;
+    private int[] topScores;
+    private int[] newScores;
+    private String[] topNames;
+    private String[] newNames;
+    private String original;
     private Actor[][] actorLayerMap;
     private Item[][] itemLayerMap;
     private Tile[][] tileLayerMap;
 
     public Map(int timeLeft, int width, int height, Actor[][] actorMap, Item[][] itemMap,
-               Tile[][] tileMap, Player player, Frog[] frogs, Bug[] bugs, PinkBall[] pinkBalls, Block[] blocks) {
+               Tile[][] tileMap, Player player, Frog[] frogs, Bug[] bugs, PinkBall[] pinkBalls, Block[] blocks,
+               Buttons[] buttons, int[] scores, String[] names, String original) {
         this.boardWidth = width;
         this.boardHeight = height;
         this.timeLeft = timeLeft;
@@ -29,6 +36,10 @@ public class Map {
         this.bugsStored = bugs;
         this.pinkBallsStored = pinkBalls;
         this.blocksStored = blocks;
+        this.buttonsStored = buttons;
+        this.topScores = scores;
+        this.topNames = names;
+        this.original = original;
     }
 
     public Player getPlayer() {
@@ -116,4 +127,47 @@ public class Map {
     public void setBlocksStored(Block[] blocksStored) {
         this.blocksStored = blocksStored;
     }
+
+    public Buttons[] getButtonsStored() {
+        return buttonsStored;
+    }
+
+    public void setButtonsStored(Buttons[] buttonsStored) {
+        this.buttonsStored = buttonsStored;
+    }
+
+    public int[] getTopScores() {
+        return topScores;
+    }
+    public void setTopScores(int[] scores) {
+        topScores = scores;
+    }
+    public int[] newScore(int score, String name) {
+        newScores = topScores;
+        newNames = topNames;
+        for(int i = 0; i < newScores.length; i++) {
+            if(score>newScores[i]) {
+                for(int x = 9; x > i; x--) {
+                    newScores[x] = newScores[x-1];
+                    newNames[x] = newNames[x-1];
+                }
+                newNames[i] = name;
+                newScores[i] = score;
+                break;
+            }
+        }
+        return newScores;
+    }
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public String[] getTopNames() {
+        return topNames;
+    }
+    public String[] getNewNames() {
+        return newNames;
+    }
+
 }

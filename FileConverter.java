@@ -1,13 +1,100 @@
 import javafx.scene.input.KeyCode;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Arrays;
 
 public class FileConverter {
-    public static Map convertFromFile(String filePath){
+
+    private static final int PRIME_MULTIPLIER = 31;
+
+    // Hashing function using a prime number multiplier
+    public static String encrypt(String string) {
+        int hash = 0;
+
+        // Calculate the hash code for the combined string
+        for (int i = 0; i < string.length(); i++) {
+            hash = (hash + PRIME_MULTIPLIER) + string.charAt(i);
+        }
+
+        // Convert the hash code to a string for output
+        return String.valueOf(hash);
+    }
+
+    public static void registerAccount(String username, String password) {
+        password = encrypt(password);
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        PrintWriter pw = null;
+
+        try (FileWriter f = new FileWriter("Credentials.txt", true);
+             BufferedWriter b = new BufferedWriter(f);
+             PrintWriter p = new PrintWriter(b);) {
+            p.println(username + "," + password);
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+    public static int checkLevels(String username) {
+        try {
+            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            fileReader.useDelimiter(",|\r\n|\n");
+            while(fileReader.hasNext()) {
+                String currentName = fileReader.next();
+                if(currentName.equals(username)) {
+                    fileReader.next();
+                    return fileReader.nextInt();
+                }
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+        return 0;
+    }
+    public static int checkUsername(String username) {
+        try {
+            int usernameIndex = 0;
+            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            fileReader.useDelimiter(",|\r\n|\n");
+            while(fileReader.hasNext()) {
+                String currentName = fileReader.next();
+                if(currentName.equals(username)) {
+                    return usernameIndex;
+                } else {
+                    fileReader.next();
+                    fileReader.next();
+                    usernameIndex++;
+                }
+            }
+        } catch (Exception e) {
+            return -1;
+        }
+        return -1;
+    }
+    public static boolean checkPassword(String password, int index) {
+        password = encrypt(password);
+        String truePassword;
+        try {
+            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            fileReader.useDelimiter("\r\n|\n");
+            for (int i = 0; i < index; i++) {
+                fileReader.next();
+            }
+            fileReader.useDelimiter(",|\r\n|\n");
+            fileReader.next();
+            truePassword = fileReader.next();
+            if(truePassword.equals(password)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch(Exception e) {
+            return false;
+        }
+    }
+    public static Map convertFromFile(String filePath, String userName){
 
         File newFile = new File(filePath);
         try {
@@ -18,10 +105,12 @@ public class FileConverter {
             int width = lineReader.nextInt();
             int height = lineReader.nextInt();
             int timeLeft = lineReader.nextInt();
-            Player givenPlayer = new Player();
+            Player givenPlayer = new Player(userName);
             Block[] givenBlocks = {};
             Frog[] givenFrogs = {};
             Bug[] givenBugs = {};
+            Buttons[] givenButtons = {};
+            Trap[] givenTraps = {};
             PinkBall[] givenPinkBalls = {};
             lineReader = new Scanner(fileReader.next());
             lineReader.useDelimiter(",");
@@ -145,6 +234,7 @@ public class FileConverter {
             }
 
             Tile[][] tileFile = new Tile[height][width];
+            int buttonCount = 1;
             for (int y = 0; y < height; y++) {
                 lineReader = new Scanner(fileReader.next());
                 lineReader.useDelimiter(",");
@@ -170,10 +260,24 @@ public class FileConverter {
                             char[] tileChar = nextTile.toCharArray();
                             switch(tileChar[0]) {
                                 case 'B':
-                                    tileFile[y][x] = new Buttons(x,y); // // MUST CONNECT THESE < v
+                                    Buttons button = new Buttons(x,y);
+                                    button.setIdentifier(buttonCount);
+                                    buttonCount++;
+                                    tileFile[y][x] = button; // // MUST CONNECT THESE < v
+                                    int buttonNum = Integer.parseInt(nextTile.substring(1));
+                                    if(buttonNum > givenButtons.length) {
+                                        givenButtons = Arrays.copyOf(givenButtons, buttonNum);
+                                    }
+                                    givenButtons[buttonNum-1] = button;
                                     break;
                                 case 'T':
-                                    tileFile[y][x] = new Trap(x,y); // MUST CONNECT THESE < ^
+                                    Trap trap = new Trap(x,y);
+                                    tileFile[y][x] = trap; // needs its tile
+                                    int trapNum = Integer.parseInt(nextTile.substring(1));
+                                    if(trapNum > givenTraps.length) {
+                                        givenTraps = Arrays.copyOf(givenTraps, trapNum);
+                                    }
+                                    givenTraps[trapNum - 1] = trap; // MUST CONNECT THESE < ^
                                     break;
                                 case 'S':
                                     int chipAmount = Integer.parseInt(nextTile.substring(1));
@@ -208,10 +312,39 @@ public class FileConverter {
                     }
                 }
             }
+            String[] givenTopNames = new String[10];
+            int[] givenTopScores = new int[10];
+            lineReader = new Scanner(fileReader.next());
+            lineReader.useDelimiter(",");
+            for(int i = 0; i < 10; i++) {
+                givenTopNames[i] = lineReader.next();
+                givenTopScores[i] = lineReader.nextInt();
+            }
+            lineReader = new Scanner(fileReader.next());
+            String original = lineReader.next();
+            if(original.equals("original")) {
+                original = filePath;
+            }
+
+            for(int i = 0; i <givenTraps.length; i++) {
+                try {
+                    if(givenButtons[i] != null) {
+                        givenTraps[i].setConnectButton(givenButtons[i]);
+                        givenTraps[i].setIdentifier(givenButtons[i].getIdentifier());
+                        givenButtons[i].setConnectTrap(givenTraps[i]);
+                    }
+                } catch(Exception e) {
+                    System.out.println("Invalid File!");
+                    return null;
+                }
+            }
+
             for(int i = 0; i <givenFrogs.length; i++) {
                 givenFrogs[i].setMap(actorFile, tileFile);
             }
-            return new Map(timeLeft, width,height,actorFile, itemFile, tileFile, givenPlayer, givenFrogs, givenBugs, givenPinkBalls,givenBlocks);
+            return new Map(timeLeft, width,height,actorFile, itemFile, tileFile,
+                    givenPlayer, givenFrogs, givenBugs, givenPinkBalls,givenBlocks
+                    , givenButtons, givenTopScores, givenTopNames, original);
         }
         catch(Exception invalidFile) {
             System.out.println("Invalid File!");
@@ -247,10 +380,34 @@ public class FileConverter {
                                 WriteToFile.write("Pl");
                             } else if(currentActor instanceof Frog) {
                             WriteToFile.write("Fr");
-                        } else if(currentActor instanceof Bug) {
-                            WriteToFile.write("Bg");
+                        } else if(currentActor instanceof Block) {
+                                WriteToFile.write("Bl");
+                            } else if(currentActor instanceof Bug) {
+                            WriteToFile.write("B");
+                                if (currentActor.getDirection() == KeyCode.UP) {
+                                    WriteToFile.write("1");
+                                } else if (currentActor.getDirection() == KeyCode.DOWN) {
+                                    WriteToFile.write("2");
+                                } else if (currentActor.getDirection() == KeyCode.LEFT) {
+                                    WriteToFile.write("3");
+                                } else if (currentActor.getDirection() == KeyCode.RIGHT) {
+                                    WriteToFile.write("4");
+                                }
+                                if (((Bug) currentActor).getFollow()) {
+                                    WriteToFile.write("1");
+                                } else {
+                                    WriteToFile.write("2");
+                                }
                         } else if(currentActor instanceof PinkBall) {
-                            WriteToFile.write("Pb");
+                                if (currentActor.getDirection() == KeyCode.UP) {
+                                    WriteToFile.write("P1");
+                                } else if (currentActor.getDirection() == KeyCode.DOWN) {
+                                    WriteToFile.write("P2");
+                                } else if (currentActor.getDirection() == KeyCode.LEFT) {
+                                    WriteToFile.write("P3");
+                                } else if (currentActor.getDirection() == KeyCode.RIGHT) {
+                                    WriteToFile.write("P4");
+                                }
                         } else {
                                 WriteToFile.write("0");
                             }
@@ -310,7 +467,7 @@ public class FileConverter {
                             } else if (currentTile instanceof Water) {
                                 WriteToFile.write("Wt");
                             } else if (currentTile instanceof ChipSocket) {
-                                WriteToFile.write("W" + ((ChipSocket) currentTile).getChipAmountNeeded());
+                                WriteToFile.write("S" + ((ChipSocket) currentTile).getChipAmountNeeded());
                             } else if (currentTile instanceof LockedDoor) {
                                 if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.RED) {
                                     WriteToFile.write("L1");
@@ -322,9 +479,9 @@ public class FileConverter {
                                     WriteToFile.write("L4");
                                 }
                             }  else if (currentTile instanceof Buttons) {
-                            WriteToFile.write("B" /*+ {something}*/ + ",");
+                            WriteToFile.write("B" + ((Buttons) currentTile).getIdentifier());
                         } else if (currentTile instanceof Trap) {
-                            WriteToFile.write("T" /*+ {something}*/ + ",");
+                            WriteToFile.write("T" + ((Trap) currentTile).getIdentifier());
                         }  else {
                                 WriteToFile.write("0");
                             }
@@ -332,10 +489,18 @@ public class FileConverter {
                                 WriteToFile.write(",");
                             }
                         }
-                        if (y + 1 != currentMap.getBoardHeight()) {
-                            WriteToFile.write("\r\n");
+                        WriteToFile.write("\r\n");
+                    }
+                    int[] scores = currentMap.getTopScores();
+                    for(int i = 0; i < 10; i++) {
+                        WriteToFile.write(String.valueOf(scores[i]));
+                        if (i + 1 != 10) {
+                            WriteToFile.write(",");
                         }
                     }
+                    WriteToFile.write("\r\n");
+                    WriteToFile.write(GameLogic.getGameMap().getOriginal());
+
                     WriteToFile.close();
                     System.out.println("File created: " + newFile.getName());
                     complete = true;
@@ -346,5 +511,17 @@ public class FileConverter {
                 System.out.println("Invalid File Path.");
             }
         }
+    }
+    public static void changeScore() {
+        /*
+        File originalFile = new File(GameLogic.getGameMap().getOriginal());
+        try {
+            Scanner fileReader = new Scanner(originalFile);
+            fileReader.
+            FileWriter fileWriter = new FileWriter(originalFile);
+        } catch(Exception e) {
+
+        }
+         */
     }
 }

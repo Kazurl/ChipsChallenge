@@ -11,9 +11,9 @@ public class GameLogic {
      *
      * @param cause The cause of death (e.g., "water").
      */
-    public static void hasDied(String how) {
+    public static void hasDied(String cause) {
         gameMap.getPlayer().setAlive(false);
-        if(how == "water") {
+        if(cause == "water") {
             //play drown animation
             //end game
         } else {
@@ -29,6 +29,9 @@ public class GameLogic {
      */
     public static boolean checkStatus() {
         if(!gameMap.getPlayer().isAlive){
+            return true;
+        }
+        if(gameMap.getTimeLeft() <= 0){
             return true;
         }
         Item currentItem = gameMap.getPosItem(gameMap.getPlayer().getX(), gameMap.getPlayer().getY());
@@ -126,7 +129,11 @@ public class GameLogic {
     public static boolean checkPlayerMove(KeyCode direction) {
         int playerX = gameMap.getPlayer().getX();
         int playerY = gameMap.getPlayer().getY();
-        
+        if(gameMap.getPosTile(playerX, playerY) instanceof Trap) {
+            if(!(((Trap) gameMap.getPosTile(playerX, playerY)).isActive())) {
+                return false;
+            }
+        }
         // Check if the provided direction is LEFT
         if(direction == KeyCode.LEFT) {
             if(playerX == 0) {
@@ -261,6 +268,11 @@ public class GameLogic {
     public static boolean blockMove(Block block, KeyCode direction) {
         int blockX = block.getLocationX();
         int blockY = block.getLocationY();
+        if(gameMap.getPosTile(blockX, blockY) instanceof Trap) {
+            if(((Trap) gameMap.getPosTile(blockX, blockY)).isActive()) {
+                return false;
+            }
+        }
         block.setDirection(direction);
         if (direction == KeyCode.LEFT) {
             if (blockX == 0) {
@@ -562,6 +574,11 @@ public class GameLogic {
     public static void movePinkBall(PinkBall ball, boolean stuck) {
         int ballX = ball.getX();
         int ballY = ball.getY();
+        if(gameMap.getPosTile(ballX, ballY) instanceof Trap) {
+            if(!(((Trap) gameMap.getPosTile(ballX, ballY)).isActive())) {
+                return;
+            }
+        }
         switch(ball.getDirection()){
             case LEFT:
                 if(ball.getX() == 0) {
@@ -571,7 +588,7 @@ public class GameLogic {
                     hasDied("ball");
                 } else if(gameMap.getPosActor(ballX -1,ballY) == null) {
                     if (gameMap.getPosTile(ballX-1, ballY) instanceof Path
-                            || gameMap.getPosTile(ballX-1, ballY) instanceof Trap
+                            || (gameMap.getPosTile(ballX-1, ballY) instanceof Trap)
                             || gameMap.getPosTile(ballX-1, ballY) instanceof Buttons) {
                         gameMap.setPosActor(ballX,ballY, null);
                         ball.setX(ballX-1);
@@ -593,7 +610,7 @@ public class GameLogic {
                     hasDied("ball");
                 } else if(gameMap.getPosActor(ballX +1,ballY) == null) {
                     if (gameMap.getPosTile(ballX+1, ballY) instanceof Path
-                            || gameMap.getPosTile(ballX+1, ballY) instanceof Trap
+                            || (gameMap.getPosTile(ballX+1, ballY) instanceof Trap)
                             || gameMap.getPosTile(ballX+1, ballY) instanceof Buttons) {
                         gameMap.setPosActor(ballX,ballY, null);
                         ball.setX(ballX+1);
@@ -615,7 +632,7 @@ public class GameLogic {
                     hasDied("ball");
                 } else if(gameMap.getPosActor(ballX,ballY-1) == null) {
                     if (gameMap.getPosTile(ballX, ballY - 1) instanceof Path
-                            || gameMap.getPosTile(ballX, ballY - 1) instanceof Trap
+                            || (gameMap.getPosTile(ballX, ballY - 1) instanceof Trap)
                             || gameMap.getPosTile(ballX, ballY - 1) instanceof Buttons) {
                         gameMap.setPosActor(ballX,ballY, null);
                         ball.setY(ballY-1);
@@ -637,7 +654,7 @@ public class GameLogic {
                     hasDied("ball");
                 } else if(gameMap.getPosActor(ballX,ballY+1) == null) {
                     if (gameMap.getPosTile(ballX, ballY + 1) instanceof Path
-                            || gameMap.getPosTile(ballX, ballY + 1) instanceof Trap
+                            || (gameMap.getPosTile(ballX, ballY + 1) instanceof Trap)
                             || gameMap.getPosTile(ballX, ballY + 1) instanceof Buttons) {
                         gameMap.setPosActor(ballX,ballY, null);
                         ball.setY(ballY+1);
@@ -654,7 +671,7 @@ public class GameLogic {
         }
     }
 
-    public static void moveBugs() {
+    public static void moveBugs() { // spins round if no wall, is this correct?
         Bug[] bugs = gameMap.getBugsStored();
         for(int i = 0; i < bugs.length; i++) {
             moveBug(bugs[i],0);
@@ -663,6 +680,11 @@ public class GameLogic {
     public static void moveBug(Bug bug, int turns) {
         int bugX = bug.getX();
         int bugY = bug.getY();
+        if(gameMap.getPosTile(bugX, bugY) instanceof Trap) {
+            if(!(((Trap) gameMap.getPosTile(bugX, bugY)).isActive())) {
+                return;
+            }
+        }
         if(bug.getFollow()){
             //follow left
             switch(bug.getDirection()) {
@@ -676,7 +698,7 @@ public class GameLogic {
                         hasDied("bug");
                     } else if (gameMap.getPosActor(bugX, bugY+1) == null) {
                         if (gameMap.getPosTile(bugX, bugY+1) instanceof Path
-                                || gameMap.getPosTile(bugX, bugY+1) instanceof Trap
+                                || (gameMap.getPosTile(bugX, bugY+1) instanceof Trap)
                                 || gameMap.getPosTile(bugX, bugY+1) instanceof Buttons) {
                             gameMap.setPosActor(bugX,bugY, null);
                             bug.setY(bugY+1);
@@ -701,7 +723,7 @@ public class GameLogic {
                         hasDied("bug");
                     } else if (gameMap.getPosActor(bugX-1, bugY) == null) {
                         if (gameMap.getPosTile(bugX-1, bugY) instanceof Path
-                                || gameMap.getPosTile(bugX-1, bugY) instanceof Trap
+                                || (gameMap.getPosTile(bugX-1, bugY) instanceof Trap)
                                 || gameMap.getPosTile(bugX-1, bugY) instanceof Buttons) {
                             gameMap.setPosActor(bugX,bugY, null);
                             bug.setX(bugX-1);
@@ -726,7 +748,7 @@ public class GameLogic {
                         hasDied("bug");
                     } else if (gameMap.getPosActor(bugX, bugY-1) == null) {
                         if (gameMap.getPosTile(bugX, bugY-1) instanceof Path
-                                || gameMap.getPosTile(bugX, bugY-1) instanceof Trap
+                                || (gameMap.getPosTile(bugX, bugY-1) instanceof Trap)
                                 || gameMap.getPosTile(bugX, bugY-1) instanceof Buttons) {
                             gameMap.setPosActor(bugX,bugY, null);
                             bug.setY(bugY-1);
@@ -751,7 +773,7 @@ public class GameLogic {
                         hasDied("bug");
                     } else if (gameMap.getPosActor(bugX+1, bugY) == null) {
                         if (gameMap.getPosTile(bugX+1, bugY) instanceof Path
-                                || gameMap.getPosTile(bugX+1, bugY) instanceof Trap
+                                || (gameMap.getPosTile(bugX+1, bugY) instanceof Trap)
                                 || gameMap.getPosTile(bugX+1, bugY) instanceof Buttons) {
                             gameMap.setPosActor(bugX,bugY, null);
                             bug.setX(bugX+1);
@@ -787,6 +809,7 @@ public class GameLogic {
 
     public static void updatePositions() {
         Block[] blockList = gameMap.getBlocksStored();
+        Buttons[] buttonList = gameMap.getButtonsStored();
 
         for(int i = 0; i < blockList.length; i++) {
             Block block = blockList[i];
@@ -799,6 +822,16 @@ public class GameLogic {
         Player player = gameMap.getPlayer();
         if (gameMap.getPosTile(player.getX(),player.getY()) instanceof Ice) {
             icePlayer(player.getDirection(), ((Ice) gameMap.getPosTile(player.getX(), player.getY())).getCornerType());
+        }
+        for(int i = 0; i < buttonList.length; i++) {
+            Buttons button = buttonList[i];
+            int blockX = button.getX();
+            int blockY = button.getY();
+            if(gameMap.getPosActor(blockX, blockY) != null) {
+                button.getConnectTrap().activate();
+            } else {
+                button.getConnectTrap().deactivate();
+            }
         }
     }
 }

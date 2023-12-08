@@ -8,6 +8,16 @@ public class Trap extends Tile {
     private Buttons connectButton;
     private boolean trapState;
 
+    private int x;
+    private int y;
+
+    private int identifier;
+
+    public Trap() {
+        super(true, true);
+        deactivate(); // Initialize Trap as closed
+    }
+
     /**
      * Constructor for the Trap class.
      * Initializes a Trap at the specified coordinates and sets it as initially closed.
@@ -17,6 +27,8 @@ public class Trap extends Tile {
      */
     public Trap(int x, int y) {
         super(true, true);
+        this.x = x;
+        this.y = y;
         deactivate(); // Initialize Trap as closed
     }
 
@@ -39,7 +51,7 @@ public class Trap extends Tile {
      *
      * @return True if the Trap is activated, false otherwise.
      */
-    public boolean isActivated() {
+    public boolean isActive() {
         return this.trapState;
     }
 
@@ -60,7 +72,8 @@ public class Trap extends Tile {
      * Activates the Trap, opening it.
      */
     public void activate() {
-        this.trapState = true; // Trap is open
+        this.trapState = true;
+        // Trap is open
     }
 
     /**
@@ -68,5 +81,37 @@ public class Trap extends Tile {
      */
     public void deactivate() {
         this.trapState = false; // Trap is closed
+    }
+
+    public Buttons getConnectButton() {
+        return connectButton;
+    }
+
+    public void setConnectButton(Buttons connectButton) {
+        this.connectButton = connectButton;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 }
