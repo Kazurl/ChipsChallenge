@@ -638,22 +638,52 @@ public class GameLogic {
         // Replace the water tile with a path tile at the specified position
         gameMap.setPosTile(waterX,waterY, new Path());
     }
+    /**
+     * Gets the current game map.
+     *
+     * @return The current game map.
+     */
     public static Map getGameMap() {
         return gameMap;
     }
 
+    /**
+     * Sets the game map to the specified map.
+     *
+     * This method updates the game map to the provided map instance.
+     *
+     * @param gameMap The new game map.
+     */
     public static void setGameMap(Map gameMap) {
+        // Set the game map to the provided map instance
         GameLogic.gameMap = gameMap;
     }
 
+    /**
+     * Gets the next move stored in the game logic.
+     *
+     * @return The KeyCode representing the next move.
+     */
     public static KeyCode getNextMove() {
         return nextMove;
     }
-
+    
+    /**
+     * Sets the next move in the game logic to the specified KeyCode.
+     *
+     * This method updates the next move stored in the game logic with the provided KeyCode.
+     *
+     * @param nextMove The KeyCode representing the next move to be set.
+     */
     public static void setNextMove(KeyCode nextMove) {
         GameLogic.nextMove = nextMove;
     }
 
+    /**
+     * Moves all pink balls stored in the game map.
+     *
+     * This method iterates over all pink balls stored in the game map and moves each one.
+     */
     public static void movePinkBalls() {
         PinkBall[] pinkBalls = gameMap.getPinkBallsStored();
         for(int i = 0; i < pinkBalls.length; i++) {
@@ -661,31 +691,47 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Moves a pink ball on the game map based on its current direction.
+     *
+     * @param ball  The PinkBall object to be moved.
+     * @param stuck Indicates whether the ball is stuck and needs to change direction.
+     */
+
     public static void movePinkBall(PinkBall ball, boolean stuck) {
+        // Get the current coordinates of the pink ball
         int ballX = ball.getX();
         int ballY = ball.getY();
+        // Switch statement to handle different directions
         switch(ball.getDirection()){
             case LEFT:
+                // Check if the ball is at the left edge
                 if(ball.getX() == 0) {
+                    // If at the left edge, change direction to RIGHT
                     ball.setDirection(KeyCode.RIGHT);
                     movePinkBall(ball, true);
                 } else if(gameMap.getPosActor(ballX -1,ballY) == null) {
+                    // If the position to the left is empty
                     if (gameMap.getPosTile(ballX-1, ballY) instanceof Path
                             || gameMap.getPosTile(ballX-1, ballY) instanceof Trap
                             || gameMap.getPosTile(ballX-1, ballY) instanceof Buttons) {
+                        // If the tile to the left is Path, Trap, or Buttons, move the ball
                         gameMap.setPosActor(ballX,ballY, null);
                         ball.setX(ballX-1);
                         gameMap.setPosActor(ballX-1,ballY, ball);
                     } else if (!stuck){
+                        // If not stuck and the tile is not suitable, change direction to RIGHT
                         ball.setDirection(KeyCode.RIGHT);
                         movePinkBall(ball, true);
                     }
                 } else if(!stuck) {
+                    // If not stuck and the position to the left is not empty, change direction to RIGHT
                     ball.setDirection(KeyCode.RIGHT);
                     movePinkBall(ball, true);
                 }
                 break;
             case RIGHT:
+                // Similar logic as for LEFT, but checking the right edge
                 if(ball.getX() == gameMap.getBoardWidth()-1) {
                     ball.setDirection(KeyCode.LEFT);
                     movePinkBall(ball, true);
@@ -706,6 +752,7 @@ public class GameLogic {
                 }
                 break;
             case UP:
+                // Similar logic as for LEFT, but checking the top edge
                 if(ball.getY() == 0) {
                     ball.setDirection(KeyCode.DOWN);
                     movePinkBall(ball, true);
@@ -726,6 +773,7 @@ public class GameLogic {
                 }
                 break;
             case DOWN:
+                // Similar logic as for LEFT, but checking the bottom edge
                 if(ball.getY() == gameMap.getBoardHeight()-1) {
                     ball.setDirection(KeyCode.UP);
                     movePinkBall(ball, true);
@@ -754,20 +802,32 @@ public class GameLogic {
 
     public static void moveFrogs() {
     }
-
+    /**
+     * Update the positions of blocks and the player on the game map.
+     * Handles special behavior on ice tiles for both blocks and the player.
+     */
     public static void updatePositions() {
+        // Get the list of blocks on the game map
         Block[] blockList = gameMap.getBlocksStored();
-
+        
+        // Iterate through each block in the list
         for(int i = 0; i < blockList.length; i++) {
+            // Get the current block
             Block block = blockList[i];
+            // Get the current coordinates of the block
             int blockX = block.getLocationX();
             int blockY = block.getLocationY();
+            // Check if the tile at the block's position is Ice
             if(gameMap.getPosTile(blockX, blockY) instanceof Ice) {
+                // If on Ice, apply iceBlock behavior to the block/
                 iceBlock(block, block.getDirection(), ((Ice) gameMap.getPosTile(blockX, blockY)).getCornerType());
             }
         }
+        // Get the player from the game map
         Player player = gameMap.getPlayer();
+        // Check if the tile at the player's position is Ice
         if (gameMap.getPosTile(player.getX(),player.getY()) instanceof Ice) {
+            // If on Ice, apply icePlayer behavior to the player
             icePlayer(player.getDirection(), ((Ice) gameMap.getPosTile(player.getX(), player.getY())).getCornerType());
         }
     }
