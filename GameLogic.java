@@ -239,7 +239,7 @@ public class GameLogic {
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_RIGHT
                     || ((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_LEFT)) {
-                return false;// Player encounters Ice with incorrect movement direction
+                return false; //Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof LockedDoor
                     && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY+1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
@@ -266,24 +266,30 @@ public class GameLogic {
      * @return True if the block is successfully moved, false otherwise.
      */
     public static boolean blockMove(Block block, KeyCode direction) {
+        // Obtain the current location of the Block
         int blockX = block.getLocationX();
         int blockY = block.getLocationY();
+
         if(gameMap.getPosTile(blockX, blockY) instanceof Trap) {
             if(((Trap) gameMap.getPosTile(blockX, blockY)).isActive()) {
                 return false;
             }
         }
-        block.setDirection(direction);
+        block.setDirection(direction); // Set the direction of the Block
+        // Handle LEFT movement
         if (direction == KeyCode.LEFT) {
+            // Check if the Block is at the leftmost edge
             if (blockX == 0) {
                 return false;
             } else if(gameMap.getPosActor(blockX - 1, blockY) instanceof Player) {
+                // Player is at the target position, handle accordingly
                 hasDied("block");
                 gameMap.setPosActor(blockX, blockY, null);
                 block.setLocation(blockX-1, blockY);
                 gameMap.setPosActor(blockX-1, blockY, block);
                 return true;
             } else if (gameMap.getPosActor(blockX - 1, blockY) instanceof Block) {
+                // Block is at the target position, recursively move the other block
                 if(blockMove((Block) gameMap.getPosActor(blockX - 1, blockY), direction)) {
                     gameMap.setPosActor(blockX, blockY, null);
                     block.setLocation(blockX-1, blockY);
@@ -293,15 +299,19 @@ public class GameLogic {
                     return false;
                 }
             } else if (gameMap.getPosActor(blockX - 1, blockY) instanceof Mob) {
+                 // Mob is at the target position, block cannot move
                 return false;
             } else if (gameMap.getPosTile(blockX - 1, blockY) instanceof Water) {
+                 // Water is at the target position, convert to path
                 convertWaterToPath(blockX, blockY, blockX-1, blockY);
                 return true;
             } else if (gameMap.getPosTile(blockX - 1, blockY) instanceof Ice
                     && (((Ice) gameMap.getPosTile(blockX - 1, blockY)).getCornerType() == Ice.CornerType.TOP_RIGHT
                     || ((Ice) gameMap.getPosTile(blockX - 1, blockY)).getCornerType() == Ice.CornerType.BOTTOM_RIGHT)) {
+                // Ice is at the target position with specific corner type, block cannot move
                 return false;
             } else {
+                // General case, check if the tile is pushable
                 if (gameMap.getPosTile(blockX - 1, blockY).getPushable()) {
                     gameMap.setPosActor(blockX, blockY, null);
                     block.setLocation(blockX-1, blockY);
@@ -311,6 +321,7 @@ public class GameLogic {
                     return false;
                 }
             }
+            // Handle RIGHT movement
         } else if (direction == KeyCode.RIGHT) {
             if (blockX == gameMap.getBoardWidth()-1) {
                 return false;
@@ -348,6 +359,7 @@ public class GameLogic {
                     return false;
                 }
             }
+            // Handle UP movement
         } else if (direction == KeyCode.UP) {
             if (blockY == 0) {
                 return false;
@@ -385,6 +397,7 @@ public class GameLogic {
                     return false;
                 }
             }
+            // Handle DOWN movement
         } else if (direction == KeyCode.DOWN) {
             if (blockY == gameMap.getBoardHeight() - 1) {
                 return false;
@@ -426,144 +439,265 @@ public class GameLogic {
        /* if(gameMap.getPosTile(blockX, blockY) instanceof Ice) {
             blockMove(block, swapDirection(direction, ((Ice) gameMap.getPosTile(blockX, blockY)).getCornerType()));
         }*/
+        // Return false by default (no movement occurred)
         return false;
     }
+    /**
+     * Handles player movement on Ice tiles considering the specified corner type.
+     *
+     * This method is responsible for handling player movement on Ice tiles based on the
+     * specified actor direction and Ice corner type. It takes into account the sliding behavior
+     * on Ice tiles and recursively moves the player accordingly.
+     *
+     * @param actorDirection The direction in which the player is moving (e.g., KeyCode.LEFT, KeyCode.RIGHT, KeyCode.UP, KeyCode.DOWN).
+     * @param corner         The corner type of the Ice tile (e.g., Ice.CornerType.TOP_LEFT, Ice.CornerType.TOP_RIGHT, etc.).
+     */
    public static void icePlayer(KeyCode actorDirection, Ice.CornerType corner) {
+       // Handle LEFT movement
         if (actorDirection == KeyCode.LEFT) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move player
                 if(!movePlayer(actorDirection)){
                     icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_LEFT) {
+                // Top-left corner, slide player DOWN
                 icePlayer(KeyCode.DOWN, corner);
             } else if(corner == Ice.CornerType.TOP_RIGHT || corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // Top-right or bottom-right corner, move player LEFT
                 movePlayer(actorDirection);
             } else if(corner == Ice.CornerType.BOTTOM_LEFT) {
+                // Bottom-left corner, slide player UP
                 icePlayer(KeyCode.UP, corner);
             }
+            // Handle RIGHT movement
         } else if (actorDirection == KeyCode.RIGHT) {
            if(corner == Ice.CornerType.NONE) {
+               // No corner, attempt to move player
                if(!movePlayer(actorDirection)){
                    icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                }
            } else if(corner == Ice.CornerType.TOP_RIGHT) {
+               // Top-right corner, slide player DOWN
                icePlayer(KeyCode.DOWN, corner);
            } else if(corner == Ice.CornerType.TOP_LEFT || corner == Ice.CornerType.BOTTOM_LEFT) {
+               //Top-left or bottom-left corner, move player RIGHT
                movePlayer(actorDirection);
            } else if(corner == Ice.CornerType.BOTTOM_RIGHT) {
+               // Bottom-right corner, slide player UP
                icePlayer(KeyCode.UP, corner);
            }
+            // Handle UP movement
        } else if (actorDirection == KeyCode.UP) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move player
                 if(!movePlayer(actorDirection)){
                     icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_RIGHT) {
+                // Top-right corner, slide player LEFT
                 icePlayer(KeyCode.LEFT, corner);
             } else if(corner == Ice.CornerType.BOTTOM_LEFT || corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // Bottom-left corner or bottom-right, move player UP
                 movePlayer(actorDirection);
             } else if(corner == Ice.CornerType.TOP_LEFT) {
+                // Top-left corner, slide player RIGHT
                 icePlayer(KeyCode.RIGHT, corner);
             }
+            // Handle DOWN movement
         } else if (actorDirection == KeyCode.DOWN) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move player
                 if(!movePlayer(actorDirection)){
                     icePlayer(turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // Bottom-right corner, slide player LEFT
                 icePlayer(KeyCode.LEFT, corner);
             } else if(corner == Ice.CornerType.TOP_LEFT || corner == Ice.CornerType.TOP_RIGHT) {
+                // Top-left corner or top-right, move player DOWN
                 movePlayer(actorDirection);
             } else if(corner == Ice.CornerType.BOTTOM_LEFT) {
+                // Bottom-left corner, slide player RIGHT
                 icePlayer(KeyCode.RIGHT, corner);
             }
         }
     }
+    /**
+     * Handles the movement of a block on Ice tiles considering the specified corner type.
+     *
+     * This method is responsible for handling block movement on Ice tiles based on the
+     * specified actor direction and Ice corner type. It takes into account the sliding behavior
+     * on Ice tiles and recursively moves the block accordingly.
+     *
+     * @param block          The block to be moved on the Ice tile.
+     * @param actorDirection The direction in which the block is moving (e.g., KeyCode.LEFT, KeyCode.RIGHT, KeyCode.UP, KeyCode.DOWN).
+     * @param corner         The corner type of the Ice tile (e.g., Ice.CornerType.TOP_LEFT, Ice.CornerType.TOP_RIGHT, etc.).
+     */
     public static void iceBlock(Block block, KeyCode actorDirection, Ice.CornerType corner) {
+        // Handle LEFT movement
         if (actorDirection == KeyCode.LEFT) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move block
                 if(!blockMove(block, actorDirection)){
                     iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_LEFT) {
+                // Top-left corner, slide block DOWN
                 iceBlock(block, KeyCode.DOWN, corner);
             } else if(corner == Ice.CornerType.TOP_RIGHT || corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // Top-right or bottom-right corner, move block LEFT
                 blockMove(block, actorDirection);
             } else if(corner == Ice.CornerType.BOTTOM_LEFT) {
+                // Bottom-left corner, slide block UP
                 iceBlock(block, KeyCode.UP, corner);
             }
+            // Handle RIGHT movement
         } else if (actorDirection == KeyCode.RIGHT) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move block
                 if(!blockMove(block, actorDirection)){
                     iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_RIGHT) {
+                // Top-right corner, slide block DOWN
                 iceBlock(block, KeyCode.DOWN, corner);
             } else if(corner == Ice.CornerType.TOP_LEFT || corner == Ice.CornerType.BOTTOM_LEFT) {
+                // Top-left or bottom-left corner, move block RIGHT
                 blockMove(block, actorDirection);
             } else if(corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // Bottom-right corner, slide block UP
                 iceBlock(block, KeyCode.UP, corner);
             }
+            // Handle UP movement
         } else if (actorDirection == KeyCode.UP) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move block
                 if(!blockMove(block, actorDirection)){
                     iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.TOP_RIGHT) {
+                // Top-right corner, slide block LEFT
                 iceBlock(block, KeyCode.LEFT, corner);
             } else if(corner == Ice.CornerType.BOTTOM_LEFT || corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // bottom-left or bottom-right corner, move block UP
                 blockMove(block, actorDirection);
             } else if(corner == Ice.CornerType.TOP_LEFT) {
+                // Top-left corner, slide block RIGHT
                 iceBlock(block, KeyCode.RIGHT, corner);
             }
+            // Handle DOWN movement
         } else if (actorDirection == KeyCode.DOWN) {
             if(corner == Ice.CornerType.NONE) {
+                // No corner, attempt to move block
                 if(!blockMove(block, actorDirection)){
                     iceBlock(block, turnLeft(turnLeft(actorDirection)), corner);
                 }
             } else if(corner == Ice.CornerType.BOTTOM_RIGHT) {
+                // Bottom-right corner, slide block LEFT
                 iceBlock(block, KeyCode.LEFT, corner);
             } else if(corner == Ice.CornerType.TOP_LEFT || corner == Ice.CornerType.TOP_RIGHT) {
+                 // Top-left or top-right corner, move block DOWN
                 blockMove(block, actorDirection);
             } else if(corner == Ice.CornerType.BOTTOM_LEFT) {
+                // Bottom-left corner, slide block RIGHT
                 iceBlock(block, KeyCode.RIGHT, corner);
             }
         }
     }
 
+    /**
+     * Swaps the given direction to its opposite direction.
+     *
+     * This method takes a direction (e.g., LEFT, RIGHT, UP, DOWN) and returns
+     * its opposite direction. It is commonly used for reversing movement when needed.
+     *
+     * @param direction The direction to be swapped.
+     * @return The opposite direction of the input.
+     */
     public static KeyCode turnLeft(KeyCode direction) {
         switch (direction) {
             case LEFT:
+                // If the input direction is LEFT, return RIGHT
                 return KeyCode.DOWN;
             case RIGHT:
+                // If the input direction is RIGHT, return LEFT
                 return KeyCode.UP;
             case UP:
+                // If the input direction is UP, return DOWN
                 return KeyCode.LEFT;
             default:
+                // For any other input, return UP (assumed to cover DOWN as well)
                 return KeyCode.RIGHT;
+
         }
     }
 
+    /**
+     * Converts water at the specified position to a path and updates the game map.
+     *
+     * This method takes the coordinates of a block and water position and converts
+     * the water tile to a path tile at that position. It then updates the game map
+     * accordingly.
+     *
+     * @param blockX The X-coordinate of the block.
+     * @param blockY The Y-coordinate of the block.
+     * @param waterX The X-coordinate of the water to be converted.
+     * @param waterY The Y-coordinate of the water to be converted.
+     */
+
     public static void convertWaterToPath(int blockX, int blockY, int waterX, int waterY) {
+        // Remove the block from its current position
         gameMap.setPosActor(blockX,blockY, null);
+        // Replace the water tile with a path tile at the specified position
         gameMap.setPosTile(waterX,waterY, new Path());
     }
+    /**
+     * Gets the current game map.
+     *
+     * @return The current game map.
+     */
     public static Map getGameMap() {
         return gameMap;
     }
 
+    /**
+     * Sets the game map to the specified map.
+     *
+     * This method updates the game map to the provided map instance.
+     *
+     * @param gameMap The new game map.
+     */
     public static void setGameMap(Map gameMap) {
+        // Set the game map to the provided map instance
         GameLogic.gameMap = gameMap;
     }
 
+    /**
+     * Gets the next move stored in the game logic.
+     *
+     * @return The KeyCode representing the next move.
+     */
     public static KeyCode getNextMove() {
         return nextMove;
     }
-
+    
+    /**
+     * Sets the next move in the game logic to the specified KeyCode.
+     *
+     * This method updates the next move stored in the game logic with the provided KeyCode.
+     *
+     * @param nextMove The KeyCode representing the next move to be set.
+     */
     public static void setNextMove(KeyCode nextMove) {
         GameLogic.nextMove = nextMove;
     }
 
+    /**
+     * Moves all pink balls stored in the game map.
+     *
+     * This method iterates over all pink balls stored in the game map and moves each one.
+     */
     public static void movePinkBalls() {
         PinkBall[] pinkBalls = gameMap.getPinkBallsStored();
         for(int i = 0; i < pinkBalls.length; i++) {
@@ -571,7 +705,15 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Moves a pink ball on the game map based on its current direction.
+     *
+     * @param ball  The PinkBall object to be moved.
+     * @param stuck Indicates whether the ball is stuck and needs to change direction.
+     */
+
     public static void movePinkBall(PinkBall ball, boolean stuck) {
+        // Get the current coordinates of the pink ball
         int ballX = ball.getX();
         int ballY = ball.getY();
         if(gameMap.getPosTile(ballX, ballY) instanceof Trap) {
@@ -579,30 +721,38 @@ public class GameLogic {
                 return;
             }
         }
+        // Switch statement to handle different directions
         switch(ball.getDirection()){
             case LEFT:
+                // Check if the ball is at the left edge
                 if(ball.getX() == 0) {
+                    // If at the left edge, change direction to RIGHT
                     ball.setDirection(KeyCode.RIGHT);
                     movePinkBall(ball, true);
                 } else if(gameMap.getPosActor(ballX-1, ballY) instanceof Player) {
                     hasDied("ball");
                 } else if(gameMap.getPosActor(ballX -1,ballY) == null) {
+                    // If the position to the left is empty
                     if (gameMap.getPosTile(ballX-1, ballY) instanceof Path
                             || (gameMap.getPosTile(ballX-1, ballY) instanceof Trap)
                             || gameMap.getPosTile(ballX-1, ballY) instanceof Buttons) {
+                        // If the tile to the left is Path, Trap, or Buttons, move the ball
                         gameMap.setPosActor(ballX,ballY, null);
                         ball.setX(ballX-1);
                         gameMap.setPosActor(ballX-1,ballY, ball);
                     } else if (!stuck){
+                        // If not stuck and the tile is not suitable, change direction to RIGHT
                         ball.setDirection(KeyCode.RIGHT);
                         movePinkBall(ball, true);
                     }
                 } else if(!stuck) {
+                    // If not stuck and the position to the left is not empty, change direction to RIGHT
                     ball.setDirection(KeyCode.RIGHT);
                     movePinkBall(ball, true);
                 }
                 break;
             case RIGHT:
+                // Similar logic as for LEFT, but checking the right edge
                 if(ball.getX() == gameMap.getBoardWidth()-1) {
                     ball.setDirection(KeyCode.LEFT);
                     movePinkBall(ball, true);
@@ -625,6 +775,7 @@ public class GameLogic {
                 }
                 break;
             case UP:
+                // Similar logic as for LEFT, but checking the top edge
                 if(ball.getY() == 0) {
                     ball.setDirection(KeyCode.DOWN);
                     movePinkBall(ball, true);
@@ -647,6 +798,7 @@ public class GameLogic {
                 }
                 break;
             case DOWN:
+                // Similar logic as for LEFT, but checking the bottom edge
                 if(ball.getY() == gameMap.getBoardHeight()-1) {
                     ball.setDirection(KeyCode.UP);
                     movePinkBall(ball, true);
@@ -806,21 +958,33 @@ public class GameLogic {
         }
          */
     }
-
+    /**
+     * Update the positions of blocks and the player on the game map.
+     * Handles special behavior on ice tiles for both blocks and the player.
+     */
     public static void updatePositions() {
+        // Get the list of blocks on the game map
         Block[] blockList = gameMap.getBlocksStored();
         Buttons[] buttonList = gameMap.getButtonsStored();
+        // Iterate through each block in the list
 
         for(int i = 0; i < blockList.length; i++) {
+            // Get the current block
             Block block = blockList[i];
+            // Get the current coordinates of the block
             int blockX = block.getLocationX();
             int blockY = block.getLocationY();
+            // Check if the tile at the block's position is Ice
             if(gameMap.getPosTile(blockX, blockY) instanceof Ice) {
+                // If on Ice, apply iceBlock behavior to the block/
                 iceBlock(block, block.getDirection(), ((Ice) gameMap.getPosTile(blockX, blockY)).getCornerType());
             }
         }
+        // Get the player from the game map
         Player player = gameMap.getPlayer();
+        // Check if the tile at the player's position is Ice
         if (gameMap.getPosTile(player.getX(),player.getY()) instanceof Ice) {
+            // If on Ice, apply icePlayer behavior to the player
             icePlayer(player.getDirection(), ((Ice) gameMap.getPosTile(player.getX(), player.getY())).getCornerType());
         }
         for(int i = 0; i < buttonList.length; i++) {
