@@ -120,7 +120,7 @@ public class Main extends Application {
         blueKeyImage = new Image("blueKey.png");
         yellowKeyImage = new Image("yellowKey.png");
         redLockedDoorImage = new Image("RedLock.png");
-        greenLockedDoorImage = new Image("greenLockedDoor.png");
+        greenLockedDoorImage = new Image("GreenLock.png");
         blueLockedDoorImage = new Image("BlueLock.png");
         yellowLockedDoorImage = new Image("YellowLock.png");
         pinkBallImage = new Image("PinkBall.png");
@@ -531,9 +531,9 @@ public class Main extends Application {
             gc.fillText("Game Won!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
         } else {
             gc.fillText("Game Lost!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
-            newScores = GameLogic.getGameMap().newScore(0, GameLogic.getGameMap().getPlayer().getUserName());
-
+            newScores = GameLogic.getGameMap().newScore(-1, ".");
         }
+        GameLogic.endGameChanges();
         gc.setFont(Font.font(30));
         gc.fillText("High Scores:", WINDOW_WIDTH / 1.5, WINDOW_HEIGHT * 0.2);
         gc.setFont(Font.font(20));

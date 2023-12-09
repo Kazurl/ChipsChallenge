@@ -1,6 +1,8 @@
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.io.*;
+
 public class GameLogic {
     private static Map gameMap;
     private static KeyCode nextMove;
@@ -19,6 +21,72 @@ public class GameLogic {
         } else {
             //play death animation
             //end game
+        }
+    }
+
+    public static void endGameChanges() {
+        String oldString = gameMap.getTopNames()[0] + "," + gameMap.getTopScores()[0];
+        for(int i = 1; i < 10; i++) {
+            oldString = oldString + "," + gameMap.getTopNames()[i] + "," + gameMap.getTopScores()[i];
+        }
+        System.out.println(oldString);
+        String newString = gameMap.getNewNames()[0] + "," + gameMap.newScore(-1, "")[0];
+        for(int i = 1; i < 10; i++) {
+            newString = newString + "," + gameMap.getNewNames()[i] + "," + gameMap.newScore(-1, "")[i];
+        }
+        System.out.println(newString);
+
+        File fileToBeModified = new File(gameMap.getOriginal());
+
+        String oldContent = "";
+
+        BufferedReader reader = null;
+
+        FileWriter writer = null;
+
+        try
+        {
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+
+            //Reading all the lines of input text file into oldContent
+
+            String line = reader.readLine();
+
+            while (line != null)
+            {
+                oldContent = oldContent + line + System.lineSeparator();
+
+                line = reader.readLine();
+            }
+
+            //Replacing oldString with newString in the oldContent
+
+            String newContent = oldContent.replaceAll(oldString, newString);
+
+            //Rewriting the input text file with newContent
+
+            writer = new FileWriter(fileToBeModified);
+
+            writer.write(newContent);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                //Closing the resources
+
+                reader.close();
+
+                writer.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
     /**
