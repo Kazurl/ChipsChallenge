@@ -4,6 +4,10 @@
  */
 public class Player extends Actor{
 
+    public String getUserName() {
+        return userName;
+    }
+
     /**
      * Enum representing directions the player can face.
      */
@@ -16,6 +20,8 @@ public class Player extends Actor{
     private boolean isMoving;
     private Tile currTile;
     private Tile nextTile;
+
+    private String userName;
     private int[] inventory = {/*has red key?*/0,/*has green key?*/0,/*has blue key?*/0,/*has yellow key?*/0,/*how many chips?*/0};;
     boolean isAlive;
     public int playerLocationX, playerLocationY;
@@ -25,8 +31,9 @@ public class Player extends Actor{
      * Initializes the player as alive.
      */
     
-    public Player() {
+    public Player(String name) {
         super();
+        this.userName = name;
         this.isAlive = true;
     }
 

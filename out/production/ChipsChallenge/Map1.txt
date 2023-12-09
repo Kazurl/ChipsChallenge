@@ -5,8 +5,8 @@
 0,0,0,0,0,0,0,0,Pl,0,0
 0,0,0,0,0,0,0,0,0,0,0
 0,0,Fr,0,0,0,0,0,0,0,0
-0,0,0,0,0,0,0,0,0,0,B2
-0,0,0,0,0,Bl,Bl,0,0,0,0
+0,0,0,0,0,Bl,Bl,0,0,0,B21
+0,0,0,0,0,0,0,0,0,0,0
 C,0,0,0,0,0,0,0,0,0,0
 0,0,0,0,0,0,0,0,0,0,C
 0,0,0,0,0,0,0,0,0,0,0
@@ -14,11 +14,12 @@ C,0,0,0,0,0,0,0,0,0,0
 0,0,0,0,0,0,0,0,0,0,0
 0,0,0,0,0,0,0,0,0,0,0
 C,0,0,0,0,0,0,0,0,0,K2
-Pt,Pt,L2,L1,Pt,Pt,Pt,Pt,Pt,Pt,Pt
+Pt,Pt,L2,L1,Pt,Pt,Pt,Pt,Pt,B2,T2
 Wl,Wl,Wl,Wl,Pt,Pt,Pt,Pt,Pt,Pt,Pt
 Pt,Pt,Pt,T1,Pt,Pt,Pt,Pt,Pt,Wl,Wl
 Wl,Wt,Pt,Pt,Pt,Pt,Wt,Pt,Pt,S6,Ex
 I1,Wt,Pt,Pt,Pt,Pt,Pt,B1,Pt,Wl,Wl
 I1,Wt,Wt,Wt,Pt,Pt,Pt,Pt,Pt,Dt,Pt
-I4,I1,I1,L3,Pt,Pt,Pt,Pt,Pt,Dt,Pt
-
+I4,I1,I1,L3,Pt,Pt,Pt,Pt,Pt,Pt,Pt
+John,599,Annie,588,BigFrank2003,520,George,480,.,0,.,0,.,0,.,0,.,0,.,0
+original

@@ -12,15 +12,22 @@ public class Buttons extends Tile {
      */
     private boolean buttonState;
 
-    /**
-     * Creates a Button tile at the specified coordinates.
-     * This constructor was used for testing.
-     *
-     * @param x The X-coordinate of the button tile.
-     * @param y The Y-coordinate of the button tile.
-     */
+    private Trap connectTrap;
+
+    private int x;
+    private int y;
+
+    private int identifier;
+
+    //Constructor:
+    public Buttons() {
+        super(true, true);
+        this.buttonState = false; //Set initial as false
+    }
     public Buttons(int x, int y) {
         super(true, true);
+        this.x = x;
+        this.y = y;
         this.buttonState = false; //Set initial as false
     }
 
@@ -106,5 +113,37 @@ public class Buttons extends Tile {
      */
     public void release() {
         buttonState = false;
+    }
+
+    public Trap getConnectTrap() {
+        return connectTrap;
+    }
+
+    public void setConnectTrap(Trap connectTrap) {
+        this.connectTrap = connectTrap;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 }

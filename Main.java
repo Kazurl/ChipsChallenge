@@ -3,25 +3,30 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
+import java.io.*;
 import java.util.Scanner;
 
 public class Main extends Application {
@@ -75,6 +80,17 @@ public class Main extends Application {
     private Image BRIceImage;
     private Image blockImage;
 
+    private TextField usernameInput;
+    private Label label;
+    private Label label2;
+    private PasswordField passwordInput;
+
+    private Button submitButton;
+
+    private Button loginButton;
+
+    private Button registerButton;
+
     // X and Y coordinate of player on the grid.
     private int playerX;
     private int playerY;
@@ -92,7 +108,6 @@ public class Main extends Application {
 
         playerImage = new Image("player.png");
         dirtImage = new Image("dirt2.png");
-        iconImage = new Image("icon.png");
         bugImage = new Image("Bug.png");
         buttonImage = new Image("Button.png");
         chipSocketImage = new Image("Socket.png");
@@ -105,7 +120,7 @@ public class Main extends Application {
         blueKeyImage = new Image("blueKey.png");
         yellowKeyImage = new Image("yellowKey.png");
         redLockedDoorImage = new Image("RedLock.png");
-        greenLockedDoorImage = new Image("greenLockedDoor.png");
+        greenLockedDoorImage = new Image("GreenLock.png");
         blueLockedDoorImage = new Image("BlueLock.png");
         yellowLockedDoorImage = new Image("YellowLock.png");
         pinkBallImage = new Image("PinkBall.png");
@@ -118,6 +133,10 @@ public class Main extends Application {
         BLIceImage = new Image("IceaBottomLeft.png");
         BRIceImage = new Image("IceBottomRight.png");
         blockImage = new Image("Block.png");
+
+
+        loginGUI(primaryStage);
+        /*
         // Build the GUI
         Pane root = buildGUI();
 
@@ -130,28 +149,155 @@ public class Main extends Application {
 
         // Register a tick method to be called periodically.
         // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> tick()));
         // Loop the timeline forever
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
 
         // Display the scene on the stage
         drawGame();
+        login();
         primaryStage.setScene(scene);
         primaryStage.show();
+        */
     }
+    public void loginGUI(Stage stage) {
+        BorderPane loginPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+        label = new Label("Welcome");
+        label.setFont(new Font(50));
+        loginButton = new Button("Log In");
+        loginButton.setPrefSize(200, 120);
+        registerButton = new Button("Sign Up");
+        registerButton.setPrefSize(200, 120);
+
+        registerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Register here");
+                registerGUI(stage);
+            }
+        });
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                usernameGUI(stage);
+            }
+        });
+        hbox.getChildren().addAll(label,registerButton, loginButton);
+        loginPane.setCenter(hbox);
+        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void registerGUI(Stage stage) {
+        BorderPane registerPane = new BorderPane();
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(15, 12, 15, 12));
+        vbox.setSpacing(10);
+        vbox.setStyle("-fx-background-color: #336699;");
+        label = new Label("Username: ");
+        usernameInput = new TextField();
+        label2 = new Label("Password: ");
+        passwordInput = new PasswordField();
+        submitButton = new Button("Enter");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int usernameIndex = FileConverter.checkUsername(usernameInput.getText());
+                if (usernameIndex == -1) {
+                    System.out.println("valid username");
+                    FileConverter.registerAccount(usernameInput.getText(), passwordInput.getText());
+                    loginGUI(stage);
+                } else {
+                    System.out.println("USERNAME TAKEN");
+                }
+            }
+        });
+        vbox.getChildren().addAll(label, usernameInput, label2, passwordInput, submitButton);
+        registerPane.setCenter(vbox);
+        Scene scene = new Scene(registerPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    public void usernameGUI(Stage stage) {
+        BorderPane loginPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+        label = new Label("Username: ");
+        usernameInput = new TextField();
+        submitButton = new Button("Enter");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int usernameIndex = FileConverter.checkUsername(usernameInput.getText());
+                if (usernameIndex > -1) {
+                    System.out.println("valid username");
+                    passwordGUI(stage,usernameIndex);
+                } else {
+                    System.out.println("WRONG USERNAME");
+                }
+            }
+        });
+        hbox.getChildren().addAll(label, usernameInput, submitButton);
+        loginPane.setCenter(hbox);
+        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void passwordGUI(Stage stage, int index) {
+        BorderPane loginPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+        label = new Label("Password: ");
+        passwordInput = new PasswordField();
+        submitButton = new Button("Enter");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (FileConverter.checkPassword(passwordInput.getText(), index)) {
+                    System.out.println("correct Password");
+                    saveOrLoad(stage, usernameInput.getText());
+                } else {
+                    System.out.println("WRONG PASSWORD");
+                }
+            }
+        });
+        hbox.getChildren().addAll(label, passwordInput, submitButton);
+        loginPane.setCenter(hbox);
+        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
 
     /**
      * Handles the tick event, called periodically. Updates game positions and triggers various actions.
      */
     public void tick() {
+        GameLogic.getGameMap().getSchedule().updateTick();
         GameLogic.updatePositions();
         if(GameLogic.checkStatus()) {
+            tickTimeline.stop();
             drawEnd();
             return;
         }
         // Move player every 3 ticks
         if(GameLogic.getGameMap().getSchedule().getTick()%3 == 0) {
+
             GameLogic.movePlayer(GameLogic.getNextMove());
             GameLogic.setNextMove(KeyCode.E);
 
@@ -167,6 +313,9 @@ public class Main extends Application {
         // Move Bugs every 7 ticks
         if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
             GameLogic.moveBugs();
+        }
+        if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
+            GameLogic.getGameMap().setTimeLeft(GameLogic.getGameMap().getTimeLeft()-1);
         }
         drawGame();
     }
@@ -225,6 +374,7 @@ public class Main extends Application {
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);
+            GameLogic.getGameMap().getSchedule().unPause();
             tickTimeline.play();
             stopTickTimelineButton.setDisable(false);
         });
@@ -232,6 +382,7 @@ public class Main extends Application {
         stopTickTimelineButton.setOnAction(e -> {
             // Stop the tick timeline and enable/disable buttons as appropriate.
             stopTickTimelineButton.setDisable(true);
+            GameLogic.getGameMap().getSchedule().pause();
             tickTimeline.stop();
             startTickTimelineButton.setDisable(false);
         });
@@ -340,7 +491,9 @@ public class Main extends Application {
                     GameLogic.getGameMap().getPlayer().getX() * GRID_CELL_WIDTH,
                     GameLogic.getGameMap().getPlayer().getY() * GRID_CELL_HEIGHT);
         }
-
+        // draw timer overlay
+        gc.setFill(Color.RED);
+        gc.fillText(String.valueOf(GameLogic.getGameMap().getTimeLeft()), CANVAS_WIDTH  - 3, 0);
         //Draw inventory bar
         int[] invToShow = GameLogic.getGameMap().getPlayer().getInventory();
         gc.setFill(Color.RED);
@@ -355,41 +508,227 @@ public class Main extends Application {
         gc.fillText("Chips:" + invToShow[4], CANVAS_WIDTH * 0.8,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
     }
     public void drawEnd() {
+        canvas.setWidth(WINDOW_WIDTH);
+        canvas.setHeight(WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         // Clear canvas
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         // Set the background to green.
         gc.setFill(Color.GREEN);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         gc.setFill(Color.BLACK);
+        int [] newScores;
+        gc.setFont(Font.font(60));
         if(GameLogic.getGameWon()) {
-            gc.fillText("Game Won!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            /*
+            FileConverter.changeScore();
+            GameLogic.getGameMap().setTopScores(GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft()));
+            */
+            newScores = GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft(),GameLogic.getGameMap().getPlayer().getUserName());
+            gc.fillText("Game Won!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
         } else {
-            gc.fillText("Game Lost!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            gc.fillText("Game Lost!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
+            newScores = GameLogic.getGameMap().newScore(-1, ".");
         }
+        GameLogic.endGameChanges();
+        gc.setFont(Font.font(30));
+        gc.fillText("High Scores:", WINDOW_WIDTH / 1.5, WINDOW_HEIGHT * 0.2);
+        gc.setFont(Font.font(20));
+        for(int i = 0; i < newScores.length; i++){
+            gc.fillText(GameLogic.getGameMap().getNewNames()[i], WINDOW_WIDTH / 1.6, WINDOW_HEIGHT * (0.25 + (0.05 * i)));
+            gc.fillText(String.valueOf(newScores[i]), WINDOW_WIDTH / 1.2, WINDOW_HEIGHT * (0.25 + (0.05 * i)));
+        }
+
     }
 
-    public static void main(String[] args) {
+    private void saveOrLoad(Stage stage, String userName) {
+        BorderPane mapPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+        Button newMapButton = new Button("New Map");
+        newMapButton.setPrefSize(200, 120);
 
+        Button loadButton = new Button("Load Save");
+        loadButton.setPrefSize(200, 120);
+
+        newMapButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("new map chosen");
+                newMap(stage, userName);
+            }
+        });
+
+        loadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("new map chosen");
+                loadMap(stage, userName);
+            }
+        });
+        hbox.getChildren().addAll(newMapButton, loadButton);
+        mapPane.setCenter(hbox);
+        Scene scene = new Scene(mapPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void loadMap(Stage stage, String userName) {
+        BorderPane loginPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+        label = new Label("Save File Path: ");
+        usernameInput = new TextField();
+        submitButton = new Button("Enter");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int usernameIndex = FileConverter.checkUsername(usernameInput.getText());
+                Map loadedMap = FileConverter.convertFromFile(usernameInput.getText(), userName);
+                if (loadedMap != null) {
+                    System.out.println("valid path");
+                    GRID_WIDTH = loadedMap.getBoardWidth();
+                    GRID_HEIGHT = loadedMap.getBoardHeight();
+                    CANVAS_HEIGHT = loadedMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = loadedMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(loadedMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("INVALID FILE PATH");
+                }
+            }
+        });
+        hbox.getChildren().addAll(label, usernameInput, submitButton);
+        loginPane.setCenter(hbox);
+        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+    private void newMap(Stage stage, String userName) {
+        BorderPane mapPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+
+        Button map1Button = new Button("Map 1");
+        map1Button.setPrefSize(200, 120);
+
+        Button map2Button = new Button("Map 2");
+        map2Button.setPrefSize(200, 120);
+
+        Button map3Button = new Button("Map 3");
+        map3Button.setPrefSize(200, 120);
+
+        Button map4Button = new Button("Map 4");
+        map4Button.setPrefSize(200, 120);
+
+        Button map5Button = new Button("Map 5");
+        map5Button.setPrefSize(200, 120);
+
+        map1Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Map newMap = FileConverter.convertFromFile("Map1.txt", userName);
+                System.out.println("map 1 chosen");
+                GRID_WIDTH = newMap.getBoardWidth();
+                GRID_HEIGHT = newMap.getBoardHeight();
+                CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                GameLogic.setGameMap(newMap);
+                runGame(stage);
+            }
+        });
+        map2Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 1) {
+                    Map newMap = FileConverter.convertFromFile("Map2.txt", userName);
+                    System.out.println("map 2 chosen");
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+
+        hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button);
+        mapPane.setCenter(hbox);
+
+        Scene scene = new Scene(mapPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+        /*
         Scanner in = new Scanner(System.in);
         Map newMap;
         do {
             System.out.println("Input File Path for loading:");
             String mapFilePath = in.next();
-            newMap = FileConverter.convertFromFile(mapFilePath);
+            newMap = FileConverter.convertFromFile(mapFilePath, userName);
         } while (newMap == null);
         GRID_WIDTH = newMap.getBoardWidth();
         GRID_HEIGHT = newMap.getBoardHeight();
         CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
         CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
         GameLogic.setGameMap(newMap);
-        /*
-        FileConverter.convertToFile(newMap, newMap.getPlayer());
+        // Build the GUI
+        Pane root = buildGUI();
+
+        // Create a scene from the GUI
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        // Register an event handler for key presses.
+        // This causes the processKeyEvent method to be called each time a key is pressed.
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        // Register a tick method to be called periodically.
+        // Make a new timeline with one keyframe that triggers the tick method every half a second.
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> tick()));
+        // Loop the timeline forever
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        // We start the timeline upon a button press.
+
+        // Display the scene on the stage
+        drawGame();
+        stage.setScene(scene);
+        stage.show();
          */
-        System.out.println("That is a valid file path, game starting...");
+    }
+
+    public void runGame(Stage stage) {
+        Pane root = buildGUI();
+
+        // Create a scene from the GUI
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        // Register a tick method to be called periodically.
+        // Make a new timeline with one keyframe that triggers the tick method every half a second.
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> tick()));
+        // Loop the timeline forever
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        // We start the timeline upon a button press.
+
+        // Display the scene on the stage
+        drawGame();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    public static void main(String[] args) {
         launch(args);
     }
 }

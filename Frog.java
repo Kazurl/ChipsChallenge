@@ -11,21 +11,10 @@ import java.util.Arrays;
  *</ol>
  */
 public class Frog extends Mob{
-
-    /**
-     * Sets the traversed cell.
-     */
-    final static int TRAVERSED = 2;
-
-    /**
-     * Sets the path cell.
-     */
-    final static int PATH = 3;
-
-    /**
-     * The 2D array for the Map.
-     */
-    private int[][] map;
+    final static Actor TRAVERSED = new FrogRoute();
+    final static Actor PATH = new FrogTraversed();
+    private Actor[][] actorLayerMap;
+    private Tile[][] tileLayerMap;
 
     /**
      * Creates the Frog.
@@ -76,18 +65,17 @@ public class Frog extends Mob{
         }
     }*/
 
-    /**
-     * Checks for the shortest path from the frog's current position to a specified destination on the map.
-     *
-     * @param startx The starting X-coordinate on the map.
-     * @param starty The starting Y-coordinate on the map.
-     * @param playerx The destination X-coordinate on the map.
-     * @param playery The destination Y-coordinate on the map.
-     * @return True if a path to the destination exists, false otherwise.
-     */
-    private boolean checkShortest(int startx, int starty, int playerx, int playery) {
+    public void setMap(Actor[][] givenActorMap, Tile[][]givenTileMap) {
+        this.actorLayerMap = givenActorMap;
+        this.tileLayerMap = givenTileMap;
+    }
+
+    public int[] checkShortest(int startx, int starty, int playerx, int playery) {
         Queue<int[]> Q = new ArrayDeque<>();
-        Q.offer(new int[]{startx, starty});
+        Q.add(new int[]{startx, starty});
+
+        boolean[][] visited = new boolean[actorLayerMap.length][actorLayerMap[0].length];
+        int [][] prev = new int[actorLayerMap.length][actorLayerMap[0].length];
 
         while (!Q.isEmpty()) {
             int[] curr = Q.poll();
@@ -95,10 +83,17 @@ public class Frog extends Mob{
             int col = curr[1];
 
             if (isEnd(row, col, playerx, playery)) {
-                map[row][col] = PATH;
-                return true;
+                int r = row;
+                int c = col;
+                while (r != startx || c != starty) {
+                    this.actorLayerMap[r][c] = PATH;
+                    int tempr = prev[r][c]/actorLayerMap[0].length;
+                    c = prev[r][c]%actorLayerMap[0].length;
+                    r = tempr;
+                }
+                return new int[] {r,c};
             } else {
-                map[row][col] = TRAVERSED;
+                this.actorLayerMap[row][col] = TRAVERSED;
 
                 int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
                 for (int[] dir : directions) {
@@ -107,13 +102,15 @@ public class Frog extends Mob{
 
                     if (isValid(nextRow, nextCol)) {
                         Q.offer(new int[]{nextRow, nextCol});
-                        map[nextRow][nextCol] = TRAVERSED;
+                        visited[nextRow][nextCol] = true;
+                        prev[nextRow][nextCol] = row * actorLayerMap[0].length + col;   //This provides a unique identifier to figure out where each tile is since it is only 1d
+                        this.actorLayerMap[nextRow][nextCol] = TRAVERSED;
                     }
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -153,7 +150,7 @@ public class Frog extends Mob{
      * @return True if the position is accessible, false otherwise.
      */
     private boolean isAccessible(int row, int col) {
-        return map[row][col] == 1;
+        return this.tileLayerMap[row][col].getWalkable() ;
     }
 
     /**
@@ -164,7 +161,7 @@ public class Frog extends Mob{
      * @return True if the position has been traversed, false otherwise.
      */
     private boolean isTraversed(int row, int col) {
-        return map[row][col] == TRAVERSED;
+        return this.actorLayerMap[row][col] == TRAVERSED;
     }
 
     /**
@@ -189,4 +186,3 @@ public class Frog extends Mob{
         return col >= 0 && col < width;
     }
 }
-
