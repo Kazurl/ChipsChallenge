@@ -11,9 +11,27 @@ import java.util.Arrays;
  *</ol>
  */
 public class Frog extends Mob{
+
+    /**
+     * Creates a constant of type Actor and initialise it
+     * with a new instance of the FrogRoute class.
+     */
     final static Actor TRAVERSED = new FrogRoute();
+
+    /**
+     * Creates a constant of type Actor and initialise it
+     * with a new instance of the FrogTraversed class.
+     */
     final static Actor PATH = new FrogTraversed();
+
+    /**
+     * 2D array for the Actor Layer on Map.
+     */
     private Actor[][] actorLayerMap;
+
+    /**
+     * 2D array for Tile Layer on Map.
+     */
     private Tile[][] tileLayerMap;
 
     /**
@@ -65,11 +83,27 @@ public class Frog extends Mob{
         }
     }*/
 
+    /**
+     * Method that sets the Map when given the Actor 2D array and Tile 2d Array.
+     *
+     * @param givenActorMap 2D Actor array.
+     * @param givenTileMap 2D Tile array.
+     */
     public void setMap(Actor[][] givenActorMap, Tile[][]givenTileMap) {
         this.actorLayerMap = givenActorMap;
         this.tileLayerMap = givenTileMap;
     }
 
+
+    /**
+     * Checks for the shortest path from the frog's current position to a specified destination on the map.
+     *
+     * @param startx The starting X-coordinate on the map.
+     * @param starty The starting Y-coordinate on the map.
+     * @param playerx The destination X-coordinate on the map.
+     * @param playery The destination Y-coordinate on the map.
+     * @return True if a path to the destination exists, false otherwise.
+     */
     public int[] checkShortest(int startx, int starty, int playerx, int playery) {
         Queue<int[]> Q = new ArrayDeque<>();
         Q.add(new int[]{startx, starty});

@@ -32,7 +32,7 @@ public class Buttons extends Tile {
     }
 
     /**
-     * Constructs a Button tile at the specified coordinates along with
+     * Creates a Button at the specified coordinates along with
      * the Trap that it should connect to.
      *
      * @param x The X-coordinate of the button tile.
