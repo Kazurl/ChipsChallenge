@@ -2,9 +2,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class GameLogic {
     private static Map gameMap;
+    private static int levelNum;
     private static KeyCode nextMove;
 
     private static boolean gameWon = false;
@@ -23,8 +25,12 @@ public class GameLogic {
             //end game
         }
     }
-
     public static void endGameChanges() {
+        changeScoresInFile();
+        changeMapProgress();
+    }
+
+    private static void changeScoresInFile() {
         String oldString = gameMap.getTopNames()[0] + "," + gameMap.getTopScores()[0];
         for(int i = 1; i < 10; i++) {
             oldString = oldString + "," + gameMap.getTopNames()[i] + "," + gameMap.getTopScores()[i];
@@ -86,6 +92,62 @@ public class GameLogic {
             }
         }
     }
+
+    public static void setLevelNum(int num) {
+        levelNum = num;
+    }
+    private static void changeMapProgress() {
+        if (levelNum > FileConverter.levelProgressSaved) {
+            String oldString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + "," + FileConverter.levelProgressSaved;
+            String newString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + "," + (FileConverter.levelProgressSaved + 1);
+
+            File fileToBeModified = new File("Credentials.txt");
+
+            String oldContent = "";
+
+            BufferedReader reader = null;
+
+            FileWriter writer = null;
+
+            try {
+                reader = new BufferedReader(new FileReader(fileToBeModified));
+
+                //Reading all the lines of input text file into oldContent
+
+                String line = reader.readLine();
+
+                while (line != null) {
+                    oldContent = oldContent + line + System.lineSeparator();
+
+                    line = reader.readLine();
+                }
+
+                //Replacing oldString with newString in the oldContent
+
+                String newContent = oldContent.replaceAll(oldString, newString);
+
+                //Rewriting the input text file with newContent
+
+                writer = new FileWriter(fileToBeModified);
+
+                writer.write(newContent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    //Closing the resources
+
+                    reader.close();
+
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
     /**
      * Checks the current status of the game, including the player's condition, collected items,
      * and whether the player has reached the exit.
@@ -336,7 +398,7 @@ public class GameLogic {
         int blockY = block.getLocationY();
 
         if(gameMap.getPosTile(blockX, blockY) instanceof Trap) {
-            if(((Trap) gameMap.getPosTile(blockX, blockY)).isActive()) {
+            if(!(((Trap) gameMap.getPosTile(blockX, blockY)).isActive())) {
                 return false;
             }
         }
@@ -1012,16 +1074,15 @@ public class GameLogic {
     }
 
     public static void moveFrogs() {
-        /*
         Frog[] frogs = gameMap.getFrogsStored();
         for(int i = 0; i < frogs.length; i++) {
-          int[] newCords = frogs[i].checkShortest(frogs[i].getX(),frogs[i].getY(),
+            frogs[i].setMap(gameMap.getActorLayerMap(),gameMap.getTileLayerMap());
+            int[] newCords = frogs[i].checkShortest(frogs[i].getX(),frogs[i].getY(),
                   gameMap.getPlayer().getX(),gameMap.getPlayer().getY());
-          gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), null);
-          frogs[i].setLocation(newCords[0], newCords[1]);
+            gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), null);
+            frogs[i].setLocation(newCords[0], newCords[1]);
             gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), frogs[i]);
         }
-         */
     }
     /**
      * Update the positions of blocks and the player on the game map.

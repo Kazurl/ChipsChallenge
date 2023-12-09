@@ -48,6 +48,14 @@ public class Map {
         return playerStored;
     }
 
+    public Actor[][] getActorLayerMap() {
+        return actorLayerMap;
+    }
+
+    public Tile[][] getTileLayerMap() {
+        return tileLayerMap;
+    }
+
 
     public int getTimeLeft() {
         return timeLeft;

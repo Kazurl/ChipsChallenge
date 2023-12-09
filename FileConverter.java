@@ -6,6 +6,10 @@ import java.util.Arrays;
 
 public class FileConverter {
 
+    static String userNameSaved;
+    static String passwordSaved;
+    static int levelProgressSaved;
+
     private static final int PRIME_MULTIPLIER = 31;
 
     // Hashing function using a prime number multiplier
@@ -44,7 +48,10 @@ public class FileConverter {
                 String currentName = fileReader.next();
                 if(currentName.equals(username)) {
                     fileReader.next();
-                    return fileReader.nextInt();
+
+                    levelProgressSaved = fileReader.nextInt();
+
+                    return levelProgressSaved;
                 }
             }
         } catch (Exception e) {
@@ -60,6 +67,7 @@ public class FileConverter {
             while(fileReader.hasNext()) {
                 String currentName = fileReader.next();
                 if(currentName.equals(username)) {
+                    userNameSaved = username;
                     return usernameIndex;
                 } else {
                     fileReader.next();
@@ -85,6 +93,7 @@ public class FileConverter {
             fileReader.next();
             truePassword = fileReader.next();
             if(truePassword.equals(password)) {
+                passwordSaved = password;
                 return true;
             } else {
                 return false;
@@ -491,9 +500,10 @@ public class FileConverter {
                         }
                         WriteToFile.write("\r\n");
                     }
+                    String[] names = currentMap.getTopNames();
                     int[] scores = currentMap.getTopScores();
                     for(int i = 0; i < 10; i++) {
-                        WriteToFile.write(String.valueOf(scores[i]));
+                        WriteToFile.write(names[i] + "," + scores[i]);
                         if (i + 1 != 10) {
                             WriteToFile.write(",");
                         }

@@ -21,5 +21,5 @@ Wl,Wt,Pt,Pt,Pt,Pt,Wt,Pt,Pt,S6,Ex
 I1,Wt,Pt,Pt,Pt,Pt,Pt,B1,Pt,Wl,Wl
 I1,Wt,Wt,Wt,Pt,Pt,Pt,Pt,Pt,Dt,Pt
 I4,I1,I1,L3,Pt,Pt,Pt,Pt,Pt,Pt,Pt
-John,599,Annie,588,Freddie,579,BigFrank2003,520,George,480,.,0,.,0,.,0,.,0,.,0
+John,570,Annie,488,EuanMackie2004,473,Freddie,460,EuanMackie2004,400,.,0,.,0,.,0,.,0,.,0
 original

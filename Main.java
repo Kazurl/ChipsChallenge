@@ -529,11 +529,11 @@ public class Main extends Application {
             */
             newScores = GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft(),GameLogic.getGameMap().getPlayer().getUserName());
             gc.fillText("Game Won!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
+            GameLogic.endGameChanges();
         } else {
             gc.fillText("Game Lost!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
             newScores = GameLogic.getGameMap().newScore(-1, ".");
         }
-        GameLogic.endGameChanges();
         gc.setFont(Font.font(30));
         gc.fillText("High Scores:", WINDOW_WIDTH / 1.5, WINDOW_HEIGHT * 0.2);
         gc.setFont(Font.font(20));
@@ -636,6 +636,8 @@ public class Main extends Application {
         map1Button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                FileConverter.checkLevels(userName);
+                GameLogic.setLevelNum(1);
                 Map newMap = FileConverter.convertFromFile("Map1.txt", userName);
                 System.out.println("map 1 chosen");
                 GRID_WIDTH = newMap.getBoardWidth();
@@ -650,6 +652,7 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 1) {
+                    GameLogic.setLevelNum(2);
                     Map newMap = FileConverter.convertFromFile("Map2.txt", userName);
                     System.out.println("map 2 chosen");
                     GRID_WIDTH = newMap.getBoardWidth();
@@ -667,6 +670,7 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 2) {
+                    GameLogic.setLevelNum(3);
                     Map newMap = FileConverter.convertFromFile("Map3.txt", userName);
                     System.out.println("map 3 chosen");
                     GRID_WIDTH = newMap.getBoardWidth();
