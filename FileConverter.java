@@ -30,7 +30,7 @@ public class FileConverter {
         try (FileWriter f = new FileWriter("Credentials.txt", true);
              BufferedWriter b = new BufferedWriter(f);
              PrintWriter p = new PrintWriter(b);) {
-            p.println(username + "," + password);
+            p.println(username + "," + password + ",0");
 
         } catch (IOException i) {
             i.printStackTrace();

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Map {
 
     private int boardWidth;
@@ -143,8 +145,8 @@ public class Map {
         topScores = scores;
     }
     public int[] newScore(int score, String name) {
-        newScores = topScores;
-        newNames = topNames;
+        newScores = Arrays.copyOf(topScores, 10);
+        newNames = Arrays.copyOf(topNames, 10);
         for(int i = 0; i < newScores.length; i++) {
             if(score>newScores[i]) {
                 for(int x = 9; x > i; x--) {
@@ -169,5 +171,6 @@ public class Map {
     public String[] getNewNames() {
         return newNames;
     }
+    public int[] getNewScore() {return newScores;}
 
 }

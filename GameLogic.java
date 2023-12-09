@@ -29,13 +29,10 @@ public class GameLogic {
         for(int i = 1; i < 10; i++) {
             oldString = oldString + "," + gameMap.getTopNames()[i] + "," + gameMap.getTopScores()[i];
         }
-        System.out.println(oldString);
-        String newString = gameMap.getNewNames()[0] + "," + gameMap.newScore(-1, "")[0];
+        String newString = gameMap.getNewNames()[0] + "," + gameMap.getNewScore()[0];
         for(int i = 1; i < 10; i++) {
-            newString = newString + "," + gameMap.getNewNames()[i] + "," + gameMap.newScore(-1, "")[i];
+            newString = newString + "," + gameMap.getNewNames()[i] + "," + gameMap.getNewScore()[i];
         }
-        System.out.println(newString);
-
         File fileToBeModified = new File(gameMap.getOriginal());
 
         String oldContent = "";

@@ -161,7 +161,7 @@ public class Main extends Application {
         primaryStage.show();
         */
     }
-    public void loginGUI(Stage stage) {
+    public void loginGUI(Stage stage) { //Azmeera
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
@@ -194,7 +194,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void registerGUI(Stage stage) {
+    public void registerGUI(Stage stage) { //Azmeera
         BorderPane registerPane = new BorderPane();
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(15, 12, 15, 12));
@@ -226,7 +226,7 @@ public class Main extends Application {
     }
 
 
-    public void usernameGUI(Stage stage) {
+    public void usernameGUI(Stage stage) { //Azmeera
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
@@ -254,7 +254,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void passwordGUI(Stage stage, int index) {
+    public void passwordGUI(Stage stage, int index) { //Azmeera
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
@@ -663,7 +663,23 @@ public class Main extends Application {
                 }
             }
         });
-
+        map3Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 2) {
+                    Map newMap = FileConverter.convertFromFile("Map3.txt", userName);
+                    System.out.println("map 3 chosen");
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
         hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button);
         mapPane.setCenter(hbox);
 
