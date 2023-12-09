@@ -6,7 +6,24 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.Arrays;
 
+
+/**
+ *<ol>
+ *     <li>File-name: FileConverter.java</li>
+ *     <li>Purpose of the program: Reads the text file and creates a Map,
+ *     Saves the Player's Progress and converts them into a text file.</li>
+ *
+ *</ol>
+ */
 public class FileConverter {
+
+    /**
+     * Reads the text file and creates a Map equipped with all information
+     * of the game entities.
+     *
+     * @param filePath Name of the text file.
+     * @return Creates the Map from the text file.
+     */
     public static Map convertFromFile(String filePath){
 
         File newFile = new File(filePath);
@@ -202,6 +219,13 @@ public class FileConverter {
             return null;
         }
     }
+
+    /**
+     * Reads the Map and creates a text file to save the Player's Progress.
+     * If the map is already saved, it would print "File already exists".
+     *
+     * @param currentMap Name of Map.
+     */
     public static void convertToFile(Map currentMap){
         Scanner in = new Scanner(System.in);
         Player player = currentMap.getPlayer();
