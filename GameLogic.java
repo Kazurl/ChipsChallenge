@@ -5,11 +5,26 @@ import java.io.*;
 import java.util.Scanner;
 
 public class GameLogic {
+
+    /**
+     * The map.
+     */
     private static Map gameMap;
     private static int levelNum;
+
+
+    /**
+     * Next move for the Player.
+     */
+
     private static KeyCode nextMove;
 
+    /**
+     * Set game as not won as initial.
+     */
     private static boolean gameWon = false;
+
+
     /**
      * Marks the player as dead based on the cause of death.
      *
@@ -25,6 +40,12 @@ public class GameLogic {
             //end game
         }
     }
+
+    /**
+     * Shows the high scores of all the Players that have played the level.
+     * New updates will override the old contents.
+     */
+
     public static void endGameChanges() {
         changeScoresInFile();
         changeMapProgress();
@@ -93,6 +114,7 @@ public class GameLogic {
         }
     }
 
+
     public static void setLevelNum(int num) {
         levelNum = num;
     }
@@ -146,6 +168,7 @@ public class GameLogic {
             }
         }
     }
+
 
 
     /**
@@ -247,6 +270,7 @@ public class GameLogic {
         }
         return false;
     }
+
     /**
      * Checks if the player can move in the specified direction on the game map.
      *
@@ -569,6 +593,7 @@ public class GameLogic {
         // Return false by default (no movement occurred)
         return false;
     }
+
     /**
      * Handles player movement on Ice tiles considering the specified corner type.
      *
@@ -650,6 +675,7 @@ public class GameLogic {
             }
         }
     }
+
     /**
      * Handles the movement of a block on Ice tiles considering the specified corner type.
      *
@@ -657,9 +683,9 @@ public class GameLogic {
      * specified actor direction and Ice corner type. It takes into account the sliding behavior
      * on Ice tiles and recursively moves the block accordingly.
      *
-     * @param block          The block to be moved on the Ice tile.
-     * @param actorDirection The direction in which the block is moving (e.g., KeyCode.LEFT, KeyCode.RIGHT, KeyCode.UP, KeyCode.DOWN).
-     * @param corner         The corner type of the Ice tile (e.g., Ice.CornerType.TOP_LEFT, Ice.CornerType.TOP_RIGHT, etc.).
+     * @param block          The Block to be moved on the Ice tile.
+     * @param actorDirection The direction in which the block is moving.
+     * @param corner         The corner type of the Ice tile.
      */
     public static void iceBlock(Block block, KeyCode actorDirection, Ice.CornerType corner) {
         // Handle LEFT movement
@@ -772,13 +798,13 @@ public class GameLogic {
      * @param waterX The X-coordinate of the water to be converted.
      * @param waterY The Y-coordinate of the water to be converted.
      */
-
     public static void convertWaterToPath(int blockX, int blockY, int waterX, int waterY) {
         // Remove the block from its current position
         gameMap.setPosActor(blockX,blockY, null);
         // Replace the water tile with a path tile at the specified position
         gameMap.setPosTile(waterX,waterY, new Path());
     }
+
     /**
      * Gets the current game map.
      *
@@ -838,7 +864,6 @@ public class GameLogic {
      * @param ball  The PinkBall object to be moved.
      * @param stuck Indicates whether the ball is stuck and needs to change direction.
      */
-
     public static void movePinkBall(PinkBall ball, boolean stuck) {
         // Get the current coordinates of the pink ball
         int ballX = ball.getX();
@@ -950,12 +975,25 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Method that controls the movement of the bug.
+     * If there is no wall, then the bug will spin around.
+     */
     public static void moveBugs() { // spins round if no wall, is this correct?
         Bug[] bugs = gameMap.getBugsStored();
         for(int i = 0; i < bugs.length; i++) {
             moveBug(bugs[i],0);
         }
     }
+
+    /**
+     * Method that controls the movement of the bug.
+     * If the bug is on the Trap then it will get Trapped,
+     * else the bug will move following the side that is set.
+     *
+     * @param bug Bug on the Map.
+     * @param turns Number of turns the bug will move //NOT SURE
+     */
     public static void moveBug(Bug bug, int turns) {
         int bugX = bug.getX();
         int bugY = bug.getY();

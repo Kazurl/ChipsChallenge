@@ -4,15 +4,33 @@ import java.io.*;
 import java.util.Scanner;
 import java.util.Arrays;
 
+/**
+ *<ol>
+ *     <li>File-name: FileConverter.java</li>
+ *     <li>Purpose of the program: Reads the text file and creates a Map,
+ *     Saves the Player's Progress and converts them into a text file.</li>
+ *
+ *</ol>
+ */
 public class FileConverter {
+
 
     static String userNameSaved;
     static String passwordSaved;
     static int levelProgressSaved;
 
+
+    /**
+     *Prime is used for Hashing.
+     */
     private static final int PRIME_MULTIPLIER = 31;
 
-    // Hashing function using a prime number multiplier
+    /**
+     * Method that encrypts the string for security.
+     *
+     * @param string String that needs to be encrypted.
+     * @return An encrypted String.
+     */
     public static String encrypt(String string) {
         int hash = 0;
 
@@ -25,6 +43,12 @@ public class FileConverter {
         return String.valueOf(hash);
     }
 
+    /**
+     * Registers an account for the Player.
+     *
+     * @param username The player's username.
+     * @param password The player's password.
+     */
     public static void registerAccount(String username, String password) {
         password = encrypt(password);
         FileWriter fw = null;
@@ -40,6 +64,13 @@ public class FileConverter {
             i.printStackTrace();
         }
     }
+
+    /**
+     * Returns the level that the Player is on.
+     *
+     * @param username The Player's username.
+     * @return The level that the Player has unlocked.
+     */
     public static int checkLevels(String username) {
         try {
             Scanner fileReader = new Scanner(new File("Credentials.txt"));
@@ -59,6 +90,13 @@ public class FileConverter {
         }
         return 0;
     }
+
+    /**
+     * Checks if the Player's username exists in the system.
+     *
+     * @param username The Player's username.
+     * @return 1 if it exists, -1 if it does not exist.
+     */
     public static int checkUsername(String username) {
         try {
             int usernameIndex = 0;
@@ -80,6 +118,14 @@ public class FileConverter {
         }
         return -1;
     }
+
+    /**
+     * Checks the Player's password.
+     *
+     * @param password The Player's password.
+     * @param index The number of Players registered in the system.
+     * @return True if the password is correct for the Player, False otherwise.
+     */
     public static boolean checkPassword(String password, int index) {
         password = encrypt(password);
         String truePassword;
@@ -103,6 +149,13 @@ public class FileConverter {
             return false;
         }
     }
+
+    /**
+     * Converts a file at the specified path to a Map object.
+     *
+     * @param filePath The path to the file to be converted.
+     * @return A Map object representing the contents of the file.
+     */
     public static Map convertFromFile(String filePath, String userName){
 
         File newFile = new File(filePath);
@@ -360,6 +413,13 @@ public class FileConverter {
             return null;
         }
     }
+
+    /**
+     * Reads the Map and creates a text file to save the Player's Progress.
+     * If the map is already saved, it would print "File already exists".
+     *
+     * @param currentMap Current Map that needs to be converted.
+     */
     public static void convertToFile(Map currentMap){
         Scanner in = new Scanner(System.in);
         Player player = currentMap.getPlayer();
@@ -522,6 +582,8 @@ public class FileConverter {
             }
         }
     }
+
+
     public static void changeScore() {
         /*
         File originalFile = new File(GameLogic.getGameMap().getOriginal());

@@ -1,5 +1,16 @@
+/**
+ *<ol>
+ *     <li>File-name: Ice.java</li>
+ *     <li>Purpose of the program: Creates the Ice tile for the game.</li>
+ *
+ *</ol>
+ */
 public class Ice extends Tile{
-    //From Freddie: NONE is now a corner type so hasCorner is no longer needed
+
+    /**
+     * Enumeration representing the different corner types of the Ice tile.
+     * Corner types include NONE, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, and BOTTOM_RIGHT.
+     */
     public enum CornerType {
         NONE,
         TOP_LEFT,
@@ -8,12 +19,28 @@ public class Ice extends Tile{
         BOTTOM_RIGHT
     }
 
+    /**
+     * The corner type of the Ice tile.
+     */
     private CornerType cornerType;
+
+    /**
+     * The X-coordinate of the Ice tile's location.
+     */
     private int locationX;
+
+    /**
+     * The Y-coordinate of the Ice tile's location.
+     */
     private int locationY;
 
-
-    // Constructor for IceTile
+    /**
+     * Creates the different Ice tile depending on the cornerType.
+     *
+     * @param x The X-coordinate of the Ice tile's location.
+     * @param y The Y-coordinate of the Ice tile's location.
+     * @param cornerType The corner type of the Ice tile.
+     */
     public Ice(int x, int y, CornerType cornerType) {
         super(true, true);
         this.locationX = x;
@@ -84,7 +111,11 @@ private void deflectPlayer(Player player) {
             }
         }
 */
-    // Getter for cornerType
+    /**
+     * Gets the corner type of the Ice tile.
+     *
+     * @return The corner type of the Ice tile.
+     */
     public CornerType getCornerType() {
         return cornerType;
     }
