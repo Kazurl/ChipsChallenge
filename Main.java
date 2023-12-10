@@ -19,21 +19,21 @@ import javafx.util.Duration;
 import javafx.scene.text.Font;
 
 public class Main extends Application {
-    private static int WINDOW_WIDTH = 800;
-    private static int WINDOW_HEIGHT = 500;
+    private static int windowWidth = 800;
+    private static int windowHeight = 500;
 
     // The dimensions of the canvas
-    private static int CANVAS_WIDTH;
-    private static int CANVAS_HEIGHT;
+    private static int canvasWidth;
+    private static int canvasHeight;
 
     // The width and height (in pixels) of each cell that makes up the game.
-    private static int GRID_CELL_WIDTH = 50;
-    private static int GRID_CELL_HEIGHT = 50;
+    private final static int GRID_CELL_WIDTH = 50;
+    private final static int GRID_CELL_HEIGHT = 50;
 
     // The width of the grid in number of cells.
-    private static int GRID_WIDTH;
+    private static int gridWidth;
 
-    private static int GRID_HEIGHT;
+    private static int gridHeight;
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
@@ -71,14 +71,9 @@ public class Main extends Application {
 
     private TextField usernameInput;
     private Label label;
-    private Label label2;
     private PasswordField passwordInput;
 
     private Button submitButton;
-
-    private Button loginButton;
-
-    private Button registerButton;
 
     private Alert message = new Alert(Alert.AlertType.NONE);
 
@@ -154,15 +149,15 @@ public class Main extends Application {
     public void loginGUI(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(WINDOW_HEIGHT/5.0, WINDOW_WIDTH/10.0, WINDOW_HEIGHT/5.0, WINDOW_WIDTH/10.0));
+        hbox.setPadding(new Insets(windowHeight /5.0, windowWidth /10.0, windowHeight /5.0, windowWidth /10.0));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Welcome");
         label.setFont(new Font(50));
-        loginButton = new Button("Log In");
+        Button loginButton = new Button("Log In");
         loginButton.setPrefSize(200, 120);
         loginButton.setFont(new Font(30));
-        registerButton = new Button("Sign Up");
+        Button registerButton = new Button("Sign Up");
         registerButton.setPrefSize(200, 120);
         registerButton.setFont(new Font(30));
 
@@ -179,9 +174,9 @@ public class Main extends Application {
                 usernameGUI(stage);
             }
         });
-        hbox.getChildren().addAll(label,registerButton, loginButton);
+        hbox.getChildren().addAll(label, registerButton, loginButton);
         loginPane.setCenter(hbox);
-        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(loginPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -194,7 +189,7 @@ public class Main extends Application {
         vbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Username: ");
         usernameInput = new TextField();
-        label2 = new Label("Password: ");
+        Label label2 = new Label("Password: ");
         passwordInput = new PasswordField();
         submitButton = new Button("Enter");
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -214,7 +209,7 @@ public class Main extends Application {
         });
         vbox.getChildren().addAll(label, usernameInput, label2, passwordInput, submitButton);
         registerPane.setCenter(vbox);
-        Scene scene = new Scene(registerPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(registerPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -223,7 +218,7 @@ public class Main extends Application {
     public void usernameGUI(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0, WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0));
+        hbox.setPadding(new Insets(windowHeight /4.0, windowWidth /4.0, windowHeight /4.0, windowWidth /4.0));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Username: ");
@@ -245,7 +240,7 @@ public class Main extends Application {
         });
         hbox.getChildren().addAll(label, usernameInput, submitButton);
         loginPane.setCenter(hbox);
-        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(loginPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -253,7 +248,7 @@ public class Main extends Application {
     public void passwordGUI(Stage stage, int index) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0, WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0));
+        hbox.setPadding(new Insets(windowHeight /4.0, windowWidth /4.0, windowHeight /4.0, windowWidth /4.0));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Password: ");
@@ -274,7 +269,7 @@ public class Main extends Application {
         });
         hbox.getChildren().addAll(label, passwordInput, submitButton);
         loginPane.setCenter(hbox);
-        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(loginPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -342,8 +337,8 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
-        // We store this as a gloabl variable so other methods can access it.
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        // We store this as a global variable so other methods can access it.
+        canvas = new Canvas(canvasWidth, canvasHeight);
         root.setCenter(canvas);
 
         // Create a toolbar with some nice padding and spacing
@@ -434,7 +429,7 @@ public class Main extends Application {
         });
         hbox.getChildren().addAll(label, usernameInput, submitButton);
         loginPane.setCenter(hbox);
-        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(loginPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -451,8 +446,8 @@ public class Main extends Application {
 
         // Draw tiles
         // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
-        for (int y = 0; y < GRID_HEIGHT; y++) {
-            for (int x = 0; x < GRID_WIDTH; x++) {
+        for (int y = 0; y < gridHeight; y++) {
+            for (int x = 0; x < gridWidth; x++) {
                 if(GameLogic.getGameMap().getPosTile(x,y) instanceof Path) {
                     gc.drawImage(pathImage, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
                 } else if(GameLogic.getGameMap().getPosTile(x,y) instanceof Wall) {
@@ -498,8 +493,8 @@ public class Main extends Application {
             }
         }
         // Draw items
-        for (int y = 0; y < GRID_HEIGHT; y++) {
-            for (int x = 0; x < GRID_WIDTH; x++) {
+        for (int y = 0; y < gridHeight; y++) {
+            for (int x = 0; x < gridWidth; x++) {
                 if(GameLogic.getGameMap().getPosItem(x,y) instanceof ComputerChip) {
                     gc.drawImage(compChipImage, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
                 } else if(GameLogic.getGameMap().getPosItem(x,y) instanceof Key) {
@@ -516,8 +511,8 @@ public class Main extends Application {
             }
         }
         // Draw player at current location // COULD CAUSE PROBLEMS IF ACTOR MOVEMENT IS DONE WRONG
-        for (int y = 0; y < GRID_HEIGHT; y++) {
-            for (int x = 0; x < GRID_WIDTH; x++) {
+        for (int y = 0; y < gridHeight; y++) {
+            for (int x = 0; x < gridWidth; x++) {
                 if(GameLogic.getGameMap().getPosActor(x,y) instanceof Frog) {
                     gc.drawImage(frogImage,x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
                 } else if(GameLogic.getGameMap().getPosActor(x,y) instanceof Bug) {
@@ -537,32 +532,32 @@ public class Main extends Application {
         // draw timer overlay
         gc.setFill(Color.RED);
         gc.setFont(new Font(20));
-        gc.fillText(String.valueOf(GameLogic.getGameMap().getTimeLeft()), CANVAS_WIDTH - 35, 20);
+        gc.fillText(String.valueOf(GameLogic.getGameMap().getTimeLeft()), canvasWidth - 35, 20);
         //Draw inventory bar
         gc.setFont(new Font(12));
         int[] invToShow = GameLogic.getGameMap().getPlayer().getInventory();
         gc.setFill(Color.RED);
-        gc.fillText(" Keys:" + invToShow[0], 0,CANVAS_HEIGHT  - 3, CANVAS_WIDTH/5);
+        gc.fillText(" Keys:" + invToShow[0], 0, canvasHeight - 3, canvasWidth /5.0);
         gc.setFill(Color.GREEN);
-        gc.fillText("Keys:" + invToShow[1], CANVAS_WIDTH * 0.2,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.fillText("Keys:" + invToShow[1], canvasWidth * 0.2, canvasHeight - 3, canvasWidth /5.0);
         gc.setFill(Color.BLUE);
-        gc.fillText("Keys:" + invToShow[2], CANVAS_WIDTH * 0.4,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.fillText("Keys:" + invToShow[2], canvasWidth * 0.4, canvasHeight - 3, canvasWidth /5.0);
         gc.setFill(Color.YELLOW);
-        gc.fillText("Keys:" + invToShow[3], CANVAS_WIDTH * 0.6,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.fillText("Keys:" + invToShow[3], canvasWidth * 0.6, canvasHeight - 3, canvasWidth /5.0);
         gc.setFill(Color.WHITE);
-        gc.fillText("Chips:" + invToShow[4], CANVAS_WIDTH * 0.8,CANVAS_HEIGHT - 3, CANVAS_WIDTH/5);
+        gc.fillText("Chips:" + invToShow[4], canvasWidth * 0.8, canvasHeight - 3, canvasWidth /5.0);
     }
     public void drawEnd() {
-        canvas.setWidth(WINDOW_WIDTH);
-        canvas.setHeight(WINDOW_HEIGHT);
+        canvas.setWidth(windowWidth);
+        canvas.setHeight(windowHeight);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         // Clear canvas
-        gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        gc.clearRect(0, 0, windowWidth, windowHeight);
 
         // Set the background to green.
         gc.setFill(Color.GREEN);
-        gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        gc.fillRect(0, 0, windowWidth, windowHeight);
 
         gc.setFill(Color.BLACK);
         int [] newScores;
@@ -573,18 +568,18 @@ public class Main extends Application {
             GameLogic.getGameMap().setTopScores(GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft()));
             */
             newScores = GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft(),GameLogic.getGameMap().getPlayer().getUserName());
-            gc.fillText("Game Won!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
+            gc.fillText("Game Won!", windowWidth / 7.0, windowHeight / 4.0);
             GameLogic.endGameChanges();
         } else {
-            gc.fillText("Game Lost!", WINDOW_WIDTH / 7, WINDOW_HEIGHT / 4);
+            gc.fillText("Game Lost!", windowWidth / 7.0, windowHeight / 4.0);
             newScores = GameLogic.getGameMap().newScore(-1, ".");
         }
         gc.setFont(Font.font(30));
-        gc.fillText("High Scores:", WINDOW_WIDTH / 1.5, WINDOW_HEIGHT * 0.2);
+        gc.fillText("High Scores:", windowWidth / 1.5, windowHeight * 0.2);
         gc.setFont(Font.font(20));
         for(int i = 0; i < newScores.length; i++){
-            gc.fillText(GameLogic.getGameMap().getNewNames()[i], WINDOW_WIDTH / 1.6, WINDOW_HEIGHT * (0.25 + (0.05 * i)));
-            gc.fillText(String.valueOf(newScores[i]), WINDOW_WIDTH / 1.2, WINDOW_HEIGHT * (0.25 + (0.05 * i)));
+            gc.fillText(GameLogic.getGameMap().getNewNames()[i], windowWidth / 1.6, windowHeight * (0.25 + (0.05 * i)));
+            gc.fillText(String.valueOf(newScores[i]), windowWidth / 1.2, windowHeight * (0.25 + (0.05 * i)));
         }
 
     }
@@ -618,7 +613,7 @@ public class Main extends Application {
         });
         hbox.getChildren().addAll(newMapButton, loadButton);
         mapPane.setCenter(hbox);
-        Scene scene = new Scene(mapPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(mapPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -639,10 +634,10 @@ public class Main extends Application {
                 Map loadedMap = FileConverter.convertFromFile(usernameInput.getText(), userName);
                 if (loadedMap != null) {
                     System.out.println("valid path");
-                    GRID_WIDTH = loadedMap.getBoardWidth();
-                    GRID_HEIGHT = loadedMap.getBoardHeight();
-                    CANVAS_HEIGHT = loadedMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = loadedMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = loadedMap.getBoardWidth();
+                    gridHeight = loadedMap.getBoardHeight();
+                    canvasHeight = loadedMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = loadedMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(loadedMap);
                     runGame(stage);
                 } else {
@@ -652,7 +647,7 @@ public class Main extends Application {
         });
         hbox.getChildren().addAll(label, usernameInput, submitButton);
         loginPane.setCenter(hbox);
-        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(loginPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -689,11 +684,11 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
-                Map newMap = FileConverter.convertFromFile("Map7.txt", userName); // change
-                GRID_WIDTH = newMap.getBoardWidth();
-                GRID_HEIGHT = newMap.getBoardHeight();
-                CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
+                gridWidth = newMap.getBoardWidth();
+                gridHeight = newMap.getBoardHeight();
+                canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                 GameLogic.setGameMap(newMap);
                 runGame(stage);
             }
@@ -704,10 +699,10 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 1) {
                     GameLogic.setLevelNum(2);
                     Map newMap = FileConverter.convertFromFile("Map2.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = newMap.getBoardWidth();
+                    gridHeight = newMap.getBoardHeight();
+                    canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
@@ -721,10 +716,10 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 2) {
                     GameLogic.setLevelNum(3);
                     Map newMap = FileConverter.convertFromFile("Map3.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = newMap.getBoardWidth();
+                    gridHeight = newMap.getBoardHeight();
+                    canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
@@ -738,10 +733,10 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 3) {
                     GameLogic.setLevelNum(4);
                     Map newMap = FileConverter.convertFromFile("Map4.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = newMap.getBoardWidth();
+                    gridHeight = newMap.getBoardHeight();
+                    canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
@@ -755,10 +750,10 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 4) {
                     GameLogic.setLevelNum(5);
                     Map newMap = FileConverter.convertFromFile("Map5.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = newMap.getBoardWidth();
+                    gridHeight = newMap.getBoardHeight();
+                    canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
@@ -772,10 +767,10 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 5) {
                     GameLogic.setLevelNum(6);
                     Map newMap = FileConverter.convertFromFile("Map6.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = newMap.getBoardWidth();
+                    gridHeight = newMap.getBoardHeight();
+                    canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
@@ -789,10 +784,10 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 6) {
                     GameLogic.setLevelNum(7);
                     Map newMap = FileConverter.convertFromFile("Map7.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    gridWidth = newMap.getBoardWidth();
+                    gridHeight = newMap.getBoardHeight();
+                    canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
@@ -805,22 +800,22 @@ public class Main extends Application {
         hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button, map6Button, map7Button);
         mapPane.setCenter(hbox);
 
-        Scene scene = new Scene(mapPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(mapPane, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.show();
     }
 
     public void runGame(Stage stage) {
-        if(CANVAS_WIDTH >= WINDOW_WIDTH-100) {
-            WINDOW_WIDTH = CANVAS_WIDTH + 100;
+        if(canvasWidth >= windowWidth -100) {
+            windowWidth = canvasWidth + 100;
         }
-        if(CANVAS_HEIGHT >= WINDOW_HEIGHT-100) {
-            WINDOW_HEIGHT = CANVAS_HEIGHT + 100;
+        if(canvasHeight >= windowHeight -100) {
+            windowHeight = canvasHeight + 100;
         }
         Pane root = buildGUI(stage);
 
         // Create a scene from the GUI
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(root, windowWidth, windowHeight);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
 
         // Register a tick method to be called periodically.
