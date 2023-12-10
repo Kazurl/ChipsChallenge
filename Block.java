@@ -33,7 +33,7 @@ public class Block extends Actor {
      *
      * @param tile Takes the tile of the Ice the Block is on.
      */
-    public void slideOnIce(Tile tile){
+    public void slideOnIce(Tile tile) {
     }
 
     /**
@@ -43,7 +43,7 @@ public class Block extends Actor {
      * @param player when Player touches the Block,
      *               it activates the behaviour of the Block.
      */
-    public void interactPlayer(Player player){
+    public void interactPlayer(Player player) {
 
     }
 }
