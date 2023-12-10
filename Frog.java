@@ -181,8 +181,8 @@ public class Frog extends Mob {
      * @param playery The Player's Y-coordinate on the map.
      * @return True if the Frog's position is the same as the Player, False otherwise.
      */
-    private boolean isEnd(int row, int col, int playerx, int playery) {
-        return row == playerx && col == playery;
+    private boolean isEnd(int row, int col, int playerX, int playerY) {
+        return row == playerX && col == playerY;
     }
 
     /**
@@ -245,8 +245,8 @@ public class Frog extends Mob {
         return col >= 0 && col < width;
     }
 
-    public int[] isPath(int startx, int starty, int playerx, int playery) {
-        System.out.println("Player Position: " + "(" + playerx + ", " + playery + ")" + " | Frog Position: (" + startx + ", " + starty + ")");
+    public int[] isPath(int startX, int startY, int playerX, int playerY) {
+        System.out.println("Player Position: " + "(" + playerX + ", " + playerY + ")" + " | Frog Position: (" + startX + ", " + startY + ")");
         Player player = new Player("one");
         player.setX(1);
         player.setY(1);
@@ -268,30 +268,31 @@ public class Frog extends Mob {
         Queue<Pair> Q = new LinkedList<>();
         int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
 
-        Q.add(new Pair(startx, starty));
-        visited[startx][starty] = true;
-        parent[startx][starty] = new Pair(-1, -1);
-        int destx = Q.peek().Item1 + directions[0][0];
-        int desty = Q.peek().Item2 + directions[0][1];
+        Q.add(new Pair(startX, startY));
+        visited[startX][startY] = true;
+        parent[startX][startY] = new Pair(-1, -1);
+        int destX = Q.peek().Item1 + directions[0][0];
+        int destY = Q.peek().Item2 + directions[0][1];
 
         while (Q.size() > 0) {
             Pair p = (Q.peek());
             System.out.println("Q.peek(): "+ Q.peek() +" | p: (" + p.Item1 + ", " + p.Item2 + ")");
             Q.remove();
-            System.out.println("(destx, desty): (" + destx + ", " + desty + ")");
+            System.out.println("(destX, destY): (" + destX + ", " + destY + ")");
 
-            if (p.Item1 == playerx && p.Item2 == playery) {
-                int tempx = p.Item1, tempy = p.Item2;
+            if (p.Item1 == playerX && p.Item2 == playerY) {
+                int tempX = p.Item1; 
+                int tempY = p.Item2;
                 // Backtracking to find the path from the player pos
                 System.out.println("/nStart Backtracking to find path.");
-                while (parent[tempx][tempy].Item1 != startx && parent[tempx][tempy].Item2 != starty) {
-                    destx = parent[tempx][tempy].Item1;
-                    desty = parent[tempx][tempy].Item2;
-                    tempx = destx;
-                    tempy = desty;
-                    System.out.println("(destx, desty): (" + destx + ", " + desty + ")");
+                while (parent[tempX][tempY].Item1 != startX && parent[tempX][tempY].Item2 != startY) {
+                    destX = parent[tempX][tempY].Item1;
+                    destY = parent[tempX][tempY].Item2;
+                    tempX = destX;
+                    tempY = destY;
+                    System.out.println("(destX, destY): (" + destX + ", " + destY + ")");
                 }
-                return new int[] {destx, desty};
+                return new int[] {destX, destY};
             }
 
             System.out.println("Next Rows & Cols: ");
@@ -308,11 +309,11 @@ public class Frog extends Mob {
             }
         }
 
-        return new int[] {destx, desty};
+        return new int[] {destX, destY};
     }
 
     private boolean walkableActor(int xCoord, int yCoord, Player player) {
-        System.out.println("(Playerx, Playery): (" + player.getX() + ", " + player.getY() + ")");
+        System.out.println("(PlayerX, PlayerY): (" + player.getX() + ", " + player.getY() + ")");
         if (validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length)){
             if ((xCoord == player.getX() && yCoord == player.getY()) || actorLayerMap[xCoord][yCoord] == null) {
                 return true;
@@ -320,9 +321,9 @@ public class Frog extends Mob {
         }
         return false;
     }
-    private boolean walkableTile(int xcoord, int ycoord) {
-        if (!(validHeight(xcoord, actorLayerMap.length) && validWidth(ycoord, actorLayerMap[0].length))) return false;
-        return tileLayerMap[xcoord][ycoord].getWalkable();
+    private boolean walkableTile(int xCoord, int yCoord) {
+        if (!(validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length))) return false;
+        return tileLayerMap[xCoord][yCoord].getWalkable();
     }
 
     private void createActorMap(Player player) {
