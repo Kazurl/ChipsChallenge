@@ -206,7 +206,9 @@ public class Main extends Application {
                     FileConverter.registerAccount(usernameInput.getText(), passwordInput.getText());
                     loginGUI(stage);
                 } else {
-                    System.out.println("USERNAME TAKEN");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("USERNAME TAKEN");
+                    message.show();
                 }
             }
         });
@@ -662,34 +664,25 @@ public class Main extends Application {
         hbox.setStyle("-fx-background-color: #336699;");
 
         Button map1Button = new Button("Map 1");
-        map1Button.setPrefSize(200, 120);
+        map1Button.setPrefSize(120, 120);
 
         Button map2Button = new Button("Map 2");
-        map2Button.setPrefSize(200, 120);
+        map2Button.setPrefSize(120, 120);
 
         Button map3Button = new Button("Map 3");
-        map3Button.setPrefSize(200, 120);
+        map3Button.setPrefSize(120, 120);
 
         Button map4Button = new Button("Map 4");
-        map4Button.setPrefSize(200, 120);
+        map4Button.setPrefSize(120, 120);
 
         Button map5Button = new Button("Map 5");
-        map5Button.setPrefSize(200, 120);
+        map5Button.setPrefSize(120, 120);
 
         Button map6Button = new Button("Map 6");
-        map1Button.setPrefSize(200, 120);
+        map6Button.setPrefSize(120, 120);
 
         Button map7Button = new Button("Map 7");
-        map1Button.setPrefSize(200, 120);
-
-        Button map8Button = new Button("Map 8");
-        map1Button.setPrefSize(200, 120);
-
-        Button map9Button = new Button("Map 9");
-        map1Button.setPrefSize(200, 120);
-
-        Button map10Button = new Button("Map 10");
-        map1Button.setPrefSize(200, 120);
+        map7Button.setPrefSize(120, 120);
 
         map1Button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -807,99 +800,14 @@ public class Main extends Application {
                 }
             }
         });
-        map8Button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(FileConverter.checkLevels(userName) >= 7) {
-                    GameLogic.setLevelNum(8);
-                    Map newMap = FileConverter.convertFromFile("Map8.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
-                    GameLogic.setGameMap(newMap);
-                    runGame(stage);
-                } else {
-                    System.out.println("you have not unlocked this level");
-                }
-            }
-        });
-        map9Button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(FileConverter.checkLevels(userName) >= 8) {
-                    GameLogic.setLevelNum(8);
-                    Map newMap = FileConverter.convertFromFile("Map9.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
-                    GameLogic.setGameMap(newMap);
-                    runGame(stage);
-                } else {
-                    System.out.println("you have not unlocked this level");
-                }
-            }
-        });
-        map10Button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(FileConverter.checkLevels(userName) >= 9) {
-                    GameLogic.setLevelNum(10);
-                    Map newMap = FileConverter.convertFromFile("Map10.txt", userName);
-                    GRID_WIDTH = newMap.getBoardWidth();
-                    GRID_HEIGHT = newMap.getBoardHeight();
-                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
-                    GameLogic.setGameMap(newMap);
-                    runGame(stage);
-                } else {
-                    System.out.println("you have not unlocked this level");
-                }
-            }
-        });
 
-        hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button, map6Button, map7Button, map8Button, map9Button, map10Button);
+
+        hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button, map6Button, map7Button);
         mapPane.setCenter(hbox);
 
         Scene scene = new Scene(mapPane, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
         stage.show();
-        /*
-        Scanner in = new Scanner(System.in);
-        Map newMap;
-        do {
-            System.out.println("Input File Path for loading:");
-            String mapFilePath = in.next();
-            newMap = FileConverter.convertFromFile(mapFilePath, userName);
-        } while (newMap == null);
-        GRID_WIDTH = newMap.getBoardWidth();
-        GRID_HEIGHT = newMap.getBoardHeight();
-        CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-        CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
-        GameLogic.setGameMap(newMap);
-        // Build the GUI
-        Pane root = buildGUI();
-
-        // Create a scene from the GUI
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        // Register an event handler for key presses.
-        // This causes the processKeyEvent method to be called each time a key is pressed.
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
-
-        // Register a tick method to be called periodically.
-        // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> tick()));
-        // Loop the timeline forever
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
-        // We start the timeline upon a button press.
-
-        // Display the scene on the stage
-        drawGame();
-        stage.setScene(scene);
-        stage.show();
-         */
     }
 
     public void runGame(Stage stage) {

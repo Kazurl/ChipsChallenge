@@ -51,9 +51,6 @@ public class FileConverter {
      */
     public static void registerAccount(String username, String password) {
         password = encrypt(password);
-        FileWriter fw = null;
-        BufferedWriter bw = null;
-        PrintWriter pw = null;
 
         try (FileWriter f = new FileWriter("Credentials.txt", true);
              BufferedWriter b = new BufferedWriter(f);
