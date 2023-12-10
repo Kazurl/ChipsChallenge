@@ -27,8 +27,8 @@ public class Key extends Item {
     /**
      * Creates a coloured Key at the specified coordinates
      *
-     * @param itemLocationX The X-coordinate.
-     * @param itemLocationY The Y-coordinate.
+     * @param itemLocationX The X-Coordinate.
+     * @param itemLocationY The Y-Coordinate.
      * @param keyColour The Key Colour.
      */
     public Key(int itemLocationX, int itemLocationY, Colour keyColour) {
@@ -51,7 +51,7 @@ public class Key extends Item {
      * @param player The player.
      */
     public void interactPlayer(Player player) {
-        switch(this.keyColour){
+        switch (this.keyColour) {
             case RED:
                 player.addToInventory("red key");
                 break;
