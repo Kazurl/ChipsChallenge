@@ -14,7 +14,6 @@ import java.util.Arrays;
  */
 public class FileConverter {
 
-
     /**
      * The Usernames saved in the File.
      */
@@ -29,7 +28,6 @@ public class FileConverter {
      * The Level Progressed saved in the File.
      */
     public static int levelProgressSaved;
-
 
     /**
      *Prime is used for Hashing.

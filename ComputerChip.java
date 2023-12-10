@@ -11,8 +11,8 @@ public class ComputerChip extends Item {
     /**
      * Creates a ComputerChip at the specified coordinates.
      *
-     *@param itemLocationX The X-coordinate.
-     *@param itemLocationY The Y-coordinate.
+     *@param itemLocationX The X-Coordinate.
+     *@param itemLocationY The Y-Coordinate.
      */
     public ComputerChip(int itemLocationX, int itemLocationY) {
         super(itemLocationX, itemLocationY);

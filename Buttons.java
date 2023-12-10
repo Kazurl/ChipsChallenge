@@ -20,12 +20,12 @@ public class Buttons extends Tile {
 
 
     /**
-     * Button X-coordinate.
+     * Button X-Coordinate.
      */
     private int x;
 
     /**
-     * Button Y-coordinate.
+     * Button Y-Coordinate.
      */
     private int y;
 
@@ -47,8 +47,8 @@ public class Buttons extends Tile {
     /**
      * Creates a Button at the specified coordinates.
      *
-     * @param x The X-coordinates.
-     * @param y The Y-coordinates.
+     * @param x The X-Coordinates.
+     * @param y The Y-Coordinates.
      */
     public Buttons(int x, int y) {
         super(true, true);
@@ -61,8 +61,8 @@ public class Buttons extends Tile {
      * Creates a Button at the specified coordinates along with
      * the Trap that it should connect to.
      *
-     * @param x The X-coordinate of the button tile.
-     * @param y The Y-coordinate of the button tile.
+     * @param x The X-Coordinate of the button tile.
+     * @param y The Y-Coordinate of the button tile.
      * @param connectedTrap Which Trap the button should connect to.
      */
     public Buttons(int x, int y, Trap connectedTrap) {

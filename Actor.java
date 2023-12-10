@@ -50,18 +50,18 @@ public class Actor {
     }
 
     /**
-     * Gets the X-coordinate of the actor's current location.
+     * Gets the X-Coordinate of the actor's current location.
      *
-     * @return The X-coordinate of the actor's location.
+     * @return The X-Coordinate of the actor's location.
      */
     public int getLocationX() {
         return actorLocationX;
     }
 
     /**
-     * Gets the Y-coordinate of the actor's current location.
+     * Gets the Y-Coordinate of the actor's current location.
      *
-     * @return The Y-coordinate of the actor's location.
+     * @return The Y-Coordinate of the actor's location.
      */
     public int getLocationY() {
         return actorLocationY;
