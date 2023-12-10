@@ -1,20 +1,44 @@
 /**
- * The Mob class represents a mobile entity in the game, extending the Actor class.
- * Mobs can move around the game world and interact with other entities.
+ *<ol>
+ *     <li>File-name: Mob.java</li>
+ *     <li>Purpose of the program: Creates the Mobs for the game, it extends the Actor class and
+ *     the Mobs can move around the Map and interact with other entities.</li>
+ *
+ *</ol>
  */
 public class Mob extends Actor{
 
-    private Tile currentTile, nextTile;
-    public int mobLocationX, mobLocationY;
+    /**
+     * The tile the Mob is on.
+     */
+    private Tile currentTile;
 
+    /**
+     * The tile the Mob will move next.
+     */
+    private Tile nextTile;
+
+    /**
+     * The X-coordinate for the Mob.
+     */
+    public int mobLocationX;
+
+    /**
+     * The Y-coordinate for the Mob.
+     */
+    public int mobLocationY;
+
+    /**
+     * Create a default Mob for the game.
+     */
     public Mob() {
         super();
     }
 
     /**
-     * Constructor for the Mob class with an initial tile.
+     * Creates the Mob on that specific tile.
      *
-     * @param tile The initial tile on which the Mob is placed.
+     * @param tile The initial tile where the Mob will spawn.
      */
     public Mob(Tile tile) {
         super();
@@ -22,43 +46,43 @@ public class Mob extends Actor{
     }
 
     /**
-     * Sets the X-coordinate of the mob's location.
+     * Sets the X-coordinate for the Mob.
      *
-     * @param locationX The X-coordinate to set.
+     * @param locationX The X-coordinate.
      */
     public void setX(int locationX) {
         this.mobLocationX = locationX;
     }
 
     /**
-     * Sets the Y-coordinate of the mob's location.
+     * Sets the Y-coordinate for the Mob.
      *
-     * @param locationY The Y-coordinate to set.
+     * @param locationY The Y-coordinate.
      */
     public void setY(int locationY) {
         this.mobLocationY = locationY;
     }
 
     /**
-     * Gets the X-coordinate of the mob's location.
+     * Gets the X-coordinate of the Mob.
      *
-     * @return The X-coordinate of the mob's location.
+     * @return The X-coordinate.
      */
     public int getX() {
         return this.mobLocationX;
     }
 
     /**
-     * Gets the Y-coordinate of the mob's location.
+     * Gets the Y-coordinate of the Mob.
      *
-     * @return The Y-coordinate of the mob's location.
+     * @return The Y-coordinate of the Mob.
      */
     public int getY() {
         return this.mobLocationY;
     }
 
     /**
-     * Gets the next tile the mob will move to.
+     * Gets the next tile that the mob will move to.
      *
      * @return The next tile.
      */

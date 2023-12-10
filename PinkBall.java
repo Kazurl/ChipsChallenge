@@ -1,21 +1,25 @@
 import javafx.scene.input.KeyCode;
 
 /**
- * The PinkBall class represents a type of mobile entity in the game, extending the Mob class.
- * PinkBall entities can move around the game world based on player input or game logic.
+ *<ol>
+ *     <li>File-name: PinkBall.java</li>
+ *     <li>Purpose of the program: Creates a PinkBall for the game,
+ *     it extends the Mob class and move around the game world based on player input or game logic.</li>
+ *
+ *</ol>
  */
 public class PinkBall extends Mob {
 
     /**
-     * Default constructor for the PinkBall class.
+     * Creates a default pink ball.
      */
     public PinkBall() {
     }
 
     /**
-     * Constructor for the PinkBall class with an initial tile.
+     * Creates a PinkBall that will spawn on that specific tile.
      *
-     * @param tile The initial tile on which the PinkBall is placed.
+     * @param tile The initial tile where PinkBall will spawn.
      */
     public PinkBall(Tile tile) {
         super(tile);

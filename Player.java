@@ -1,15 +1,16 @@
 /**
- * The Player class represents the player character in the game, extending the Actor class.
- * It includes attributes such as location, inventory, and methods for interacting with the game world.
+ *<ol>
+ *     <li>File-name: Player.java</li>
+ *     <li>Purpose of the program: Creates the Player for the game, it extends the Actor class and includes
+ *     attributes such as location, inventory, and methods for interacting with the game world.</li>
+ *
+ *</ol>
  */
 public class Player extends Actor{
 
-    public String getUserName() {
-        return userName;
-    }
-
     /**
-     * Enum representing directions the player can face.
+     * Enumeration representing the
+     * different directions that the Player can move.
      */
     enum Direction {
         UP,
@@ -17,20 +18,51 @@ public class Player extends Actor{
         LEFT,
         RIGHT
     }
-    private boolean isMoving;
-    private Tile currTile;
-    private Tile nextTile;
-
-    private String userName;
-    private int[] inventory = {/*has red key?*/0,/*has green key?*/0,/*has blue key?*/0,/*has yellow key?*/0,/*how many chips?*/0};;
-    boolean isAlive;
-    public int playerLocationX, playerLocationY;
 
     /**
-     * Default constructor for the Player class.
+     * Checks if the Player is moving.
+     */
+    private boolean isMoving;
+
+    /**
+     * The current Tile the Player is on.
+     */
+    private Tile currTile;
+
+    /**
+     * The next Tile that the Player will move to.
+     */
+    private Tile nextTile;
+
+    /**
+     * The username of the Player.
+     */
+    private String userName;
+
+    /**
+     * The number of Keys that the Player has in their inventory.
+     */
+    private int[] inventory = {/*has red key?*/0,/*has green key?*/0,/*has blue key?*/0,/*has yellow key?*/0,/*how many chips?*/0};
+
+    /**
+     * Checks if the Player is alive.
+     */
+    boolean isAlive;
+
+    /**
+     * The X-coordinates for the Player.
+     */
+    public int playerLocationX;
+
+    /**
+     * The Y-coordinates for the Player.
+     */
+    public int playerLocationY;
+
+    /**
+     * Creates the Player with their username.
      * Initializes the player as alive.
      */
-    
     public Player(String name) {
         super();
         this.userName = name;
@@ -42,9 +74,17 @@ public class Player extends Actor{
      *
      * @param direction The direction to set.
      */
-    
     public void setDirection(Direction direction){
 
+    }
+
+    /**
+     * Gets the username of the Player.
+     *
+     * @return The username.
+     */
+    public String getUserName() {
+        return userName;
     }
 /**
      * Sets the X-coordinate of the player's location.

@@ -94,7 +94,6 @@ public class Main extends Application {
      *
      * @param primaryStage The primary stage for this application.
      */
-
     public void start(Stage primaryStage) {
 
         playerImage = new Image("player.png");
@@ -277,8 +276,6 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-
 
 
     /**

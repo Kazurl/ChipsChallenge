@@ -1,13 +1,10 @@
 /**
  *<ol>
  *      <li>File-name: Tile.java
- *      <li>Purpose of the program: Creates the tiles for map
+ *      <li>Purpose of the program: Creates the tiles for map, consists of multiple subclasses
+ *      each with different behaviours.
  *</ol>
- * @author Azmeera, Ffi
- * @version 1.1 - added comments
  */
-
-
 public class Tile {
 
     /**
@@ -22,16 +19,14 @@ public class Tile {
 
     /**
      * Creates the tile.
+     *
      * @param walkable If the tile is walkable.
      * @param pushable If the tile is pushable.
      */
-    //Constructor
     public Tile(boolean walkable, boolean pushable) {
         this.walkable = walkable;
         this.pushable = pushable;
     }
-
-    //Getter and Setters:
 
     /**
      * 
