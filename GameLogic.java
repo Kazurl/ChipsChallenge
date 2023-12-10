@@ -1112,14 +1112,14 @@ public class GameLogic {
     }
 
     public static void moveFrogs() {
-
         Frog[] frogs = gameMap.getFrogsStored();
         for(int i = 0; i < frogs.length; i++) {
             frogs[i].setMap(gameMap.getActorLayerMap(),gameMap.getTileLayerMap());
             int[] newCords = frogs[i].isPath(frogs[i].getX(),frogs[i].getY(),
                   gameMap.getPlayer().getX(),gameMap.getPlayer().getY());
             gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), null);
-            frogs[i].setLocation(newCords[0], newCords[1]);
+            frogs[i].setX(newCords[0]);
+            frogs[i].setY(newCords[1]);
             gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), frogs[i]);
         }
 

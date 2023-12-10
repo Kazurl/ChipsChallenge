@@ -296,20 +296,22 @@ public class Main extends Application {
             GameLogic.setNextMove(KeyCode.E);
 
         }
-        // Move PinkBalls every 5 ticks
+        // Move PinkBalls every 2 ticks
         if(GameLogic.getGameMap().getSchedule().getTick()%2 == 0) {
             GameLogic.movePinkBalls();
         }
-        // Move Frogs every 10 ticks
-        if(GameLogic.getGameMap().getSchedule().getTick()%8 == 0) {
-            GameLogic.moveFrogs();
-        }
-        // Move Bugs every 7 ticks
+
+        // Move Bugs every 4 ticks
         if(GameLogic.getGameMap().getSchedule().getTick()%4 == 0) {
             GameLogic.moveBugs();
         }
+        // Second passes every 10 ticks
         if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
             GameLogic.getGameMap().setTimeLeft(GameLogic.getGameMap().getTimeLeft()-1);
+        }
+        // Move Frogs every 8 ticks
+        if(GameLogic.getGameMap().getSchedule().getTick()%8 == 0) {
+            GameLogic.moveFrogs();
         }
         drawGame();
     }
@@ -674,13 +676,27 @@ public class Main extends Application {
         Button map5Button = new Button("Map 5");
         map5Button.setPrefSize(200, 120);
 
+        Button map6Button = new Button("Map 6");
+        map1Button.setPrefSize(200, 120);
+
+        Button map7Button = new Button("Map 7");
+        map1Button.setPrefSize(200, 120);
+
+        Button map8Button = new Button("Map 8");
+        map1Button.setPrefSize(200, 120);
+
+        Button map9Button = new Button("Map 9");
+        map1Button.setPrefSize(200, 120);
+
+        Button map10Button = new Button("Map 10");
+        map1Button.setPrefSize(200, 120);
+
         map1Button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
-                Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
-                System.out.println("map 1 chosen");
+                Map newMap = FileConverter.convertFromFile("Map7.txt", userName); // change
                 GRID_WIDTH = newMap.getBoardWidth();
                 GRID_HEIGHT = newMap.getBoardHeight();
                 CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -695,7 +711,6 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 1) {
                     GameLogic.setLevelNum(2);
                     Map newMap = FileConverter.convertFromFile("Map2.txt", userName);
-                    System.out.println("map 2 chosen");
                     GRID_WIDTH = newMap.getBoardWidth();
                     GRID_HEIGHT = newMap.getBoardHeight();
                     CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -713,7 +728,6 @@ public class Main extends Application {
                 if(FileConverter.checkLevels(userName) >= 2) {
                     GameLogic.setLevelNum(3);
                     Map newMap = FileConverter.convertFromFile("Map3.txt", userName);
-                    System.out.println("map 3 chosen");
                     GRID_WIDTH = newMap.getBoardWidth();
                     GRID_HEIGHT = newMap.getBoardHeight();
                     CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -725,7 +739,127 @@ public class Main extends Application {
                 }
             }
         });
-        hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button);
+        map4Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 3) {
+                    GameLogic.setLevelNum(4);
+                    Map newMap = FileConverter.convertFromFile("Map4.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+        map5Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 4) {
+                    GameLogic.setLevelNum(5);
+                    Map newMap = FileConverter.convertFromFile("Map5.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+        map6Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 5) {
+                    GameLogic.setLevelNum(6);
+                    Map newMap = FileConverter.convertFromFile("Map6.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+        map7Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 6) {
+                    GameLogic.setLevelNum(7);
+                    Map newMap = FileConverter.convertFromFile("Map7.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+        map8Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 7) {
+                    GameLogic.setLevelNum(8);
+                    Map newMap = FileConverter.convertFromFile("Map8.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+        map9Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 8) {
+                    GameLogic.setLevelNum(8);
+                    Map newMap = FileConverter.convertFromFile("Map9.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+        map10Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(FileConverter.checkLevels(userName) >= 9) {
+                    GameLogic.setLevelNum(10);
+                    Map newMap = FileConverter.convertFromFile("Map10.txt", userName);
+                    GRID_WIDTH = newMap.getBoardWidth();
+                    GRID_HEIGHT = newMap.getBoardHeight();
+                    CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                    CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                    GameLogic.setGameMap(newMap);
+                    runGame(stage);
+                } else {
+                    System.out.println("you have not unlocked this level");
+                }
+            }
+        });
+
+        hbox.getChildren().addAll(map1Button, map2Button, map3Button, map4Button, map5Button, map6Button, map7Button, map8Button, map9Button, map10Button);
         mapPane.setCenter(hbox);
 
         Scene scene = new Scene(mapPane, WINDOW_WIDTH, WINDOW_HEIGHT);

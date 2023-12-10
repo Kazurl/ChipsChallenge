@@ -1,7 +1,5 @@
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 /**
  *<ol>
@@ -17,13 +15,13 @@ public class Frog extends Mob{
      * Creates a constant of type Actor and initialise it
      * with a new instance of the FrogRoute class.
      */
-    final static Actor TRAVERSED = new FrogRoute();
+    //final static Actor TRAVERSED = new FrogRoute();
 
     /**
      * Creates a constant of type Actor and initialise it
      * with a new instance of the FrogTraversed class.
      */
-    final static Actor PATH = new FrogTraversed();
+    //final static Actor PATH = new FrogTraversed();
 
     /**
      * 2D array for the Actor Layer on Map.
@@ -48,6 +46,30 @@ public class Frog extends Mob{
      */
     public Frog(Tile tile) {
         super(tile);
+    }
+
+    public static void main(String[] args) {
+        // Create a Frog instance
+        Frog frog = new Frog();
+
+        // Set up test maps (this can be adjusted as per your needs)
+        //frog.createActorMap();
+        //frog.createTileMap();
+
+        // Sample test coordinates (modify these as needed)
+        int startX = 2;
+        int startY = 4;
+        int playerX = 1;
+        int playerY = 1;
+
+        // Check if a path exists from (startX, startY) to (playerX, playerY)
+        int[] result = frog.isPath(startX, startY, playerX, playerY);
+
+        if (result != null) {
+            System.out.println("Path found. Destination coordinates: (" + result[0] + ", " + result[1] + ")");
+        } else {
+            System.out.println("No path found.");
+        }
     }
 
     /**
@@ -105,7 +127,7 @@ public class Frog extends Mob{
      * @param playery The destination Y-coordinate on the map.
      * @return True if a path to the destination exists, false otherwise.
      */
-    public int[] checkShortest(int startx, int starty, int playerx, int playery) {
+    /*public int[] checkShortest(int startx, int starty, int playerx, int playery) {
         Queue<int[]> Q = new ArrayDeque<>();
         Q.add(new int[]{startx, starty});
 
@@ -131,9 +153,9 @@ public class Frog extends Mob{
                 this.actorLayerMap[row][col] = TRAVERSED;
 
                 int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
-                for (int[] dir : directions) {
-                    int nextRow = row + dir[0];
-                    int nextCol = col + dir[1];
+                for (int i = 0; i< 4; i++) {
+                    int nextRow = row + directions[i][0];
+                    int nextCol = col + directions[i][1];
 
                     if (isValid(nextRow, nextCol)) {
                         Q.offer(new int[]{nextRow, nextCol});
@@ -146,86 +168,8 @@ public class Frog extends Mob{
         }
 
         return null;
-    }
+    }*/
 
-    private boolean validHeight(int row, int height) {
-        return row >= 0 && row < height;
-    }
-
-    /**
-     * Checks if the given column is within the valid width range of the map.
-     *
-     * @param col The column to be checked.
-     * @param width The width of the map.
-     * @return True if the column is within the valid width range, false otherwise.
-     */
-    private boolean validWidth(int col, int width) {
-        return col >= 0 && col < width;
-    }
-
-    public int[] isPath(int startx, int starty, int playerx, int playery) {
-        boolean[][] visited = new boolean[actorLayerMap.length][actorLayerMap[0].length];
-
-        for (int i = 0; i< actorLayerMap.length; i++) {
-            for (int j =0; j< actorLayerMap[0].length; j++) {
-                visited[i][j] = false;
-            }
-        }
-
-        Pair[][] parent = new Pair[actorLayerMap.length][actorLayerMap[0].length];
-        Queue<Pair> Q = new LinkedList<>();
-        int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
-        int destx = directions[0][0], desty = directions[0][1];
-
-        Q.add(new Pair(startx, starty));
-        visited[startx][starty] = true;
-        parent[startx][starty] = new Pair(-1, -1);
-
-        while (Q.size() > 0) {
-            Pair p = (Q.peek());
-            Q.remove();
-
-            if (p.Item1 == playerx && p.Item2 == playery) {
-                int tempx = p.Item1, tempy = p.Item2;
-                while (parent[tempx][tempy].Item1 != startx && parent[tempx][tempy].Item2 != starty){
-                    destx = parent[tempx][tempy].Item1;
-                    desty = parent[tempx][tempy].Item2;
-                    tempx = destx;
-                    tempy = desty;
-                }
-                return new int[] {destx, desty};
-            }
-
-            for (int i = 0; i < 4; i++) {
-                int nextRow = p.Item1 + directions[i][0];
-                int nextCol = p.Item2 + directions[i][1];
-
-                if (walkableActor(nextRow, nextCol) && walkableTile(nextRow, nextCol)
-                        && visited[nextRow][nextCol] == false && validHeight(nextRow, actorLayerMap.length)
-                        && validWidth(nextCol, actorLayerMap[0].length)) {
-                    visited[nextRow][nextCol] = true;
-                    Q.add(new Pair(nextRow, nextCol));
-                    parent[nextRow][nextCol] = new Pair(p.Item1, p.Item2);
-                }
-            }
-        }
-        return new int[] {destx, desty};
-    }
-
-    public boolean walkableActor(int xcoord, int ycoord) {
-        if(validWidth(ycoord, actorLayerMap[0].length) && validHeight(xcoord, actorLayerMap.length)) {
-            return actorLayerMap[xcoord][ycoord] instanceof Player || actorLayerMap[xcoord][ycoord] == null;
-        } else {
-            return false;
-        }
-    }
-    public boolean walkableTile(int xcoord, int ycoord) {
-        if(validWidth(ycoord, actorLayerMap[0].length) && validHeight(xcoord, actorLayerMap.length)) {
-            return tileLayerMap[xcoord][ycoord].getWalkable();
-        } else {
-            return false;
-        }
-    }
     /**
      * Checks if the Frog is on the same tile as the Player.
      *
@@ -247,12 +191,12 @@ public class Frog extends Mob{
      * @param col The column on the map.
      * @return True if the position is valid, false otherwise.
      */
-    private boolean isValid(int row, int col) {
+    /*private boolean isValid(int row, int col) {
         if (validHeight(row, col) && validWidth(col, col) && isAccessible(row, col) && !isTraversed(row, col)) {
             return true;
         }
         return false;
-    }
+    }*/
 
 
     /**
@@ -273,9 +217,9 @@ public class Frog extends Mob{
      * @param col The column to be checked.
      * @return True if the position has been traversed, false otherwise.
      */
-    private boolean isTraversed(int row, int col) {
-        return this.actorLayerMap[row][col] == TRAVERSED;
-    }
+    //private boolean isTraversed(int row, int col) {
+    //return this.actorLayerMap[row][col] == TRAVERSED;
+    //}
 
     /**
      * Checks if the given row is within the valid height range of the map.
@@ -284,6 +228,9 @@ public class Frog extends Mob{
      * @param height The height of the map.
      * @return True if the row is within the valid height range, false otherwise.
      */
+    private boolean validHeight(int row, int height) {
+        return row >= 0 && row < height;
+    }
 
     /**
      * Checks if the given column is within the valid width range of the map.
@@ -292,5 +239,130 @@ public class Frog extends Mob{
      * @param width The width of the map.
      * @return True if the column is within the valid width range, false otherwise.
      */
+    private boolean validWidth(int col, int width) {
+        return col >= 0 && col < width;
+    }
 
+    public int[] isPath(int startx, int starty, int playerx, int playery) {
+        System.out.println("Player Position: " + "(" + playerx + ", " + playery + ")" + " | Frog Position: (" + startx + ", " + starty + ")");
+        Player player = new Player("one");
+        player.setX(1);
+        player.setY(1);
+        createActorMap(player);
+        createTileMap();
+        // Displaying the entire actor map
+        System.out.println("Actor Map:\n" + toStringActorMap());
+        System.out.println("\nTile Map:\n" + toStringTileMap());
+
+        boolean[][] visited = new boolean[actorLayerMap.length][actorLayerMap[0].length];
+
+        for (int i = 0; i< actorLayerMap.length; i++) {
+            for (int j =0; j< actorLayerMap[0].length; j++) {
+                visited[i][j] = false;
+            }
+        }
+
+        Pair[][] parent = new Pair[actorLayerMap.length][actorLayerMap[0].length];
+        Queue<Pair> Q = new LinkedList<>();
+        int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
+
+        Q.add(new Pair(startx, starty));
+        visited[startx][starty] = true;
+        parent[startx][starty] = new Pair(-1, -1);
+        int destx = Q.peek().Item1 + directions[0][0];
+        int desty = Q.peek().Item2 + directions[0][1];
+
+        while (Q.size() > 0) {
+            Pair p = (Q.peek());
+            System.out.println("Q.peek(): "+ Q.peek() +" | p: (" + p.Item1 + ", " + p.Item2 + ")");
+            Q.remove();
+            System.out.println("(destx, desty): (" + destx + ", " + desty + ")");
+
+            if (p.Item1 == playerx && p.Item2 == playery) {
+                int tempx = p.Item1, tempy = p.Item2;
+                // Backtracking to find the path from the player pos
+                System.out.println("/nStart Backtracking to find path.");
+                while (parent[tempx][tempy].Item1 != startx && parent[tempx][tempy].Item2 != starty){
+                    destx = parent[tempx][tempy].Item1;
+                    desty = parent[tempx][tempy].Item2;
+                    tempx = destx;
+                    tempy = desty;
+                    System.out.println("(destx, desty): (" + destx + ", " + desty + ")");
+                }
+                return new int[] {destx, desty};
+            }
+
+            System.out.println("Next Rows & Cols: ");
+            for (int i = 0; i < 4; i++) {
+                int nextRow = p.Item1 + directions[i][0];
+                int nextCol = p.Item2 + directions[i][1];
+                System.out.println("(nextRow, nextCol): (" + nextRow + ", " + nextCol + ")");
+
+                if (walkableActor(nextRow, nextCol, player) && walkableTile(nextRow, nextCol) && visited[nextRow][nextCol] == false) {
+                    visited[nextRow][nextCol] = true;
+                    Q.add(new Pair(nextRow, nextCol));
+                    parent[nextRow][nextCol] = new Pair(p.Item1, p.Item2);
+                }
+            }
+        }
+
+        return new int[] {destx, desty};
+    }
+
+    private boolean walkableActor(int xcoord, int ycoord, Player player) {
+        System.out.println("(Playerx, Playery): (" + player.getX() + ", " + player.getY() + ")");
+        if (validHeight(xcoord, actorLayerMap.length) && validWidth(ycoord, actorLayerMap[0].length)){
+            if ( (xcoord == player.getX() && ycoord == player.getY()) || actorLayerMap[xcoord][ycoord] == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean walkableTile(int xcoord, int ycoord) {
+        if (!(validHeight(xcoord, actorLayerMap.length) && validWidth(ycoord, actorLayerMap[0].length))) return false;
+        return tileLayerMap[xcoord][ycoord].getWalkable();
+    }
+
+    private void createActorMap(Player player) {
+        Bug bug = new Bug();
+
+        this.actorLayerMap = new Actor[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j< 5; j++){
+                if (i == 1 && j == 1) this.actorLayerMap[i][j] = player;
+                else if (i == 2 && j == 4) this.actorLayerMap[i][j] = bug;
+                else this.actorLayerMap[i][j] = null;
+            }
+        }
+    }
+
+    private void createTileMap() {
+        Path path = new Path();
+
+        this.tileLayerMap = new Tile[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j< 5; j++){
+                /*if (i == 1 && j == 1) this.actorLayerMap[i][j] = player;
+                if (i == 2 && j == 4) this.actorLayerMap[i][j] = bug;*/
+                this.tileLayerMap[i][j] = path;
+            }
+        }
+    }
+
+    public String toStringActorMap() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < actorLayerMap.length; i++) {
+            str.append(Arrays.toString(actorLayerMap[i])).append("\n");
+        }
+        return str.toString();
+    }
+
+    public String toStringTileMap() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < tileLayerMap.length; i++) {
+            str.append(Arrays.toString(tileLayerMap[i])).append("\n");
+        }
+        return str.toString();
+    }
 }
+
