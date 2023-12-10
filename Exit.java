@@ -7,7 +7,7 @@
  *
  *</ol>
  */
-public class Exit extends Tile{
+public class Exit extends Tile {
 
     /**
      * Exit X-Coordinates.
