@@ -19,12 +19,12 @@ public class Trap extends Tile {
     private boolean trapState;
 
     /**
-     * The X-coordinates of the Trap.
+     * The X-Coordinates of the Trap.
      */
     private int x;
 
     /**
-     * The Y-coordinates of the Trap.
+     * The Y-Coordinates of the Trap.
      */
     private int y;
 
@@ -47,8 +47,8 @@ public class Trap extends Tile {
      * Initializes a Trap at the specified coordinates
      * and sets it as initially closed.
      *
-     * @param x The X-coordinate of the Trap.
-     * @param y The Y-coordinate of the Trap.
+     * @param x The X-Coordinate of the Trap.
+     * @param y The Y-Coordinate of the Trap.
      */
     public Trap(int x, int y) {
         super(true, true);
@@ -62,8 +62,8 @@ public class Trap extends Tile {
      * Initializes a Trap at the specified coordinates,
      * connects it to a button, and sets it as initially closed.
      *
-     * @param x      The X-coordinate of the Trap.
-     * @param y      The Y-coordinate of the Trap.
+     * @param x      The X-Coordinate of the Trap.
+     * @param y      The Y-Coordinate of the Trap.
      * @param button The button connected to the Trap.
      */
     public Trap(int x, int y, Buttons button) {
