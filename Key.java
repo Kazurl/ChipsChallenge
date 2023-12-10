@@ -1,4 +1,3 @@
-
 /**
  *<ol>
  *     <li>File-name: Key.java</li>
@@ -22,7 +21,7 @@ public class Key extends Item {
     /**
      * The colour of the Key.
      */
-    private Colour keyColour; // Assuming Colour is a class or enum representing colors
+    private Colour keyColour;
 
     /**
      * Creates a coloured Key at the specified coordinates

@@ -1,6 +1,5 @@
 import javafx.scene.input.KeyCode;
 
-
 /**
  *<ol>
  *     <li>File-name: Actor.java</li>

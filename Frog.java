@@ -51,6 +51,11 @@ public class Frog extends Mob {
     }
 
 
+    /**
+     * Checks if the Frog is moving correctly.
+     *
+     * @param args Runs the programme.
+     */
     public static void main(String[] args) {
         // Create a Frog instance
         Frog frog = new Frog();
@@ -246,6 +251,16 @@ public class Frog extends Mob {
         return col >= 0 && col < width;
     }
 
+
+    /**
+     * Moves the Frog closer to the Player.
+     *
+     * @param startX The Frog's X-Coordinate.
+     * @param startY The Frog's  Y-Coordinate.
+     * @param playerX The Player's X-Coordinate.
+     * @param playerY The Player's Y-Coordinate.
+     * @return The new coordinates for the Frog to move.
+     */
     public int[] isPath(int startX, int startY, int playerX, int playerY) {
         System.out.println("Player Position: " + "(" + playerX + ", " + playerY + ")" + " | Frog Position: (" + startX + ", " + startY + ")");
         Player player = new Player("one");

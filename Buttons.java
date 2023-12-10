@@ -18,7 +18,6 @@ public class Buttons extends Tile {
      */
     private Trap connectTrap;
 
-
     /**
      * Button X-Coordinate.
      */

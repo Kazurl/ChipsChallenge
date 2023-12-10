@@ -9,7 +9,6 @@ import java.util.Arrays;
  *
  *</ol>
  */
-
 public class Map {
 
     /**
@@ -151,10 +150,20 @@ public class Map {
         return playerStored;
     }
 
+    /**
+     * Gets the 2D array of Actor Layer for the Map.
+     *
+     * @return The Actor Layer.
+     */
     public Actor[][] getActorLayerMap() {
         return actorLayerMap;
     }
 
+    /**
+     * Gets the 2D array of Tile Layer for the Map.
+     *
+     * @return The Tile Layer.
+     */
     public Tile[][] getTileLayerMap() {
         return tileLayerMap;
     }
@@ -167,7 +176,6 @@ public class Map {
      *
      * @return Time left to complete the Map.
      */
-
     public int getTimeLeft() {
         return timeLeft;
     }
