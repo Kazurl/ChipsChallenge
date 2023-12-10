@@ -5,7 +5,7 @@
  *
  *</ol>
  */
-public class Ice extends Tile{
+public class Ice extends Tile {
 
     /**
      * Enumeration representing the different corner types of the Ice tile.
