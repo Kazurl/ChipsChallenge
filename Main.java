@@ -6,32 +6,21 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-
-import java.io.*;
-import java.util.Scanner;
 
 public class Main extends Application {
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 500;
+    private static int WINDOW_WIDTH = 800;
+    private static int WINDOW_HEIGHT = 500;
 
     // The dimensions of the canvas
     private static int CANVAS_WIDTH;
@@ -90,6 +79,8 @@ public class Main extends Application {
     private Button loginButton;
 
     private Button registerButton;
+
+    private Alert message = new Alert(Alert.AlertType.NONE);
 
     // X and Y coordinate of player on the grid.
     private int playerX;
@@ -161,18 +152,20 @@ public class Main extends Application {
         primaryStage.show();
         */
     }
-    public void loginGUI(Stage stage) { //Azmeera
+    public void loginGUI(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setPadding(new Insets(WINDOW_HEIGHT/5.0, WINDOW_WIDTH/10.0, WINDOW_HEIGHT/5.0, WINDOW_WIDTH/10.0));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Welcome");
         label.setFont(new Font(50));
         loginButton = new Button("Log In");
         loginButton.setPrefSize(200, 120);
+        loginButton.setFont(new Font(30));
         registerButton = new Button("Sign Up");
         registerButton.setPrefSize(200, 120);
+        registerButton.setFont(new Font(30));
 
         registerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -226,13 +219,14 @@ public class Main extends Application {
     }
 
 
-    public void usernameGUI(Stage stage) { //Azmeera
+    public void usernameGUI(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setPadding(new Insets(WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0, WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Username: ");
+        label.setFont(new Font(30));
         usernameInput = new TextField();
         submitButton = new Button("Enter");
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -240,10 +234,11 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 int usernameIndex = FileConverter.checkUsername(usernameInput.getText());
                 if (usernameIndex > -1) {
-                    System.out.println("valid username");
                     passwordGUI(stage,usernameIndex);
                 } else {
-                    System.out.println("WRONG USERNAME");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("Incorrect Username");
+                    message.show();
                 }
             }
         });
@@ -254,23 +249,25 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void passwordGUI(Stage stage, int index) { //Azmeera
+    public void passwordGUI(Stage stage, int index) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setPadding(new Insets(WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0, WINDOW_HEIGHT/4.0, WINDOW_WIDTH/4.0));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         label = new Label("Password: ");
+        label.setFont(new Font(30));
         passwordInput = new PasswordField();
         submitButton = new Button("Enter");
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (FileConverter.checkPassword(passwordInput.getText(), index)) {
-                    System.out.println("correct Password");
                     saveOrLoad(stage, usernameInput.getText());
                 } else {
-                    System.out.println("WRONG PASSWORD");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("Wrong password");
+                    message.show();
                 }
             }
         });
@@ -303,15 +300,15 @@ public class Main extends Application {
 
         }
         // Move PinkBalls every 5 ticks
-        if(GameLogic.getGameMap().getSchedule().getTick()%5 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%2 == 0) {
             GameLogic.movePinkBalls();
         }
         // Move Frogs every 10 ticks
-        if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%8 == 0) {
             GameLogic.moveFrogs();
         }
         // Move Bugs every 7 ticks
-        if(GameLogic.getGameMap().getSchedule().getTick()%7 == 0) {
+        if(GameLogic.getGameMap().getSchedule().getTick()%4 == 0) {
             GameLogic.moveBugs();
         }
         if(GameLogic.getGameMap().getSchedule().getTick()%10 == 0) {
@@ -339,7 +336,7 @@ public class Main extends Application {
      *
      * @return The root pane of the GUI.
      */
-    private Pane buildGUI() {
+    private Pane buildGUI(Stage stage) {
         // Create top-level panel that will hold all GUI nodes.
         BorderPane root = new BorderPane();
 
@@ -357,19 +354,36 @@ public class Main extends Application {
         // Create the toolbar content
 
         // Tick Timeline buttons
+        Button pauseButton = new Button("Start");
+        /*
         Button startTickTimelineButton = new Button("Start Ticks");
         Button stopTickTimelineButton = new Button("Stop Ticks");
+         */
         Button saveButton = new Button("Save & Quit");
         // We add both buttons at the same time to the timeline (we could have done this in two steps).
-        toolbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, saveButton);
+        toolbar.getChildren().addAll(saveButton, pauseButton);
         // Stop button is disabled by default
+        /*
         stopTickTimelineButton.setDisable(true);
+         */
 
         // save behaviour
         saveButton.setOnAction(e -> {
-            FileConverter.convertToFile(GameLogic.getGameMap());
-            Platform.exit();
+            saveToFile(stage);
         });
+        pauseButton.setOnAction(e -> {
+            // Start the tick timeline and enable/disable buttons as appropriate.
+            if (pauseButton.getText().equals("Pause")) {
+                pauseButton.setText("Unpause");
+                GameLogic.getGameMap().getSchedule().pause();
+                tickTimeline.stop();
+            } else {
+                pauseButton.setText("Pause");
+                GameLogic.getGameMap().getSchedule().unPause();
+                tickTimeline.play();
+            }
+        });
+        /*
         // Set up the behaviour of the buttons.
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
@@ -392,10 +406,38 @@ public class Main extends Application {
 
         // This code allows the canvas to react to a dragged object when it is finally dropped.
         // You probably don't need to change this (unless you wish to do more advanced things).
-
+    */
         // Finally, return the border pane we built up.
         return root;
     }
+
+    public void saveToFile(Stage stage) {
+        BorderPane loginPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.setStyle("-fx-background-color: #336699;");
+        label = new Label("File path: ");
+        usernameInput = new TextField();
+        submitButton = new Button("Enter");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (FileConverter.convertToFile(GameLogic.getGameMap(), usernameInput.getText())) {
+                    System.out.println("valid file path");
+                    Platform.exit();
+                } else {
+                    System.out.println("INVALID FILE PATH");
+                }
+            }
+        });
+        hbox.getChildren().addAll(label, usernameInput, submitButton);
+        loginPane.setCenter(hbox);
+        Scene scene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void drawGame() {
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -493,8 +535,10 @@ public class Main extends Application {
         }
         // draw timer overlay
         gc.setFill(Color.RED);
-        gc.fillText(String.valueOf(GameLogic.getGameMap().getTimeLeft()), CANVAS_WIDTH  - 3, 0);
+        gc.setFont(new Font(20));
+        gc.fillText(String.valueOf(GameLogic.getGameMap().getTimeLeft()), CANVAS_WIDTH - 35, 20);
         //Draw inventory bar
+        gc.setFont(new Font(12));
         int[] invToShow = GameLogic.getGameMap().getPlayer().getInventory();
         gc.setFill(Color.RED);
         gc.fillText(" Keys:" + invToShow[0], 0,CANVAS_HEIGHT  - 3, CANVAS_WIDTH/5);
@@ -638,7 +682,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
-                Map newMap = FileConverter.convertFromFile("Map1.txt", userName);
+                Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
                 System.out.println("map 1 chosen");
                 GRID_WIDTH = newMap.getBoardWidth();
                 GRID_HEIGHT = newMap.getBoardHeight();
@@ -728,7 +772,13 @@ public class Main extends Application {
     }
 
     public void runGame(Stage stage) {
-        Pane root = buildGUI();
+        if(CANVAS_WIDTH >= WINDOW_WIDTH-100) {
+            WINDOW_WIDTH = CANVAS_WIDTH + 100;
+        }
+        if(CANVAS_HEIGHT >= WINDOW_HEIGHT-100) {
+            WINDOW_HEIGHT = CANVAS_HEIGHT + 100;
+        }
+        Pane root = buildGUI(stage);
 
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);

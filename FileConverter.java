@@ -420,14 +420,12 @@ public class FileConverter {
      *
      * @param currentMap Current Map that needs to be converted.
      */
-    public static void convertToFile(Map currentMap){
-        Scanner in = new Scanner(System.in);
+    public static boolean convertToFile(Map currentMap, String path){
         Player player = currentMap.getPlayer();
         boolean complete = false;
         while(!complete) {
             try {
-                System.out.println("Please enter a valid file path and name for saving:");
-                File newFile = new File(in.next());
+                File newFile = new File(path);
                 if (newFile.createNewFile()) {
                     FileWriter WriteToFile = new FileWriter(newFile);
                     WriteToFile.write(currentMap.getBoardWidth()
@@ -576,11 +574,14 @@ public class FileConverter {
                     complete = true;
                 } else {
                     System.out.println("File already exists.");
+                    return false;
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Invalid File Path.");
+                return false;
             }
         }
+        return true;
     }
 
 
