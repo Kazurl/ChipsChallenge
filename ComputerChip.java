@@ -23,7 +23,7 @@ public class ComputerChip extends Item {
      *
      * @param player The Player.
      */
-    public void interactPlayer(Player player){
+    public void interactPlayer(Player player) {
         player.addToInventory("chip");
     }
 
