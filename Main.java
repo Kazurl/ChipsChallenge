@@ -22,24 +22,35 @@ public class Main extends Application {
     private static int WINDOW_WIDTH = 800;
     private static int WINDOW_HEIGHT = 500;
 
-    // The dimensions of the canvas
+    /**
+    * The dimensions of the canvas
+    */
     private static int CANVAS_WIDTH;
     private static int CANVAS_HEIGHT;
 
-    // The width and height (in pixels) of each cell that makes up the game.
+    /** 
+    * The width and height (in pixels) of each cell that makes up the game.
+    */
     private static int GRID_CELL_WIDTH = 50;
     private static int GRID_CELL_HEIGHT = 50;
 
-    // The width of the grid in number of cells.
+    /**
+    * The width of the grid in number of cells.
+    */
     private static int GRID_WIDTH;
 
     private static int GRID_HEIGHT;
-    // The canvas in the GUI. This needs to be a global variable
-    // (in this setup) as we need to access it in different methods.
-    // We could use FXML to place code in the controller instead.
+    
+    /**
+    * The canvas in the GUI. This needs to be a global variable
+    * (in this setup) as we need to access it in different methods.
+    * We could use FXML to place code in the controller instead.
+    */
     private Canvas canvas;
 
-    // Loaded images
+    /**
+    * Loaded images
+    */
     private Image playerImage;
     private Image dirtImage;
     private Image iconImage;
@@ -82,11 +93,15 @@ public class Main extends Application {
 
     private Alert message = new Alert(Alert.AlertType.NONE);
 
-    // X and Y coordinate of player on the grid.
+    /**
+    * X and Y coordinate of player on the grid.
+    */
     private int playerX;
     private int playerY;
 
-    // Timeline which will cause tick method to be called periodically.
+    /**
+    * Timeline which will cause tick method to be called periodically.
+    */
     private Timeline tickTimeline;
 
     /**
