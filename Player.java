@@ -6,7 +6,7 @@
  *
  *</ol>
  */
-public class Player extends Actor{
+public class Player extends Actor {
 
     /**
      * Enumeration representing the
@@ -233,7 +233,7 @@ public class Player extends Actor{
      * @param item The item to add ("red key", "green key", "blue key", "yellow key", or "chip").
      */
     public void addToInventory(String item) {
-        switch (item){
+        switch (item) {
             case "red key":
                 this.inventory[0] = 1;
                 break;
