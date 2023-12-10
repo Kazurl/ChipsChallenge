@@ -9,7 +9,7 @@ import java.util.*;
  *
  *</ol>
  */
-public class Frog extends Mob{
+public class Frog extends Mob {
 
     /**
      * Creates a constant of type Actor and initialise it
@@ -37,7 +37,9 @@ public class Frog extends Mob{
      * Creates the Frog.
      * This was used for testing.
      */
-    public Frog() {}
+    public Frog() {
+        
+    }
 
     /**
      * Constructs a Frog that will spawn on the specified tile.
@@ -282,7 +284,7 @@ public class Frog extends Mob{
                 int tempx = p.Item1, tempy = p.Item2;
                 // Backtracking to find the path from the player pos
                 System.out.println("/nStart Backtracking to find path.");
-                while (parent[tempx][tempy].Item1 != startx && parent[tempx][tempy].Item2 != starty){
+                while (parent[tempx][tempy].Item1 != startx && parent[tempx][tempy].Item2 != starty) {
                     destx = parent[tempx][tempy].Item1;
                     desty = parent[tempx][tempy].Item2;
                     tempx = destx;
@@ -309,10 +311,10 @@ public class Frog extends Mob{
         return new int[] {destx, desty};
     }
 
-    private boolean walkableActor(int xcoord, int ycoord, Player player) {
+    private boolean walkableActor(int xCoord, int yCoord, Player player) {
         System.out.println("(Playerx, Playery): (" + player.getX() + ", " + player.getY() + ")");
-        if (validHeight(xcoord, actorLayerMap.length) && validWidth(ycoord, actorLayerMap[0].length)){
-            if ( (xcoord == player.getX() && ycoord == player.getY()) || actorLayerMap[xcoord][ycoord] == null) {
+        if (validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length)){
+            if ((xCoord == player.getX() && yCoord == player.getY()) || actorLayerMap[xCoord][yCoord] == null) {
                 return true;
             }
         }
@@ -328,7 +330,7 @@ public class Frog extends Mob{
 
         this.actorLayerMap = new Actor[5][5];
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j< 5; j++){
+            for (int j = 0; j< 5; j++) {
                 if (i == 1 && j == 1) this.actorLayerMap[i][j] = player;
                 else if (i == 2 && j == 4) this.actorLayerMap[i][j] = bug;
                 else this.actorLayerMap[i][j] = null;
@@ -341,7 +343,7 @@ public class Frog extends Mob{
 
         this.tileLayerMap = new Tile[5][5];
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j< 5; j++){
+            for (int j = 0; j< 5; j++) {
                 /*if (i == 1 && j == 1) this.actorLayerMap[i][j] = player;
                 if (i == 2 && j == 4) this.actorLayerMap[i][j] = bug;*/
                 this.tileLayerMap[i][j] = path;
