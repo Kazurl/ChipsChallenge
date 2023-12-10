@@ -3,12 +3,24 @@
  * It is initially not walkable and can be unlocked using a key of a specific colour.
  */
 
+
+/**
+ *<ol>
+ *     <li>File-name: LockedDoor.java</li>
+ *     <li>Purpose of the program: Creates the LockedDoor for the game.
+ *     It has different colours and it extends the Tile class.</li>
+ *
+ *</ol>
+ */
 public class LockedDoor extends Tile {
-//From Freddie: Door doesnt need locked status, if the door has been unlocked it it now a path not a door
+
+    /**
+     * The colour of the LockedDoor.
+     */
     private Key.Colour doorColour;
 
     /**
-     * Constructor for the LockedDoor class.
+     * Creates a coloured LockedDoor.
      *
      * @param doorColour The colour of the locked door.
      */
@@ -27,7 +39,7 @@ public class LockedDoor extends Tile {
     }
 
     /**
-     * Attempts to unlock the door using a key.
+     * Unlocks the door if the colored key is correct.
      *
      * @param key The key used to unlock the door.
      * @return True if the door is successfully unlocked, false otherwise.

@@ -1,7 +1,8 @@
 /**
  *<ol>
  *     <li>File-name: Buttons.java</li>
- *     <li>Purpose of the program: Creates the buttons for the game.</li>
+ *     <li>Purpose of the program: Creates the Buttons for the game. The Button is connected to
+ *     their corresponding Trap.</li>
  *
  *</ol>
  */
@@ -12,18 +13,43 @@ public class Buttons extends Tile {
      */
     private boolean buttonState;
 
+    /**
+     * Trap that the button connects to.
+     */
     private Trap connectTrap;
 
+
+    /**
+     * Button X-coordinate.
+     */
     private int x;
+
+    /**
+     * Button Y-coordinate.
+     */
     private int y;
 
+    /**
+     * Identifier number for the Button.
+     */
     private int identifier;
 
-    //Constructor:
+    /**
+     * Creates a default Button.
+     * This was used for testing.
+     */
     public Buttons() {
         super(true, true);
         this.buttonState = false; //Set initial as false
     }
+
+
+    /**
+     * Creates a Button at the specified coordinates.
+     *
+     * @param x The X-coordinates.
+     * @param y The Y-coordinates.
+     */
     public Buttons(int x, int y) {
         super(true, true);
         this.x = x;
@@ -115,35 +141,77 @@ public class Buttons extends Tile {
         buttonState = false;
     }
 
+    /**
+     * Gets the connected trap for the Button.
+     *
+     * @return Connected Trap.
+     */
     public Trap getConnectTrap() {
         return connectTrap;
     }
 
+    /**
+     * Sets the connected trap for the Button.
+     * @param connectTrap
+     */
     public void setConnectTrap(Trap connectTrap) {
         this.connectTrap = connectTrap;
     }
 
+    /**
+     * Gets the X-coordinates of the Button.
+     *
+     * @return X-coordinates.
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Sets the X-coordinates for the Button.
+     *
+     * @param x X-coordinates.
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Gets the Y-coordinates for the Button.
+     *
+     * @return Y-coordinates.
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Sets the Y-coordinates of the Button.
+     *
+     * @param y Y-coordinates.
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Gets the identifier of the Button.
+     * This lets the FileConverter know that this Button has a connection
+     * with the same identifier number Trap.
+     *
+     * @return identifier number for the Button.
+     */
     public int getIdentifier() {
         return identifier;
     }
 
+    /**
+     * Sets the identifier for the Button.
+     *
+     * @param identifier The identifier number of the Button.
+     */
     public void setIdentifier(int identifier) {
         this.identifier = identifier;
     }
+
 }
