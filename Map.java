@@ -397,9 +397,9 @@ public class Map {
     public int[] newScore(int score, String name) {
         newScores = Arrays.copyOf(topScores, 10);
         newNames = Arrays.copyOf(topNames, 10);
-        for(int i = 0; i < newScores.length; i++) {
-            if(score>newScores[i]) {
-                for(int x = 9; x > i; x--) {
+        for (int i = 0; i < newScores.length; i++) {
+            if (score>newScores[i]) {
+                for (int x = 9; x > i; x--) {
                     newScores[x] = newScores[x-1];
                     newNames[x] = newNames[x-1];
                 }
