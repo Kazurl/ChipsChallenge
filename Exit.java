@@ -29,36 +29,36 @@ public class Exit extends Tile {
     }
 
     /**
-     * Gets the X-coordinate of the exit tile.
+     * Gets the X-Coordinate of the exit tile.
      *
-     * @return The X-coordinate of the exit tile.
+     * @return The X-Coordinate of the exit tile.
      */
     public int getExitX() {
         return exitX;
     }
 
     /**
-     * Gets the Y-coordinate of the exit tile.
+     * Gets the Y-Coordinate of the exit tile.
      *
-     * @return The Y-coordinate of the exit tile.
+     * @return The Y-Coordinate of the exit tile.
      */
     public int getExitY() {
         return exitY;
     }
 
     /**
-     * Sets the X-coordinate of the exit tile.
+     * Sets the X-Coordinate of the exit tile.
      *
-     * @param x The new X-coordinate for the exit tile.
+     * @param x The new X-Coordinate for the exit tile.
      */
     public void setExitX(int x) {
         this.exitX = x;
     }
 
     /**
-     * Sets the Y-coordinate of the exit tile.
+     * Sets the Y-Coordinate of the exit tile.
      *
-     * @param y The new Y-coordinate for the exit tile.
+     * @param y The new Y-Coordinate for the exit tile.
      */
     public void setExitY(int y) {
         this.exitY = y;
