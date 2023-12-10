@@ -70,7 +70,7 @@ public class FileConverter {
      */
     public static int checkLevels(String username) {
         try {
-            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            Scanner fileReader = new Scanner(new File("https://github.com/Kazurl/ChipsChallenge/blob/23cd362f985d37412f322632073dd7e7666a6e5f/Credentials.txt"));
             fileReader.useDelimiter(",|\r\n|\n");
             while(fileReader.hasNext()) {
                 String currentName = fileReader.next();
@@ -97,7 +97,7 @@ public class FileConverter {
     public static int checkUsername(String username) {
         try {
             int usernameIndex = 0;
-            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            Scanner fileReader = new Scanner(new File("https://github.com/Kazurl/ChipsChallenge/blob/23cd362f985d37412f322632073dd7e7666a6e5f/Credentials.txt"));
             fileReader.useDelimiter(",|\r\n|\n");
             while(fileReader.hasNext()) {
                 String currentName = fileReader.next();
