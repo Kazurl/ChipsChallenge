@@ -29,7 +29,7 @@ public class Exit extends Tile {
     }
 
     /**
-     * Gets the X-coordinate of the exit tile.
+     * Gets the X-Coordinate of the exit tile.
      *
      * @return The X-coordinate of the exit tile.
      */

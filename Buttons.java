@@ -82,7 +82,7 @@ public class Buttons extends Tile {
     /**
      * Sets the state of the button.
      *
-     * @param buttonState IS True to set the button as pressed,
+     * @param buttonState Is True to set the button as pressed,
      *                    False to set it as released.
      */
     public void setButtonState(boolean buttonState) {
@@ -152,43 +152,44 @@ public class Buttons extends Tile {
 
     /**
      * Sets the connected trap for the Button.
-     * @param connectTrap
+     *
+     * @param connectTrap Connects the Trap to the Button.
      */
     public void setConnectTrap(Trap connectTrap) {
         this.connectTrap = connectTrap;
     }
 
     /**
-     * Gets the X-coordinates of the Button.
+     * Gets the X-Coordinates of the Button.
      *
-     * @return X-coordinates.
+     * @return X-Coordinates.
      */
     public int getX() {
         return x;
     }
 
     /**
-     * Sets the X-coordinates for the Button.
+     * Sets the X-Coordinates for the Button.
      *
-     * @param x X-coordinates.
+     * @param x X-Coordinates.
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * Gets the Y-coordinates for the Button.
+     * Gets the Y-Coordinates for the Button.
      *
-     * @return Y-coordinates.
+     * @return Y-Coordinates.
      */
     public int getY() {
         return y;
     }
 
     /**
-     * Sets the Y-coordinates of the Button.
+     * Sets the Y-Coordinates of the Button.
      *
-     * @param y Y-coordinates.
+     * @param y Y-Coordinates.
      */
     public void setY(int y) {
         this.y = y;

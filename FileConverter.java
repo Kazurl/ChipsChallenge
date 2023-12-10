@@ -15,9 +15,20 @@ import java.util.Arrays;
 public class FileConverter {
 
 
-    static String userNameSaved;
-    static String passwordSaved;
-    static int levelProgressSaved;
+    /**
+     * The Usernames saved in the File.
+     */
+    public static String userNameSaved;
+
+    /**
+     * The Passwords saved in the File.
+     */
+    public static String passwordSaved;
+
+    /**
+     * The Level Progressed saved in the File.
+     */
+    public static int levelProgressSaved;
 
 
     /**
@@ -582,6 +593,9 @@ public class FileConverter {
     }
 
 
+    /**
+     * Changes the scores in the File.
+     */
     public static void changeScore() {
         /*
         File originalFile = new File(GameLogic.getGameMap().getOriginal());

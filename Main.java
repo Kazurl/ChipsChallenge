@@ -689,7 +689,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
-                Map newMap = FileConverter.convertFromFile("Map7.txt", userName); // change
+                Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
                 GRID_WIDTH = newMap.getBoardWidth();
                 GRID_HEIGHT = newMap.getBoardHeight();
                 CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;

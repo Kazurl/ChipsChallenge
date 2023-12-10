@@ -50,6 +50,7 @@ public class Frog extends Mob {
         super(tile);
     }
 
+
     public static void main(String[] args) {
         // Create a Frog instance
         Frog frog = new Frog();
@@ -177,8 +178,8 @@ public class Frog extends Mob {
      *
      * @param row The row on the map.
      * @param col The column on the map.
-     * @param playerx The Player's X-coordinate on the map.
-     * @param playery The Player's Y-coordinate on the map.
+     * @param playerX The Player's X-Coordinate on the map.
+     * @param playerY The Player's Y-Coordinate on the map.
      * @return True if the Frog's position is the same as the Player, False otherwise.
      */
     private boolean isEnd(int row, int col, int playerX, int playerY) {
@@ -312,6 +313,14 @@ public class Frog extends Mob {
         return new int[] {destX, destY};
     }
 
+    /**
+     * Checks if the Actor can walk at the specified Coordinate.
+     *
+     * @param xCoord X-Coordinates on the Map.
+     * @param yCoord Y-Coordinates on the Map.
+     * @param player The Player.
+     * @return True if Actor can walk at the specified Coordinate.
+     */
     private boolean walkableActor(int xCoord, int yCoord, Player player) {
         System.out.println("(PlayerX, PlayerY): (" + player.getX() + ", " + player.getY() + ")");
         if (validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length)){
@@ -321,11 +330,24 @@ public class Frog extends Mob {
         }
         return false;
     }
+
+    /**
+     * Check if the Tile is walkable.
+     *
+     * @param xCoord X-Coordinate on the Map.
+     * @param yCoord Y-Coordinate on the Map.
+     * @return True if the Tile is walkable, False if otherwise.
+     */
     private boolean walkableTile(int xCoord, int yCoord) {
         if (!(validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length))) return false;
         return tileLayerMap[xCoord][yCoord].getWalkable();
     }
 
+    /**
+     * Create a Player on the Map.
+     *
+     * @param player The Player.
+     */
     private void createActorMap(Player player) {
         Bug bug = new Bug();
 
@@ -339,6 +361,9 @@ public class Frog extends Mob {
         }
     }
 
+    /**
+     * Create the Tile for the Map.
+     */
     private void createTileMap() {
         Path path = new Path();
 
@@ -352,6 +377,11 @@ public class Frog extends Mob {
         }
     }
 
+    /**
+     * Outputs the Actors present on the Map.
+     *
+     * @return String of Actors that are present on the Map.
+     */
     public String toStringActorMap() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < actorLayerMap.length; i++) {
@@ -360,6 +390,11 @@ public class Frog extends Mob {
         return str.toString();
     }
 
+    /**
+     * Outputs the Tile of the Map.
+     *
+     * @return String of Tiles of the Map.
+     */
     public String toStringTileMap() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < tileLayerMap.length; i++) {

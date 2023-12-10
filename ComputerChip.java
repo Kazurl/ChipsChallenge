@@ -7,6 +7,7 @@
  *</ol>
  */
 public class ComputerChip extends Item {
+
     /**
      * Creates a ComputerChip at the specified coordinates.
      *
