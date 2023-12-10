@@ -72,9 +72,9 @@ public class FileConverter {
         try {
             Scanner fileReader = new Scanner(new File("Credentials.txt"));
             fileReader.useDelimiter(",|\r\n|\n");
-            while(fileReader.hasNext()) {
+            while (fileReader.hasNext()) {
                 String currentName = fileReader.next();
-                if(currentName.equals(username)) {
+                if (currentName.equals(username)) {
                     fileReader.next();
 
                     levelProgressSaved = fileReader.nextInt();
@@ -99,9 +99,9 @@ public class FileConverter {
             int usernameIndex = 0;
             Scanner fileReader = new Scanner(new File("Credentials.txt"));
             fileReader.useDelimiter(",|\r\n|\n");
-            while(fileReader.hasNext()) {
+            while (fileReader.hasNext()) {
                 String currentName = fileReader.next();
-                if(currentName.equals(username)) {
+                if (currentName.equals(username)) {
                     userNameSaved = username;
                     return usernameIndex;
                 } else {
@@ -135,14 +135,14 @@ public class FileConverter {
             fileReader.useDelimiter(",|\r\n|\n");
             fileReader.next();
             truePassword = fileReader.next();
-            if(truePassword.equals(password)) {
+            if (truePassword.equals(password)) {
                 passwordSaved = password;
                 return true;
             } else {
                 return false;
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -153,7 +153,7 @@ public class FileConverter {
      * @param filePath The path to the file to be converted.
      * @return A Map object representing the contents of the file.
      */
-    public static Map convertFromFile(String filePath, String userName){
+    public static Map convertFromFile(String filePath, String userName) {
 
         File newFile = new File(filePath);
         try {
@@ -181,7 +181,7 @@ public class FileConverter {
                 lineReader.useDelimiter(",");
                 for (int x = 0; x < width; x++) {
                     String nextActor = lineReader.next();
-                    switch(nextActor){
+                    switch (nextActor) {
                         case "Pl":
                             givenPlayer.setInventory(newInventory);
                             givenPlayer.setX(x);
@@ -205,12 +205,12 @@ public class FileConverter {
                             break;
                         default:
                             char[] mobChar = nextActor.toCharArray();
-                            switch(mobChar[0]) {
+                            switch (mobChar[0]) {
                                 case 'B':
                                     Bug bug = new Bug();
                                     bug.setX(x);
                                     bug.setY(y);
-                                    switch(mobChar[1]) {
+                                    switch (mobChar[1]) {
                                         case '1':
                                             bug.setDirection(KeyCode.UP);
                                             break;
@@ -224,7 +224,7 @@ public class FileConverter {
                                             bug.setDirection(KeyCode.RIGHT);
                                             break;
                                     }
-                                    switch(mobChar[2]) {
+                                    switch (mobChar[2]) {
                                         case '1':
                                             bug.setFollow(true);
                                             break;
@@ -240,7 +240,7 @@ public class FileConverter {
                                     PinkBall ball = new PinkBall();
                                     ball.setX(x);
                                     ball.setY(y);
-                                    switch(mobChar[1]) {
+                                    switch (mobChar[1]) {
                                         case '1':
                                             ball.setDirection(KeyCode.UP);
                                             break;
@@ -270,7 +270,7 @@ public class FileConverter {
                 lineReader.useDelimiter(",");
                 for (int x = 0; x < width; x++) {
                     String nextItem = lineReader.next();
-                    switch(nextItem){
+                    switch (nextItem) {
                         case "C":
                             itemFile[y][x] = new ComputerChip(x,y);
                             break;
@@ -299,7 +299,7 @@ public class FileConverter {
                 lineReader.useDelimiter(",");
                 for (int x = 0; x < width; x++) {
                     String nextTile = lineReader.next();
-                    switch(nextTile){
+                    switch (nextTile) {
                         case "Pt":
                             tileFile[y][x] = new Path();
                             break;
@@ -317,14 +317,14 @@ public class FileConverter {
                             break;
                         default:
                             char[] tileChar = nextTile.toCharArray();
-                            switch(tileChar[0]) {
+                            switch (tileChar[0]) {
                                 case 'B':
                                     Buttons button = new Buttons(x,y);
                                     button.setIdentifier(buttonCount);
                                     buttonCount++;
                                     tileFile[y][x] = button; // // MUST CONNECT THESE < v
                                     int buttonNum = Integer.parseInt(nextTile.substring(1));
-                                    if(buttonNum > givenButtons.length) {
+                                    if (buttonNum > givenButtons.length) {
                                         givenButtons = Arrays.copyOf(givenButtons, buttonNum);
                                     }
                                     givenButtons[buttonNum-1] = button;
@@ -333,7 +333,7 @@ public class FileConverter {
                                     Trap trap = new Trap(x,y);
                                     tileFile[y][x] = trap; // needs its tile
                                     int trapNum = Integer.parseInt(nextTile.substring(1));
-                                    if(trapNum > givenTraps.length) {
+                                    if (trapNum > givenTraps.length) {
                                         givenTraps = Arrays.copyOf(givenTraps, trapNum);
                                     }
                                     givenTraps[trapNum - 1] = trap; // MUST CONNECT THESE < ^
@@ -343,26 +343,26 @@ public class FileConverter {
                                     tileFile[y][x] = new ChipSocket(chipAmount);
                                     break;
                                 case 'L':
-                                    if(tileChar[1] == '1') {
+                                    if (tileChar[1] == '1') {
                                         tileFile[y][x] = new LockedDoor(Key.Colour.RED);
-                                    } else if(tileChar[1] == '2') {
+                                    } else if (tileChar[1] == '2') {
                                         tileFile[y][x] = new LockedDoor(Key.Colour.GREEN);
-                                    } else if(tileChar[1] == '3') {
+                                    } else if (tileChar[1] == '3') {
                                         tileFile[y][x] = new LockedDoor(Key.Colour.BLUE);
-                                    } else if(tileChar[1] == '4') {
+                                    } else if (tileChar[1] == '4') {
                                         tileFile[y][x] = new LockedDoor(Key.Colour.YELLOW);
                                     }
                                     break;
                                 case 'I':
-                                    if(tileChar[1] == '1') {
+                                    if (tileChar[1] == '1') {
                                         tileFile[y][x] = new Ice(x,y,Ice.CornerType.NONE);
-                                    } else if(tileChar[1] == '2') {
+                                    } else if (tileChar[1] == '2') {
                                         tileFile[y][x] = new Ice(x,y,Ice.CornerType.TOP_LEFT);
-                                    } else if(tileChar[1] == '3') {
+                                    } else if (tileChar[1] == '3') {
                                         tileFile[y][x] = new Ice(x,y,Ice.CornerType.TOP_RIGHT);
-                                    } else if(tileChar[1] == '4') {
+                                    } else if (tileChar[1] == '4') {
                                         tileFile[y][x] = new Ice(x,y,Ice.CornerType.BOTTOM_LEFT);
-                                    } else if(tileChar[1] == '5') {
+                                    } else if (tileChar[1] == '5') {
                                         tileFile[y][x] = new Ice(x,y,Ice.CornerType.BOTTOM_RIGHT);
                                     }
                                     break;
@@ -375,37 +375,37 @@ public class FileConverter {
             int[] givenTopScores = new int[10];
             lineReader = new Scanner(fileReader.next());
             lineReader.useDelimiter(",");
-            for(int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 givenTopNames[i] = lineReader.next();
                 givenTopScores[i] = lineReader.nextInt();
             }
             lineReader = new Scanner(fileReader.next());
             String original = lineReader.next();
-            if(original.equals("original")) {
+            if (original.equals("original")) {
                 original = filePath;
             }
 
-            for(int i = 0; i <givenTraps.length; i++) {
+            for (int i = 0; i <givenTraps.length; i++) {
                 try {
-                    if(givenButtons[i] != null) {
+                    if (givenButtons[i] != null) {
                         givenTraps[i].setConnectButton(givenButtons[i]);
                         givenTraps[i].setIdentifier(givenButtons[i].getIdentifier());
                         givenButtons[i].setConnectTrap(givenTraps[i]);
                     }
-                } catch(Exception e) {
+                } catch (Exception e) {
                     System.out.println("Invalid File!");
                     return null;
                 }
             }
 
-            for(int i = 0; i <givenFrogs.length; i++) {
+            for (int i = 0; i <givenFrogs.length; i++) {
                 givenFrogs[i].setMap(actorFile, tileFile);
             }
             return new Map(timeLeft, width,height,actorFile, itemFile, tileFile,
                     givenPlayer, givenFrogs, givenBugs, givenPinkBalls,givenBlocks
                     , givenButtons, givenTopScores, givenTopNames, original);
-        }
-        catch(Exception invalidFile) {
+            
+        } catch (Exception invalidFile) {
             System.out.println("Invalid File!");
             return null;
         }
@@ -417,10 +417,10 @@ public class FileConverter {
      *
      * @param currentMap Current Map that needs to be converted.
      */
-    public static boolean convertToFile(Map currentMap, String path){
+    public static boolean convertToFile(Map currentMap, String path) {
         Player player = currentMap.getPlayer();
         boolean complete = false;
-        while(!complete) {
+        while (!complete) {
             try {
                 File newFile = new File(path);
                 if (newFile.createNewFile()) {
@@ -442,11 +442,11 @@ public class FileConverter {
                             Actor currentActor = currentMap.getPosActor(x, y);
                             if (currentActor instanceof Player) {
                                 WriteToFile.write("Pl");
-                            } else if(currentActor instanceof Frog) {
+                            } else if (currentActor instanceof Frog) {
                             WriteToFile.write("Fr");
-                        } else if(currentActor instanceof Block) {
+                        } else if (currentActor instanceof Block) {
                                 WriteToFile.write("Bl");
-                            } else if(currentActor instanceof Bug) {
+                            } else if (currentActor instanceof Bug) {
                             WriteToFile.write("B");
                                 if (currentActor.getDirection() == KeyCode.UP) {
                                     WriteToFile.write("1");
@@ -462,7 +462,7 @@ public class FileConverter {
                                 } else {
                                     WriteToFile.write("2");
                                 }
-                        } else if(currentActor instanceof PinkBall) {
+                        } else if (currentActor instanceof PinkBall) {
                                 if (currentActor.getDirection() == KeyCode.UP) {
                                     WriteToFile.write("P1");
                                 } else if (currentActor.getDirection() == KeyCode.DOWN) {
@@ -557,7 +557,7 @@ public class FileConverter {
                     }
                     String[] names = currentMap.getTopNames();
                     int[] scores = currentMap.getTopScores();
-                    for(int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 10; i++) {
                         WriteToFile.write(names[i] + "," + scores[i]);
                         if (i + 1 != 10) {
                             WriteToFile.write(",");
