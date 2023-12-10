@@ -158,4 +158,3 @@ public class Frog extends Mob{
         return tileLayerMap[xcoord][ycoord].getWalkable();
     }
 }
-
