@@ -973,12 +973,6 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
 
-                    String musicFile = "SaveTube.io_-_MapleStory_BGM_Moonbridge__Wave_of_Emptiness_128_kbps.mp3";     // For example
-
-                    Media sound = new Media(new File(musicFile).toURI().toString());
-                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                    mediaPlayer.play();
-
                 } else {
                     message.setAlertType(Alert.AlertType.ERROR);
                     message.setContentText("you have not unlocked this level");
