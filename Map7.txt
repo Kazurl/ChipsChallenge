@@ -19,7 +19,7 @@ Wl,Wl,Wl,Wl,Pt,Pt,Pt,Pt,Pt,Pt,Pt
 Pt,Pt,Pt,T1,Pt,Pt,Pt,Pt,Pt,Wl,Wl
 Wl,Wt,Pt,Pt,Pt,Pt,Wt,Pt,Pt,S3,Ex
 I1,Wt,Pt,Pt,Pt,Pt,Pt,B1,Pt,Wl,Wl
-I1,Wt,Wt,Wt,Pt,Pt,Pt,Pt,Pt,Dt,Pt
-I4,I1,I1,L2,Pt,Pt,Pt,Pt,Pt,Pt,Pt
+I1,Wt,Wt,Wt,Pt,Pt,Pt,Pt,Dt,Pt,Pt
+I4,I1,I1,L2,Pt,Pt,Pt,Pt,Dt,Pt,Pt
 .,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0
 original

@@ -12,5 +12,5 @@ Pt,Pt,I1,I1,I1,I3,Wt,I2,I1,I1,Pt,Ex
 Pt,Pt,Wt,Wt,Wt,I4,I1,I5,Wt,Wt,Pt,Pt
 Pt,Pt,Wt,Wt,Wt,Wt,Wt,Wt,Wt,Wt,Pt,Pt
 Pt,Pt,I1,I1,I1,I1,Wt,I1,I1,I1,Pt,Pt
-.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0
+Freddie,594,.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0,.,0
 original

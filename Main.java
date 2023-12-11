@@ -223,13 +223,13 @@ public class Main extends Application {
     private TextField usernameInput;
 
     /**
-     * Label for the GUI. //IDK
+     * Label for the GUI.
      */
     private Label label;
 
 
     /**
-     * IDK
+     * another label used for when there are two simultaneous labels needed.
      */
     private Label label2;
 
@@ -455,7 +455,7 @@ public class Main extends Application {
      * Generate the Password GUI for the application.
      *
      * @param stage The stage for the application.
-     * @param index //IDK
+     * @param index index at which the password will be found based on the username index.
      */
     public void passwordGUI(Stage stage, int index) {
         BorderPane loginPane = new BorderPane();
@@ -621,7 +621,7 @@ public class Main extends Application {
     }
 
     /**
-     * Saves the Game in a File. //IDK
+     * JavaFX pane for saving to a given file path.
      *
      * @param stage The stage for the application.
      */

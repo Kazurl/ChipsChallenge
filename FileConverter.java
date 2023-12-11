@@ -177,6 +177,7 @@ public class FileConverter {
             int width = lineReader.nextInt();
             int height = lineReader.nextInt();
             int timeLeft = lineReader.nextInt();
+            int[] mapInfo = {width, height, timeLeft};
 
             Player givenPlayer = new Player(userName);
 
@@ -422,10 +423,17 @@ public class FileConverter {
                     return null;
                 }
             }
-
-            return new Map(timeLeft, width,height,actorFile, itemFile, tileFile,
-                    givenPlayer, givenFrogs, givenBugs, givenPinkBalls,givenBlocks
-                    , givenButtons, givenTopScores, givenTopNames, original);
+            Object[] arraysSaved = new Object[9];
+            arraysSaved[0] = actorFile;
+            arraysSaved[1] = itemFile;
+            arraysSaved[2] = tileFile;
+            arraysSaved[3] = givenPlayer;
+            arraysSaved[4] = givenFrogs;
+            arraysSaved[5] = givenBugs;
+            arraysSaved[6] = givenPinkBalls;
+            arraysSaved[7] = givenBlocks;
+            arraysSaved[8] = givenButtons;
+            return new Map(mapInfo,arraysSaved, givenTopScores, givenTopNames, original);
             
         } catch (Exception invalidFile) {
             System.out.println("Invalid File!");

@@ -4,6 +4,7 @@ import javafx.scene.input.KeyEvent;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -1292,6 +1293,15 @@ public class GameLogic {
                     destx = tempx;
                     desty = tempy;
                 }
+                while (destx == startx && desty == starty) {
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(4);
+
+                    if (walkableActor(destx + directions[randomNumber][0], desty + directions[randomNumber][1]) && walkableTile(destx + directions[randomNumber][0], desty + directions[randomNumber][1])) {
+                        destx += directions[randomNumber][0];
+                        desty += directions[randomNumber][1];
+                    }
+                }
                 return new int[] {destx, desty};
             }
 
@@ -1307,6 +1317,15 @@ public class GameLogic {
             }
         }
 
+        while (destx == startx && desty == starty) {
+            Random random = new Random();
+            int randomNumber = random.nextInt(4);
+
+            if (walkableActor(destx + directions[randomNumber][0], desty + directions[randomNumber][1]) && walkableTile(destx + directions[randomNumber][0], desty + directions[randomNumber][1])) {
+                destx += directions[randomNumber][0];
+                desty += directions[randomNumber][1];
+            }
+        }
         return new int[] {destx, desty};
     }
 

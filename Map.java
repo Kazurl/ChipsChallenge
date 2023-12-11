@@ -83,7 +83,7 @@ public class Map {
     private String[] newNames;
 
     /**
-     * IDK what tis is
+     * original (not current save file) file path
      */
     private String original;
 
@@ -104,38 +104,38 @@ public class Map {
 
     /**
      * Creates the Map for the Level.
+     * @param mapInfo gives the size and time left for the given map
+     * [0] = boardWidth
+     * [1] = boardHeight
+     * [2] = timeLeft
      *
-     * @param timeLeft Time left for Player to win the Level.
-     * @param width The width of the Map.
-     * @param height The height of the Map.
-     * @param actorMap Actor Layer for the Map.
-     * @param itemMap Item Layer for the Map.
-     * @param tileMap Tile Layer for the Map.
-     * @param player The Player.
-     * @param frogs List of Frogs on the Map.
-     * @param bugs List of Bugs on the Map.
-     * @param pinkBalls List of PinkBalls on the Map.
-     * @param blocks List of Blocks on the Map.
-     * @param buttons List of Buttons on the Map.
+     * @param arraysSaved stores information of where actors are stored for movement
+     * [0] = actorLayerMap
+     * [1] = itemLayerMap
+     * [2] = tileLayerMap
+     * [3] = playerStored
+     * [4] = frogsStored
+     * [5] = bugsStored
+     * [6] = pinkBallsStored
+     * [7] = blocksStored
+     * [8] = buttonsStored
      * @param scores List of Scores that completed the Map.
      * @param names List of Player names that completed the Map.
-     * @param original //IDK what tis is
+     * @param original original map in case of save file.
      */
-    public Map(int timeLeft, int width, int height, Actor[][] actorMap, Item[][] itemMap,
-               Tile[][] tileMap, Player player, Frog[] frogs, Bug[] bugs, PinkBall[] pinkBalls, Block[] blocks,
-               Buttons[] buttons, int[] scores, String[] names, String original) {
-        this.boardWidth = width;
-        this.boardHeight = height;
-        this.timeLeft = timeLeft;
-        this.actorLayerMap = actorMap;
-        this.itemLayerMap = itemMap;
-        this.tileLayerMap = tileMap;
-        this.playerStored = player;
-        this.frogsStored = frogs;
-        this.bugsStored = bugs;
-        this.pinkBallsStored = pinkBalls;
-        this.blocksStored = blocks;
-        this.buttonsStored = buttons;
+    public Map(int[] mapInfo, Object[] arraysSaved, int[] scores, String[] names, String original) {
+        this.boardWidth = mapInfo[0];
+        this.boardHeight = mapInfo[1];
+        this.timeLeft = mapInfo[2];
+        this.actorLayerMap = ((Actor[][]) arraysSaved[0]);
+        this.itemLayerMap = ((Item[][]) arraysSaved[1]);
+        this.tileLayerMap = ((Tile[][]) arraysSaved[2]);
+        this.playerStored = ((Player) arraysSaved[3]);
+        this.frogsStored = ((Frog[]) arraysSaved[4]);
+        this.bugsStored = ((Bug[]) arraysSaved[5]);
+        this.pinkBallsStored = ((PinkBall[]) arraysSaved[6]);
+        this.blocksStored = ((Block[]) arraysSaved[7]);
+        this.buttonsStored = ((Buttons[]) arraysSaved[8]);
         this.topScores = scores;
         this.topNames = names;
         this.original = original;
@@ -420,9 +420,9 @@ public class Map {
     }
 
     /**
-     * IDK what tis is.
+     * Gets the original map (not the crrent loaded save) file path of the current map
      *
-     * @return
+     * @return original map file path
      */
     public String getOriginal() {
         return original;
