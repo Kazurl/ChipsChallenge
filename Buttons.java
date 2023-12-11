@@ -5,6 +5,8 @@
  *     their corresponding Trap.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Azmeera, Ffi. JavaDoc - Ffi, Enrique]
  */
 public class Buttons extends Tile {
 

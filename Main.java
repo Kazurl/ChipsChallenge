@@ -25,6 +25,8 @@ import javafx.scene.text.Font;
  *     <li>Purpose of the program: This program is the main one used to launch the game.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Olwen. JavaDoc - Ffi, Enrique]
  */
 public class Main extends Application {
 

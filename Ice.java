@@ -4,6 +4,7 @@
  *     <li>Purpose of the program: Creates the Ice tile for the game.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Ffi, Azmeera - Ffi, Enrique]
  */
 public class Ice extends Tile {
 

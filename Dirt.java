@@ -6,6 +6,8 @@
  *     The Mobs should not be able to walk on the Dirt.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Dirt extends Tile {
 

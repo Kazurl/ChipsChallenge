@@ -6,6 +6,7 @@
  *     the Game will end once the Player reaches this tile.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Exit extends Tile {
 

@@ -5,6 +5,7 @@
  *     in the game.</li>
  *
  *</ol>
+ * @author [Code - Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Item {
 

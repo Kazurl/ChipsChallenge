@@ -5,6 +5,8 @@
  *     is a non-walkable tile that blocks movement.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Wall extends Tile {
 

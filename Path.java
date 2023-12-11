@@ -5,6 +5,8 @@
  *     This class is the normal tile for the game.</li>
  *
  *</ol>
+ *
+ *  * @author [Code - Azmeera, Ffi. JavaDoc - Ffi, Enrique]
  */
 public class Path extends Tile {
 

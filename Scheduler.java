@@ -12,6 +12,7 @@
  *     to pause, resume, and update game ticks. .</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard. JavaDoc - Ffi, Enrique]
  */
 public class Scheduler {
 

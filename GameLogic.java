@@ -6,6 +6,16 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+
+/**
+ *<ol>
+ *     <li>File-name: GameLogic.java</li>
+ *     <li>Purpose of the program: Controls the Logic of the Game, this includes the Actor movements, events as well as
+ *     game status.</li>
+ *
+ *</ol>
+ * @author [Code - Freddie. JavaDoc - Ffi, Enrique, Azmeera]
+ */
 public class GameLogic {
 
     /**

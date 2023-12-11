@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
  *     it extends the Mob class and move around the game world based on player input or game logic.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Enrique. JavaDoc - Ffi, Enrique]
  */
 public class PinkBall extends Mob {
 

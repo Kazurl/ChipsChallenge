@@ -5,6 +5,7 @@
  *     The key is used to open the locked doors and allows player to pass.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Azmeera, Ffi. JavaDoc - Ffi, Enrique]
  */
 public class Key extends Item {
 

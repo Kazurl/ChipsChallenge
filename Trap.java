@@ -5,6 +5,8 @@
  *     it extends the Tile class and can be activated or deactivated based on a connected button.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Trap extends Tile {
 
