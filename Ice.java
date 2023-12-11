@@ -25,12 +25,12 @@ public class Ice extends Tile {
     private CornerType cornerType;
 
     /**
-     * The X-coordinate of the Ice tile's location.
+     * The X-Coordinate of the Ice tile's location.
      */
     private int locationX;
 
     /**
-     * The Y-coordinate of the Ice tile's location.
+     * The Y-Coordinate of the Ice tile's location.
      */
     private int locationY;
 

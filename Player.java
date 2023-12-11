@@ -6,7 +6,7 @@
  *
  *</ol>
  */
-public class Player extends Actor{
+public class Player extends Actor {
 
     /**
      * Enumeration representing the
@@ -74,7 +74,7 @@ public class Player extends Actor{
      *
      * @param direction The direction to set.
      */
-    public void setDirection(Direction direction){
+    public void setDirection(Direction direction) {
 
     }
 
@@ -187,29 +187,29 @@ public class Player extends Actor{
      * @return True if there is a key of the specified color and it is used, false otherwise.
      */
     public boolean useKey(Key.Colour colour) {
-        if(colour == Key.Colour.RED) {
-            if(this.inventory[0] > 0) {
+        if (colour == Key.Colour.RED) {
+            if (this.inventory[0] > 0) {
                 this.inventory[0] -= 1;
                 return true;
             } else {
                 return false;
             }
-        } else if(colour == Key.Colour.GREEN) {
-            if(this.inventory[1] > 0) {
+        } else if (colour == Key.Colour.GREEN) {
+            if (this.inventory[1] > 0) {
                 this.inventory[1] -= 1;
                 return true;
             } else {
                 return false;
             }
-        } else if(colour == Key.Colour.BLUE) {
-            if(this.inventory[2] > 0) {
+        } else if (colour == Key.Colour.BLUE) {
+            if (this.inventory[2] > 0) {
                 this.inventory[2] -= 1;
                 return true;
             } else {
                 return false;
             }
-        } else if(colour == Key.Colour.YELLOW) {
-            if(this.inventory[3] > 0) {
+        } else if (colour == Key.Colour.YELLOW) {
+            if (this.inventory[3] > 0) {
                 this.inventory[3] -= 1;
                 return true;
             } else {
@@ -232,8 +232,8 @@ public class Player extends Actor{
      *
      * @param item The item to add ("red key", "green key", "blue key", "yellow key", or "chip").
      */
-    public void addToInventory(String item){
-        switch(item){
+    public void addToInventory(String item) {
+        switch (item) {
             case "red key":
                 this.inventory[0] = 1;
                 break;

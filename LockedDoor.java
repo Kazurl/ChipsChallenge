@@ -1,10 +1,4 @@
 /**
- * The LockedDoor class represents a tile of type LockedDoor, extending the Tile class.
- * It is initially not walkable and can be unlocked using a key of a specific colour.
- */
-
-
-/**
  *<ol>
  *     <li>File-name: LockedDoor.java</li>
  *     <li>Purpose of the program: Creates the LockedDoor for the game.

@@ -18,70 +18,259 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 
+
+/**
+ *<ol>
+ *     <li>File-name: Main.java</li>
+ *     <li>Purpose of the program: This program is the main one used to launch the game.</li>
+ *
+ *</ol>
+ */
 public class Main extends Application {
-    private static int windowWidth = 800;
-    private static int windowHeight = 500;
 
-    // The dimensions of the canvas
-    private static int canvasWidth;
-    private static int canvasHeight;
+    /**
+     * The width of the window.
+     */
+    private static int WINDOW_WIDTH = 800;
 
-    // The width and height (in pixels) of each cell that makes up the game.
-    private final static int GRID_CELL_WIDTH = 50;
-    private final static int GRID_CELL_HEIGHT = 50;
+    /**
+     * The height of the window.
+     */
+    private static int WINDOW_HEIGHT = 500;
 
-    // The width of the grid in number of cells.
-    private static int gridWidth;
+    /**
+    * Width of the canvas.
+    */
+    private static int CANVAS_WIDTH;
 
-    private static int gridHeight;
-    // The canvas in the GUI. This needs to be a global variable
-    // (in this setup) as we need to access it in different methods.
-    // We could use FXML to place code in the controller instead.
+    /**
+     * Height of the canvas.
+     */
+    private static int CANVAS_HEIGHT;
+
+    /** 
+    * The width in pixels of each cell that makes up the game.
+    */
+    private static int GRID_CELL_WIDTH = 50;
+
+    /**
+     * The height in pixels of each cell that makes up the game.
+     */
+    private static int GRID_CELL_HEIGHT = 50;
+
+    /**
+    * The width of the grid in number of cells.
+    */
+    private static int GRID_WIDTH;
+
+    /**
+     * The height of the grid in number of cells.
+     */
+    private static int GRID_HEIGHT;
+    
+    /**
+    * The canvas in the GUI. This needs to be a global variable
+    * (in this setup) as we need to access it in different methods.
+    * We could use FXML to place code in the controller instead.
+    */
     private Canvas canvas;
 
-    // Loaded images
+    /**
+     * Player Image.
+     */
     private Image playerImage;
+
+    /**
+     * Dirt Image.
+     */
     private Image dirtImage;
+
+    /**
+     * Icon Image.
+     */
     private Image iconImage;
+
+    /**
+     * Bug Image.
+     */
     private Image bugImage;
+
+    /**
+     * Button Image.
+     */
     private Image buttonImage;
+
+    /**
+     * ChipSocket Image.
+     */
     private Image chipSocketImage;
+
+    /**
+     * ComputerChip Image.
+     */
     private Image compChipImage;
+
+    /**
+     * Exit Image.
+     */
     private Image exitImage;
+
+    /**
+     * Frog Image.
+     */
     private Image frogImage;
+
+    /**
+     * Ice Image.
+     */
     private Image iceImage;
+
+    /**
+     * Red Key Image.
+     */
     private Image redKeyImage;
+
+    /**
+     * Green Key Image.
+     */
     private Image greenKeyImage;
+
+    /**
+     * Blue Key Image.
+     */
     private Image blueKeyImage;
+
+    /**
+     * Yellow Key Image.
+     */
     private Image yellowKeyImage;
+
+    /**
+     * Red Locked Door Image.
+     */
     private Image redLockedDoorImage;
+
+    /**
+     * Green Locked Door Image.
+     */
     private Image greenLockedDoorImage;
+
+    /**
+     * Blue Locked Door Image.
+     */
     private Image blueLockedDoorImage;
+
+    /**
+     * Yellow Locked Door Image.
+     */
     private Image yellowLockedDoorImage;
+
+    /**
+     * PinkBall Image.
+     */
     private Image pinkBallImage;
+
+    /**
+     * Trap Image.
+     */
     private Image trapImage;
+
+    /**
+     * Wall Image.
+     */
     private Image wallImage;
+
+    /**
+     * Water Image.
+     */
     private Image waterImage;
+
+    /**
+     * Path Image.
+     */
     private Image pathImage;
+
+    /**
+     * Top-Left Corner Ice Image.
+     */
     private Image TLIceImage;
+
+    /**
+     * Top-Right Corner Ice Image.
+     */
     private Image TRIceImage;
+
+    /**
+     * Bottom-Left Corner Ice Image.
+     */
     private Image BLIceImage;
+
+    /**
+     * Bottom-Right Corner Ice Image.
+     */
     private Image BRIceImage;
+
+    /**
+     * Block Image.
+     */
     private Image blockImage;
 
+    /**
+     * TextField for Username.
+     */
     private TextField usernameInput;
+
+    /**
+     * Label for the GUI. //IDK
+     */
     private Label label;
+
+
+    /**
+     * IDK
+     */
+    private Label label2;
+
+    /**
+     * PasswordField for Password.
+     */
+
     private PasswordField passwordInput;
 
+    /**
+     * Submit button for the GUI.
+     */
     private Button submitButton;
 
+
+    /**
+     * Login button for the GUI.
+     */
+    private Button loginButton;
+
+    /**
+     * Register button for the GUI.
+     */
+    private Button registerButton;
+
+    /**
+     * Error Alert Message.
+     */
     private Alert message = new Alert(Alert.AlertType.NONE);
 
-    // X and Y coordinate of player on the grid.
+    /**
+    * X-Coordinate of player on the grid.
+    */
     private int playerX;
+
+    /**
+     * Y-Coordinate of player on the grid.
+     */
     private int playerY;
 
-    // Timeline which will cause tick method to be called periodically.
+    /**
+    * Timeline which will cause tick method to be called periodically.
+    */
     private Timeline tickTimeline;
 
     /**
@@ -146,6 +335,12 @@ public class Main extends Application {
         primaryStage.show();
         */
     }
+
+    /**
+     * Generates the Login GUI for the application.
+     *
+     * @param stage The stage for the application.
+     */
     public void loginGUI(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
@@ -181,7 +376,12 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void registerGUI(Stage stage) { //Azmeera
+    /**
+     * Generate the Register GUI for the game.
+     *
+     * @param stage The stage for the application.
+     */
+    public void registerGUI(Stage stage) {
         BorderPane registerPane = new BorderPane();
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(15, 12, 15, 12));
@@ -214,7 +414,11 @@ public class Main extends Application {
         stage.show();
     }
 
-
+    /**
+     * Generate the username GUI for the application.
+     *
+     * @param stage The stage for the application.
+     */
     public void usernameGUI(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
@@ -245,6 +449,12 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Generate the Password GUI for the application.
+     *
+     * @param stage The stage for the application.
+     * @param index //IDK
+     */
     public void passwordGUI(Stage stage, int index) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
@@ -276,7 +486,8 @@ public class Main extends Application {
 
 
     /**
-     * Handles the tick event, called periodically. Updates game positions and triggers various actions.
+     * This is called periodically and updates the game positions
+     * and triggers various actions.
      */
     public void tick() {
         GameLogic.getGameMap().getSchedule().updateTick();
@@ -314,8 +525,8 @@ public class Main extends Application {
     }
 
     /**
-     * Handles key events when a key is pressed. Changes behavior based on the pressed key.
-     *
+     * Handles key events when a key is pressed.
+     * Changes behavior based on the pressed key.
      * @param event The key event.
      */
 
@@ -407,6 +618,11 @@ public class Main extends Application {
         return root;
     }
 
+    /**
+     * Saves the Game in a File. //IDK
+     *
+     * @param stage The stage for the application.
+     */
     public void saveToFile(Stage stage) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
@@ -434,6 +650,9 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Generates the whole Map on the Canvas.
+     */
     public void drawGame() {
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -547,6 +766,10 @@ public class Main extends Application {
         gc.setFill(Color.WHITE);
         gc.fillText("Chips:" + invToShow[4], canvasWidth * 0.8, canvasHeight - 3, canvasWidth /5.0);
     }
+
+    /**
+     * Generate the Ending Canvas for when the game ends.
+     */
     public void drawEnd() {
         canvas.setWidth(windowWidth);
         canvas.setHeight(windowHeight);
@@ -584,6 +807,12 @@ public class Main extends Application {
 
     }
 
+    /**
+     * Generate the Save and Load GUI for the application.
+     *
+     * @param stage The stage for the application.
+     * @param userName The Player.
+     */
     private void saveOrLoad(Stage stage, String userName) {
         BorderPane mapPane = new BorderPane();
         HBox hbox = new HBox();
@@ -618,6 +847,12 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Load the Map for the game.
+     *
+     * @param stage The stage for the application.
+     * @param userName The Player.
+     */
     private void loadMap(Stage stage, String userName) {
         BorderPane loginPane = new BorderPane();
         HBox hbox = new HBox();
@@ -651,6 +886,13 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * Generates the List of Maps in the game.
+     *
+     * @param stage The stage of the application.
+     * @param userName The Player.
+     */
     private void newMap(Stage stage, String userName) {
         BorderPane mapPane = new BorderPane();
         HBox hbox = new HBox();
@@ -685,10 +927,10 @@ public class Main extends Application {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
                 Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
-                gridWidth = newMap.getBoardWidth();
-                gridHeight = newMap.getBoardHeight();
-                canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                GRID_WIDTH = newMap.getBoardWidth();
+                GRID_HEIGHT = newMap.getBoardHeight();
+                CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                 GameLogic.setGameMap(newMap);
                 runGame(stage);
             }
@@ -805,6 +1047,11 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Runs the stage for the game.
+     *
+     * @param stage The stage of the application.
+     */
     public void runGame(Stage stage) {
         if(canvasWidth >= windowWidth -100) {
             windowWidth = canvasWidth + 100;
@@ -831,7 +1078,11 @@ public class Main extends Application {
         stage.show();
     }
 
-
+    /**
+     * Officially launch the game on User's device.
+     *
+     * @param args The application.
+     */
     public static void main(String[] args) {
         launch(args);
     }

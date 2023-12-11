@@ -10,13 +10,16 @@ public class GameLogic {
      * The map.
      */
     private static Map gameMap;
+
+    /**
+     * The level number of the Map.
+     */
     private static int levelNum;
 
 
     /**
      * Next move for the Player.
      */
-
     private static KeyCode nextMove;
 
     /**
@@ -45,12 +48,14 @@ public class GameLogic {
      * Shows the high scores of all the Players that have played the level.
      * New updates will override the old contents.
      */
-
     public static void endGameChanges() {
         changeScoresInFile();
         changeMapProgress();
     }
 
+    /**
+     * Changes the Scores In the File.
+     */
     private static void changeScoresInFile() {
         String oldString = gameMap.getTopNames()[0] + "," + gameMap.getTopScores()[0];
         
@@ -111,10 +116,18 @@ public class GameLogic {
         }
     }
 
-
+    /**
+     * Sets the Level of the Map.
+     * @param num Level number for the Map.
+     */
     public static void setLevelNum(int num) {
         levelNum = num;
     }
+
+    /**
+     * Update the contents in the Credentials and
+     * change the progress of the Map.
+     */
     private static void changeMapProgress() {
         if (levelNum > FileConverter.levelProgressSaved) {
             String oldString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + "," + FileConverter.levelProgressSaved;
@@ -167,7 +180,6 @@ public class GameLogic {
     }
 
 
-
     /**
      * Checks the current status of the game, including the player's condition, collected items,
      * and whether the player has reached the exit.
@@ -215,6 +227,7 @@ public class GameLogic {
     public static void setGameWon(boolean gameWon) {
         GameLogic.gameWon = gameWon;
     }
+
     /**
      * Gets the current win status of the game.
      *
@@ -1108,6 +1121,9 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Moves the Frog on the Map.
+     */
     public static void moveFrogs() {
         Frog[] frogs = gameMap.getFrogsStored();
         for (int i = 0; i < frogs.length; i++) {
@@ -1121,6 +1137,7 @@ public class GameLogic {
         }
 
     }
+
     /**
      * Update the positions of blocks and the player on the game map.
      * Handles special behavior on ice tiles for both blocks and the player.

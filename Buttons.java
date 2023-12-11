@@ -18,14 +18,13 @@ public class Buttons extends Tile {
      */
     private Trap connectTrap;
 
-
     /**
-     * Button X-coordinate.
+     * Button X-Coordinate.
      */
     private int x;
 
     /**
-     * Button Y-coordinate.
+     * Button Y-Coordinate.
      */
     private int y;
 
@@ -47,8 +46,8 @@ public class Buttons extends Tile {
     /**
      * Creates a Button at the specified coordinates.
      *
-     * @param x The X-coordinates.
-     * @param y The Y-coordinates.
+     * @param x The X-Coordinates.
+     * @param y The Y-Coordinates.
      */
     public Buttons(int x, int y) {
         super(true, true);
@@ -61,8 +60,8 @@ public class Buttons extends Tile {
      * Creates a Button at the specified coordinates along with
      * the Trap that it should connect to.
      *
-     * @param x The X-coordinate of the button tile.
-     * @param y The Y-coordinate of the button tile.
+     * @param x The X-Coordinate of the button tile.
+     * @param y The Y-Coordinate of the button tile.
      * @param connectedTrap Which Trap the button should connect to.
      */
     public Buttons(int x, int y, Trap connectedTrap) {
@@ -82,7 +81,7 @@ public class Buttons extends Tile {
     /**
      * Sets the state of the button.
      *
-     * @param buttonState IS True to set the button as pressed,
+     * @param buttonState Is True to set the button as pressed,
      *                    False to set it as released.
      */
     public void setButtonState(boolean buttonState) {
@@ -152,43 +151,44 @@ public class Buttons extends Tile {
 
     /**
      * Sets the connected trap for the Button.
-     * @param connectTrap
+     *
+     * @param connectTrap Connects the Trap to the Button.
      */
     public void setConnectTrap(Trap connectTrap) {
         this.connectTrap = connectTrap;
     }
 
     /**
-     * Gets the X-coordinates of the Button.
+     * Gets the X-Coordinates of the Button.
      *
-     * @return X-coordinates.
+     * @return X-Coordinates.
      */
     public int getX() {
         return x;
     }
 
     /**
-     * Sets the X-coordinates for the Button.
+     * Sets the X-Coordinates for the Button.
      *
-     * @param x X-coordinates.
+     * @param x X-Coordinates.
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * Gets the Y-coordinates for the Button.
+     * Gets the Y-Coordinates for the Button.
      *
-     * @return Y-coordinates.
+     * @return Y-Coordinates.
      */
     public int getY() {
         return y;
     }
 
     /**
-     * Sets the Y-coordinates of the Button.
+     * Sets the Y-Coordinates of the Button.
      *
-     * @param y Y-coordinates.
+     * @param y Y-Coordinates.
      */
     public void setY(int y) {
         this.y = y;

@@ -11,14 +11,24 @@ import java.util.Arrays;
  *     Saves the Player's Progress and converts them into a text file.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class FileConverter {
 
+    /**
+     * The Usernames saved in the File.
+     */
+    public static String userNameSaved;
 
-    static String userNameSaved;
-    static String passwordSaved;
-    static int levelProgressSaved;
+    /**
+     * The Passwords saved in the File.
+     */
+    public static String passwordSaved;
 
+    /**
+     * The Level Progressed saved in the File.
+     */
+    public static int levelProgressSaved;
 
     /**
      *Prime is used for Hashing.
@@ -157,28 +167,43 @@ public class FileConverter {
 
         File newFile = new File(filePath);
         try {
+
             Scanner fileReader = new Scanner(newFile);
             fileReader.useDelimiter("\r\n|\n");
+
             Scanner lineReader = new Scanner(fileReader.next());
             lineReader.useDelimiter(",");
+
             int width = lineReader.nextInt();
             int height = lineReader.nextInt();
             int timeLeft = lineReader.nextInt();
+
             Player givenPlayer = new Player(userName);
+
             Block[] givenBlocks = {};
+
             Frog[] givenFrogs = {};
+
             Bug[] givenBugs = {};
+
             Buttons[] givenButtons = {};
+
             Trap[] givenTraps = {};
+
             PinkBall[] givenPinkBalls = {};
+
             lineReader = new Scanner(fileReader.next());
             lineReader.useDelimiter(",");
+
             int[] newInventory = {lineReader.nextInt(),lineReader.nextInt(),lineReader.nextInt(),lineReader.nextInt(),lineReader.nextInt()};
 
             Actor[][] actorFile = new Actor[height][width];
+
             for (int y = 0; y < height; y++) {
+
                 lineReader = new Scanner(fileReader.next());
                 lineReader.useDelimiter(",");
+
                 for (int x = 0; x < width; x++) {
                     String nextActor = lineReader.next();
                     switch (nextActor) {
@@ -416,182 +441,276 @@ public class FileConverter {
      * If the map is already saved, it would print "File already exists".
      *
      * @param currentMap Current Map that needs to be converted.
+     * @param path Name of the Text File.
      */
     public static boolean convertToFile(Map currentMap, String path) {
         Player player = currentMap.getPlayer();
-        boolean complete = false;
-        while (!complete) {
-            try {
-                File newFile = new File(path);
-                if (newFile.createNewFile()) {
-                    FileWriter WriteToFile = new FileWriter(newFile);
-                    WriteToFile.write(currentMap.getBoardWidth()
-                            + "," + currentMap.getBoardHeight()
-                            + "," + currentMap.getTimeLeft() + "\r\n");
-                    int[] playerInv = player.getInventory();
-                    for (int i = 0; i < playerInv.length; i++) {
-                        WriteToFile.write(Integer.toString(playerInv[i]));
-                        if (i + 1 == playerInv.length) {
-                            WriteToFile.write("\r\n");
-                        } else {
-                            WriteToFile.write(",");
-                        }
-                    }
-                    for (int y = 0; y < currentMap.getBoardHeight(); y++) {
-                        for (int x = 0; x < currentMap.getBoardWidth(); x++) {
-                            Actor currentActor = currentMap.getPosActor(x, y);
-                            if (currentActor instanceof Player) {
-                                WriteToFile.write("Pl");
-                            } else if (currentActor instanceof Frog) {
-                            WriteToFile.write("Fr");
-                        } else if (currentActor instanceof Block) {
-                                WriteToFile.write("Bl");
-                            } else if (currentActor instanceof Bug) {
-                            WriteToFile.write("B");
-                                if (currentActor.getDirection() == KeyCode.UP) {
-                                    WriteToFile.write("1");
-                                } else if (currentActor.getDirection() == KeyCode.DOWN) {
-                                    WriteToFile.write("2");
-                                } else if (currentActor.getDirection() == KeyCode.LEFT) {
-                                    WriteToFile.write("3");
-                                } else if (currentActor.getDirection() == KeyCode.RIGHT) {
-                                    WriteToFile.write("4");
-                                }
-                                if (((Bug) currentActor).getFollow()) {
-                                    WriteToFile.write("1");
-                                } else {
-                                    WriteToFile.write("2");
-                                }
-                        } else if (currentActor instanceof PinkBall) {
-                                if (currentActor.getDirection() == KeyCode.UP) {
-                                    WriteToFile.write("P1");
-                                } else if (currentActor.getDirection() == KeyCode.DOWN) {
-                                    WriteToFile.write("P2");
-                                } else if (currentActor.getDirection() == KeyCode.LEFT) {
-                                    WriteToFile.write("P3");
-                                } else if (currentActor.getDirection() == KeyCode.RIGHT) {
-                                    WriteToFile.write("P4");
-                                }
-                        } else {
-                                WriteToFile.write("0");
-                            }
-                            if (x + 1 != currentMap.getBoardWidth()) {
-                                WriteToFile.write(",");
-                            }
-                        }
-                        WriteToFile.write("\r\n");
-                    }
-                    for (int y = 0; y < currentMap.getBoardHeight(); y++) {
-                        for (int x = 0; x < currentMap.getBoardWidth(); x++) {
-                            Item currentItem = currentMap.getPosItem(x, y);
-                            if (currentItem instanceof ComputerChip) {
-                                WriteToFile.write("C");
-                            } else if (currentItem instanceof Key) {
-                                if (((Key) currentItem).getKeyColour() == Key.Colour.RED) {
-                                    WriteToFile.write("K1");
-                                } else if (((Key) currentItem).getKeyColour() == Key.Colour.GREEN) {
-                                    WriteToFile.write("K2");
-                                } else if (((Key) currentItem).getKeyColour() == Key.Colour.BLUE) {
-                                    WriteToFile.write("K3");
-                                } else if (((Key) currentItem).getKeyColour() == Key.Colour.YELLOW) {
-                                    WriteToFile.write("K4");
-                                }
-                            } else {
-                                WriteToFile.write("0");
-                            }
-                            if (x + 1 != currentMap.getBoardWidth()) {
-                                WriteToFile.write(",");
-                            }
-                        }
-                        WriteToFile.write("\r\n");
-                    }
-                    for (int y = 0; y < currentMap.getBoardHeight(); y++) {
-                        for (int x = 0; x < currentMap.getBoardWidth(); x++) {
-                            Tile currentTile = currentMap.getPosTile(x, y);
-                            if (currentTile instanceof Ice) {
-                                if (((Ice) currentTile).getCornerType() == Ice.CornerType.NONE) {
-                                    WriteToFile.write("I1");
-                                } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.TOP_LEFT) {
-                                    WriteToFile.write("I2");
-                                } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.TOP_RIGHT) {
-                                    WriteToFile.write("I3");
-                                } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.BOTTOM_LEFT) {
-                                    WriteToFile.write("I4");
-                                } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.BOTTOM_RIGHT) {
-                                    WriteToFile.write("I5");
-                                }
-                            } else if (currentTile instanceof Dirt) {
-                                WriteToFile.write("Dt");
-                            } else if (currentTile instanceof Wall) {
-                                WriteToFile.write("Wl");
-                            } else if (currentTile instanceof Exit) {
-                                WriteToFile.write("Ex");
-                            } else if (currentTile instanceof Path) {
-                                WriteToFile.write("Pt");
-                            } else if (currentTile instanceof Water) {
-                                WriteToFile.write("Wt");
-                            } else if (currentTile instanceof ChipSocket) {
-                                WriteToFile.write("S" + ((ChipSocket) currentTile).getChipAmountNeeded());
-                            } else if (currentTile instanceof LockedDoor) {
-                                if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.RED) {
-                                    WriteToFile.write("L1");
-                                } else if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.GREEN) {
-                                    WriteToFile.write("L2");
-                                } else if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.BLUE) {
-                                    WriteToFile.write("L3");
-                                } else if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.YELLOW) {
-                                    WriteToFile.write("L4");
-                                }
-                            }  else if (currentTile instanceof Buttons) {
-                            WriteToFile.write("B" + ((Buttons) currentTile).getIdentifier());
-                        } else if (currentTile instanceof Trap) {
-                            WriteToFile.write("T" + ((Trap) currentTile).getIdentifier());
-                        }  else {
-                                WriteToFile.write("0");
-                            }
-                            if (x + 1 != currentMap.getBoardWidth()) {
-                                WriteToFile.write(",");
-                            }
-                        }
-                        WriteToFile.write("\r\n");
-                    }
-                    String[] names = currentMap.getTopNames();
-                    int[] scores = currentMap.getTopScores();
-                    for (int i = 0; i < 10; i++) {
-                        WriteToFile.write(names[i] + "," + scores[i]);
-                        if (i + 1 != 10) {
-                            WriteToFile.write(",");
-                        }
-                    }
-                    WriteToFile.write("\r\n");
-                    WriteToFile.write(GameLogic.getGameMap().getOriginal());
 
-                    WriteToFile.close();
-                    System.out.println("File created: " + newFile.getName());
-                    complete = true;
-                } else {
-                    System.out.println("File already exists.");
-                    return false;
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid File Path.");
-                return false;
+        boolean complete = false;
+
+        try {
+            File newFile = createNewFile(path);
+            FileWriter writeToFile = new FileWriter(newFile);
+
+            writeMapInfo(currentMap, writeToFile);
+
+            writePlayerInventory(player, writeToFile);
+
+            writeActorLayer(currentMap, writeToFile);
+
+            writeItemLayer(currentMap, writeToFile);
+
+            writeTileLayer(currentMap, writeToFile);
+
+            writeTopScores(currentMap, writeToFile);
+
+            writeToFile.write(GameLogic.getGameMap().getOriginal());
+
+            writeToFile.close();
+
+            System.out.println("File created: " + newFile.getName());
+            complete = true;
+
+        } catch (IOException e) {
+            System.out.println("Error creating file.");
+            return false;
+        }
+
+        return complete;
+    }
+
+    /**
+     * Creates a new text file if a text file does not exist.
+     *
+     * @param path Name of the Text file.
+     * @return Created File.
+     * @throws IOException Throws error if file already exists.
+     */
+    private static File createNewFile(String path) throws IOException {
+
+        File newFile = new File(path);
+
+        if (newFile.createNewFile()) {
+            return newFile;
+        } else {
+            System.out.println("File already exists");
+            throw new IOException("File already exists");
+        }
+    }
+
+    /**
+     * Writes the Map Width, Height and TimeLeft from the Map into the Save File.
+     *
+     * @param currMap The current Map.
+     * @param writeToFile File that will write the information.
+     * @throws IOException Throws error if there's issue writing data.
+     */
+    private static void writeMapInfo(Map currMap, FileWriter writeToFile) throws IOException {
+
+        writeToFile.write(currMap.getBoardWidth()
+                + "," + currMap.getBoardHeight()
+                + "," + currMap.getTimeLeft() + "\r\n");
+
+    }
+
+    /**
+     * Writes the Player inventory data from the Map into the File.
+     *
+     * @param player The Player.
+     * @param writeToFile File that will write the information.
+     * @throws IOException Throws error if there's issue writing data.
+     */
+    private static void writePlayerInventory(Player player, FileWriter writeToFile) throws IOException {
+
+        int[] playerInv = player.getInventory();
+
+        for (int i = 0; i < playerInv.length; i++) {
+            writeToFile.write(Integer.toString(playerInv[i]));
+            if (i + 1 == playerInv.length) {
+                writeToFile.write("\r\n");
+            } else {
+                writeToFile.write(",");
             }
         }
-        return true;
     }
 
+    /**
+     * Write the Actor information data from the Map into the File.
+     *
+     * @param currentMap The current Map.
+     * @param writeToFile File that will write the information.
+     * @throws IOException Throws error if there's issue writing data.
+     */
+    private static void writeActorLayer(Map currentMap, FileWriter writeToFile) throws IOException {
 
-    public static void changeScore() {
-        /*
-        File originalFile = new File(GameLogic.getGameMap().getOriginal());
-        try {
-            Scanner fileReader = new Scanner(originalFile);
-            fileReader.
-            FileWriter fileWriter = new FileWriter(originalFile);
-        } catch(Exception e) {
+        for (int y = 0; y < currentMap.getBoardHeight(); y++) {
+            for (int x = 0; x < currentMap.getBoardWidth(); x++) {
 
+                Actor currentActor = currentMap.getPosActor(x, y);
+
+                if (currentActor instanceof Player) {
+                    writeToFile.write("Pl");
+                } else if (currentActor instanceof Frog) {
+                    writeToFile.write("Fr");
+                } else if (currentActor instanceof Block) {
+                    writeToFile.write("Bl");
+                } else if (currentActor instanceof Bug) {
+                    writeToFile.write("B");
+                    if (currentActor.getDirection() == KeyCode.UP) {
+                        writeToFile.write("1");
+                    } else if (currentActor.getDirection() == KeyCode.DOWN) {
+                        writeToFile.write("2");
+                    } else if (currentActor.getDirection() == KeyCode.LEFT) {
+                        writeToFile.write("3");
+                    } else if (currentActor.getDirection() == KeyCode.RIGHT) {
+                        writeToFile.write("4");
+                    }
+                    if (((Bug) currentActor).getFollow()) {
+                        writeToFile.write("1");
+                    } else {
+                        writeToFile.write("2");
+                    }
+                } else if (currentActor instanceof PinkBall) {
+                    if (currentActor.getDirection() == KeyCode.UP) {
+                        writeToFile.write("P1");
+                    } else if (currentActor.getDirection() == KeyCode.DOWN) {
+                        writeToFile.write("P2");
+                    } else if (currentActor.getDirection() == KeyCode.LEFT) {
+                        writeToFile.write("P3");
+                    } else if (currentActor.getDirection() == KeyCode.RIGHT) {
+                        writeToFile.write("P4");
+                    }
+                } else {
+                    writeToFile.write("0");
+                }
+
+                if (x + 1 != currentMap.getBoardWidth()) {
+                    writeToFile.write(",");
+                }
+            }
+            writeToFile.write("\r\n");
         }
-         */
     }
+
+    /**
+     * Write the Item information data from the Map into the File.
+     *
+     * @param currentMap The current Map.
+     * @param writeToFile File that will write the information.
+     * @throws IOException Throws error if there's issue writing data.
+     */
+    private static void writeItemLayer(Map currentMap, FileWriter writeToFile) throws IOException {
+
+        for (int y = 0; y < currentMap.getBoardHeight(); y++) {
+            for (int x = 0; x < currentMap.getBoardWidth(); x++) {
+                Item currentItem = currentMap.getPosItem(x, y);
+
+                if (currentItem instanceof ComputerChip) {
+                    writeToFile.write("C");
+                } else if (currentItem instanceof Key) {
+                    if (((Key) currentItem).getKeyColour() == Key.Colour.RED) {
+                        writeToFile.write("K1");
+                    } else if (((Key) currentItem).getKeyColour() == Key.Colour.GREEN) {
+                        writeToFile.write("K2");
+                    } else if (((Key) currentItem).getKeyColour() == Key.Colour.BLUE) {
+                        writeToFile.write("K3");
+                    } else if (((Key) currentItem).getKeyColour() == Key.Colour.YELLOW) {
+                        writeToFile.write("K4");
+                    }
+                } else {
+                    writeToFile.write("0");
+                }
+
+                if (x + 1 != currentMap.getBoardWidth()) {
+                    writeToFile.write(",");
+                }
+            }
+            writeToFile.write("\r\n");
+        }
+    }
+
+    /**
+     * Write the Tile information data from the Map into the File.
+     *
+     * @param currentMap The current Map.
+     * @param writeToFile File that will write the information.
+     * @throws IOException Throws error if there's issue writing data.
+     */
+    private static void writeTileLayer(Map currentMap, FileWriter writeToFile) throws IOException {
+        for (int y = 0; y < currentMap.getBoardHeight(); y++) {
+            for (int x = 0; x < currentMap.getBoardWidth(); x++) {
+                Tile currentTile = currentMap.getPosTile(x, y);
+
+                if (currentTile instanceof Ice) {
+                    if (((Ice) currentTile).getCornerType() == Ice.CornerType.NONE) {
+                        writeToFile.write("I1");
+                    } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.TOP_LEFT) {
+                        writeToFile.write("I2");
+                    } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.TOP_RIGHT) {
+                        writeToFile.write("I3");
+                    } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.BOTTOM_LEFT) {
+                        writeToFile.write("I4");
+                    } else if (((Ice) currentTile).getCornerType() == Ice.CornerType.BOTTOM_RIGHT) {
+                        writeToFile.write("I5");
+                    }
+                } else if (currentTile instanceof Dirt) {
+                    writeToFile.write("Dt");
+                } else if (currentTile instanceof Wall) {
+                    writeToFile.write("Wl");
+                } else if (currentTile instanceof Exit) {
+                    writeToFile.write("Ex");
+                } else if (currentTile instanceof Path) {
+                    writeToFile.write("Pt");
+                } else if (currentTile instanceof Water) {
+                    writeToFile.write("Wt");
+                } else if (currentTile instanceof ChipSocket) {
+                    writeToFile.write("S" + ((ChipSocket) currentTile).getChipAmountNeeded());
+                } else if (currentTile instanceof LockedDoor) {
+                    if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.RED) {
+                        writeToFile.write("L1");
+                    } else if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.GREEN) {
+                        writeToFile.write("L2");
+                    } else if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.BLUE) {
+                        writeToFile.write("L3");
+                    } else if (((LockedDoor) currentTile).getDoorColour() == Key.Colour.YELLOW) {
+                        writeToFile.write("L4");
+                    }
+                } else if (currentTile instanceof Buttons) {
+                    writeToFile.write("B" + ((Buttons) currentTile).getIdentifier());
+                } else if (currentTile instanceof Trap) {
+                    writeToFile.write("T" + ((Trap) currentTile).getIdentifier());
+                } else {
+                    writeToFile.write("0");
+                }
+
+                if (x + 1 != currentMap.getBoardWidth()) {
+                    writeToFile.write(",");
+                }
+            }
+            writeToFile.write("\r\n");
+        }
+    }
+
+    /**
+     * Write the Top-score data from the Map into the File.
+     *
+     * @param currentMap The current Map.
+     * @param writeToFile File that will write the information.
+     * @throws IOException Throws error if there's issue writing data.
+     */
+    private static void writeTopScores(Map currentMap, FileWriter writeToFile) throws IOException {
+
+        String[] names = currentMap.getTopNames();
+
+        int[] scores = currentMap.getTopScores();
+
+        for (int i = 0; i < 10; i++) {
+            writeToFile.write(names[i] + "," + scores[i]);
+            if (i + 1 != 10) {
+                writeToFile.write(",");
+            }
+        }
+        writeToFile.write("\r\n");
+    }
+
 }

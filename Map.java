@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-
 /**
  *<ol>
  *     <li>File-name: Map.java</li>
@@ -8,8 +7,8 @@ import java.util.Arrays;
  *     The map will be created with all the information needed for that level.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard. JavaDoc - Ffi, Enrique]
  */
-
 public class Map {
 
     /**
@@ -34,7 +33,7 @@ public class Map {
     private Scheduler schedule = new Scheduler();
 
     /**
-     * The pLayer.
+     * The Player.
      */
     private Player playerStored;
 
@@ -151,10 +150,20 @@ public class Map {
         return playerStored;
     }
 
+    /**
+     * Gets the 2D array of Actor Layer for the Map.
+     *
+     * @return The Actor Layer.
+     */
     public Actor[][] getActorLayerMap() {
         return actorLayerMap;
     }
 
+    /**
+     * Gets the 2D array of Tile Layer for the Map.
+     *
+     * @return The Tile Layer.
+     */
     public Tile[][] getTileLayerMap() {
         return tileLayerMap;
     }
@@ -167,7 +176,6 @@ public class Map {
      *
      * @return Time left to complete the Map.
      */
-
     public int getTimeLeft() {
         return timeLeft;
     }
@@ -397,9 +405,9 @@ public class Map {
     public int[] newScore(int score, String name) {
         newScores = Arrays.copyOf(topScores, 10);
         newNames = Arrays.copyOf(topNames, 10);
-        for(int i = 0; i < newScores.length; i++) {
-            if(score>newScores[i]) {
-                for(int x = 9; x > i; x--) {
+        for (int i = 0; i < newScores.length; i++) {
+            if (score>newScores[i]) {
+                for (int x = 9; x > i; x--) {
                     newScores[x] = newScores[x-1];
                     newNames[x] = newNames[x-1];
                 }
@@ -437,6 +445,12 @@ public class Map {
     public String[] getNewNames() {
         return newNames;
     }
+
+    /**
+     * Gets the new Score for the Player.
+     *
+     * @return List of new Scores for the Map.
+     */
     public int[] getNewScore() {return newScores;}
 
 }

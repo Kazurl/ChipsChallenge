@@ -1,4 +1,3 @@
-
 /**
  *<ol>
  *     <li>File-name: Key.java</li>
@@ -12,7 +11,7 @@ public class Key extends Item {
     /**
      * Enumeration representing the different colours for Key.
      */
-    enum Colour {
+    public enum Colour {
         RED,
         BLUE,
         YELLOW,
@@ -22,13 +21,13 @@ public class Key extends Item {
     /**
      * The colour of the Key.
      */
-    private Colour keyColour; // Assuming Colour is a class or enum representing colors
+    private Colour keyColour;
 
     /**
      * Creates a coloured Key at the specified coordinates
      *
-     * @param itemLocationX The X-coordinate.
-     * @param itemLocationY The Y-coordinate.
+     * @param itemLocationX The X-Coordinate.
+     * @param itemLocationY The Y-Coordinate.
      * @param keyColour The Key Colour.
      */
     public Key(int itemLocationX, int itemLocationY, Colour keyColour) {
@@ -51,7 +50,7 @@ public class Key extends Item {
      * @param player The player.
      */
     public void interactPlayer(Player player) {
-        switch(this.keyColour){
+        switch (this.keyColour) {
             case RED:
                 player.addToInventory("red key");
                 break;

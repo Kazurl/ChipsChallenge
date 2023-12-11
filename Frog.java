@@ -50,6 +50,71 @@ public class Frog extends Mob{
         super(tile);
     }
 
+
+
+    /**
+     * Checks if the Frog is moving correctly.
+     *
+     * @param args Runs the programme.
+     */
+    public static void main(String[] args) {
+        // Create a Frog instance
+        Frog frog = new Frog();
+
+        // Set up test maps (this can be adjusted as per your needs)
+        //frog.createActorMap();
+        //frog.createTileMap();
+
+        // Sample test coordinates (modify these as needed)
+        int startX = 2;
+        int startY = 4;
+        int playerX = 1;
+        int playerY = 1;
+
+        // Check if a path exists from (startX, startY) to (playerX, playerY)
+        int[] result = frog.isPath(startX, startY, playerX, playerY);
+
+        if (result != null) {
+            System.out.println("Path found. Destination coordinates: (" + result[0] + ", " + result[1] + ")");
+        } else {
+            System.out.println("No path found.");
+        }
+    }
+
+    /**
+     * Finds the shortest path from the frog's current position
+     * based on a point on the map and moves accordingly.
+     *
+     *
+     *
+     */
+    /*public int checkShortest(int[][] map, int frog) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        int d[] = new int[6];
+        int pred[] = new int[6];
+        boolean S[] = new boolean[6];
+        for (int i = 0; i < 6; i++) {
+            d[i] = 1000;
+            pred[i] = -1;
+            S[i] = false;
+        }
+        d[frog] = 0;
+        // put all vertices in priority queue, Q, in d[i] decreasing order
+        // while !Empty(Q){
+        int u = pq.poll();
+        System.out.println("Cheapest: " + u + "| The rest of priority Queue: " + pq);
+        S[u] = true;
+        for ea vertex i adj to u{
+            if (S[i] != true && d[i] > d[u]+1){
+                remove i from Q;
+                d[i] = d[u] + 1;
+                pred[i] = u;
+                insert i into Q acc to its d[i];
+            }
+        }
+    }*/
+
     /**
      * Method that sets the Map when given the Actor 2D array and Tile 2d Array.
      *
@@ -118,8 +183,8 @@ public class Frog extends Mob{
      *
      * @param row The row on the map.
      * @param col The column on the map.
-     * @param playerx The Player's X-coordinate on the map.
-     * @param playery The Player's Y-coordinate on the map.
+     * @param playerX The Player's X-Coordinate on the map.
+     * @param playerY The Player's Y-Coordinate on the map.
      * @return True if the Frog's position is the same as the Player, False otherwise.
      */
     private boolean isEnd(int row, int col, int playerX, int playerY) {
@@ -189,6 +254,7 @@ public class Frog extends Mob{
 
 
     /**
+
      * Checks for the shortest path from the frog's current position to a specified destination on the map.
      *
      * @param startx The starting X-coordinate on the map.
@@ -196,6 +262,14 @@ public class Frog extends Mob{
      * @param playerx The destination X-coordinate on the map.
      * @param playery The destination Y-coordinate on the map.
      * @return Immediate coordinates in the shortest path on the map.
+
+     * Moves the Frog closer to the Player.
+     *
+     * @param startX The Frog's X-Coordinate.
+     * @param startY The Frog's  Y-Coordinate.
+     * @param playerX The Player's X-Coordinate.
+     * @param playerY The Player's Y-Coordinate.
+     * @return The new coordinates for the Frog to move.
      */
 
     public int[] isPath(int startX, int startY, int playerX, int playerY) {
@@ -270,6 +344,14 @@ public class Frog extends Mob{
         return new int[] {destX, destY};
     }
 
+    /**
+     * Checks if the Actor can walk at the specified Coordinate.
+     *
+     * @param xCoord X-Coordinates on the Map.
+     * @param yCoord Y-Coordinates on the Map.
+     * @param player The Player.
+     * @return True if Actor can walk at the specified Coordinate.
+     */
     private boolean walkableActor(int xCoord, int yCoord, Player player) {
         System.out.println("(PlayerX, PlayerY): (" + player.getX() + ", " + player.getY() + ")");
         if (validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length)){
@@ -280,8 +362,78 @@ public class Frog extends Mob{
         }
         return false;
     }
+
+    /**
+     * Check if the Tile is walkable.
+     *
+     * @param xCoord X-Coordinate on the Map.
+     * @param yCoord Y-Coordinate on the Map.
+     * @return True if the Tile is walkable, False if otherwise.
+     */
     private boolean walkableTile(int xCoord, int yCoord) {
         if (!(validHeight(xCoord, actorLayerMap.length) && validWidth(yCoord, actorLayerMap[0].length))) return false;
         return tileLayerMap[xCoord][yCoord].getWalkable();
     }
+
+
+    /**
+     * Create a Player on the Map.
+     *
+     * @param player The Player.
+     */
+    private void createActorMap(Player player) {
+        Bug bug = new Bug();
+
+        this.actorLayerMap = new Actor[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j< 5; j++) {
+                if (i == 1 && j == 1) this.actorLayerMap[i][j] = player;
+                else if (i == 2 && j == 4) this.actorLayerMap[i][j] = bug;
+                else this.actorLayerMap[i][j] = null;
+            }
+        }
+    }
+
+    /**
+     * Create the Tile for the Map.
+     */
+    private void createTileMap() {
+        Path path = new Path();
+
+        this.tileLayerMap = new Tile[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j< 5; j++) {
+                /*if (i == 1 && j == 1) this.actorLayerMap[i][j] = player;
+                if (i == 2 && j == 4) this.actorLayerMap[i][j] = bug;*/
+                this.tileLayerMap[i][j] = path;
+            }
+        }
+    }
+
+    /**
+     * Outputs the Actors present on the Map.
+     *
+     * @return String of Actors that are present on the Map.
+     */
+    public String toStringActorMap() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < actorLayerMap.length; i++) {
+            str.append(Arrays.toString(actorLayerMap[i])).append("\n");
+        }
+        return str.toString();
+    }
+
+    /**
+     * Outputs the Tile of the Map.
+     *
+     * @return String of Tiles of the Map.
+     */
+    public String toStringTileMap() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < tileLayerMap.length; i++) {
+            str.append(Arrays.toString(tileLayerMap[i])).append("\n");
+        }
+        return str.toString();
+    }
+
 }
