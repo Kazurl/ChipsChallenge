@@ -1129,7 +1129,108 @@ public class GameLogic {
             }
         } else {
             //follow right
-
+            switch (bug.getDirection()) {
+                case RIGHT:
+                    if (bug.getY() == gameMap.getBoardHeight()-1) {
+                        if (turns != 3) {
+                            bug.setDirection(KeyCode.UP);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if (gameMap.getPosActor(bugX, bugY+1) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX, bugY+1) == null) {
+                        if (gameMap.getPosTile(bugX, bugY+1) instanceof Path
+                                || (gameMap.getPosTile(bugX, bugY+1) instanceof Trap)
+                                || gameMap.getPosTile(bugX, bugY+1) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setY(bugY+1);
+                            bug.setDirection(KeyCode.DOWN);
+                            gameMap.setPosActor(bugX,bugY+1, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.UP);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if (turns != 3) {
+                        bug.setDirection(KeyCode.UP);
+                        moveBug(bug, turns+1);
+                    }
+                    break;
+                case DOWN:
+                    if (bug.getX() == 0) {
+                        if (turns != 3) {
+                            bug.setDirection(KeyCode.RIGHT);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if (gameMap.getPosActor(bugX-1, bugY) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX-1, bugY) == null) {
+                        if (gameMap.getPosTile(bugX-1, bugY) instanceof Path
+                                || (gameMap.getPosTile(bugX-1, bugY) instanceof Trap)
+                                || gameMap.getPosTile(bugX-1, bugY) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setX(bugX-1);
+                            bug.setDirection(KeyCode.LEFT);
+                            gameMap.setPosActor(bugX-1,bugY, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.RIGHT);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if (turns != 3) {
+                        bug.setDirection(KeyCode.RIGHT);
+                        moveBug(bug, turns+1);
+                    }
+                    return;
+                case LEFT:
+                    if (bug.getY() == 0) {
+                        if (turns != 3) {
+                            bug.setDirection(KeyCode.DOWN);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if (gameMap.getPosActor(bugX, bugY-1) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX, bugY-1) == null) {
+                        if (gameMap.getPosTile(bugX, bugY-1) instanceof Path
+                                || (gameMap.getPosTile(bugX, bugY-1) instanceof Trap)
+                                || gameMap.getPosTile(bugX, bugY-1) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setY(bugY-1);
+                            bug.setDirection(KeyCode.UP);
+                            gameMap.setPosActor(bugX,bugY-1, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.DOWN);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if (turns != 3) {
+                        bug.setDirection(KeyCode.DOWN);
+                        moveBug(bug, turns+1);
+                    }
+                    return;
+                case UP:
+                    if (bug.getX() == gameMap.getBoardWidth()-1) {
+                        if (turns != 3) {
+                            bug.setDirection(KeyCode.LEFT);
+                            moveBug(bug, turns + 1);
+                        }
+                    } else if (gameMap.getPosActor(bugX+1, bugY) instanceof Player) {
+                        hasDied("bug");
+                    } else if (gameMap.getPosActor(bugX+1, bugY) == null) {
+                        if (gameMap.getPosTile(bugX+1, bugY) instanceof Path
+                                || (gameMap.getPosTile(bugX+1, bugY) instanceof Trap)
+                                || gameMap.getPosTile(bugX+1, bugY) instanceof Buttons) {
+                            gameMap.setPosActor(bugX,bugY, null);
+                            bug.setX(bugX+1);
+                            bug.setDirection(KeyCode.RIGHT);
+                            gameMap.setPosActor(bugX+1,bugY, bug);
+                        } else if (turns != 3){
+                            bug.setDirection(KeyCode.LEFT);
+                            moveBug(bug, turns+1);
+                        }
+                    } else if (turns != 3) {
+                        bug.setDirection(KeyCode.LEFT);
+                        moveBug(bug, turns+1);
+                    }
+                    return;
+            }
         }
     }
 
