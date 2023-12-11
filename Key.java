@@ -44,26 +44,4 @@ public class Key extends Item {
     public Colour getKeyColour() {
         return keyColour;
     }
-
-    /**
-     * Will add the colour Key into the Player's inventory.
-     *
-     * @param player The player.
-     */
-    public void interactPlayer(Player player) {
-        switch (this.keyColour) {
-            case RED:
-                player.addToInventory("red key");
-                break;
-            case GREEN:
-                player.addToInventory("green key");
-                break;
-            case BLUE:
-                player.addToInventory("blue key");
-                break;
-            case YELLOW:
-                player.addToInventory("yellow key");
-                break;
-        }
-    }
 }

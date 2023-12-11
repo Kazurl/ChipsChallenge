@@ -32,21 +32,4 @@ public class LockedDoor extends Tile {
     public Key.Colour getDoorColour() {
         return doorColour;
     }
-
-    /**
-     * Unlocks the door if the colored key is correct.
-     *
-     * @param key The key used to unlock the door.
-     * @return True if the door is successfully unlocked, false otherwise.
-     */
-    public boolean unlock(Key key) {
-        // Check if the key's colour matches the door's colour
-        if (key.getKeyColour() == doorColour) {
-            // Unlock the door and replace it with a walkable path
-            setWalkable(true);
-            return true; // Unlock successful
-        } else {
-            return false; // Key does not match, unlock failed
-        }
-    }
 }

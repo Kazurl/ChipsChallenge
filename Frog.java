@@ -9,7 +9,6 @@
  */
 public class Frog extends Mob{
 
-
     /**
      * Creates the Frog.
      * This was used for testing.
@@ -17,22 +16,5 @@ public class Frog extends Mob{
     public Frog() {
         super();
     }
-
-    /**
-     * Constructs a Frog that will spawn on the specified tile.
-     *
-     * @param tile The starting tile for the Frog.
-     */
-    public Frog(Tile tile) {
-        super(tile);
-    }
-
-    /**
-     * Method that sets the Map when given the Actor 2D array and Tile 2d Array.
-     *
-     * @param givenActorMap 2D Actor array.
-     * @param givenTileMap 2D Tile array.
-     */
-
 
 }

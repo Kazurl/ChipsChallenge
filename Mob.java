@@ -82,34 +82,4 @@ public class Mob extends Actor{
         return this.mobLocationY;
     }
 
-    /**
-     * Gets the next tile that the mob will move to.
-     *
-     * @return The next tile.
-     */
-    public Tile getNextTile() {
-        return this.nextTile;
-    }
-
-    /**
-     * Gets the current tile the mob is on.
-     *
-     * @return The current tile.
-     */
-    public Tile getCurrTile() {
-        return this.currentTile;
-    }
-
-    /**
-     * Interacts with the player, triggering events if on the same tile.
-     *
-     * @param player The player to interact with.
-     */
-    public void interactPlayer(Player player) {
-        // update this method
-        // Need to check if same tile as player and trigger event
-        if (this.nextTile == player.getCurrTile()) {
-
-        }
-    }
 }

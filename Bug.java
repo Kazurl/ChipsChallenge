@@ -39,12 +39,4 @@ public class Bug extends Mob {
         return this.followLeft;
     }
 
-    /**
-     * Constructs a Bug that will spawn on the specified tile.
-     *
-     * @param tile The starting tile for the Bug.
-     */
-    public Bug(Tile tile) {
-        super(tile);
-    }
 }

@@ -1,10 +1,4 @@
 /**
- * The {@code Scheduler} class manages game ticks and level status, providing functionality
- * to pause, resume, and update game ticks.
- */
-
-
-/**
  *<ol>
  *     <li>File-name: Scheduler.java</li>
  *     <li>Purpose of the program: Creates the Scheduler for the Map,
@@ -27,11 +21,6 @@ public class Scheduler {
     private boolean levelWon;
 
     /**
-     * Flag indicating whether the level has been lost.
-     */
-    private boolean levelLost;
-
-    /**
      * Flag indicating whether the game is paused.
      */
     private boolean paused;
@@ -52,62 +41,6 @@ public class Scheduler {
      */
     public int getTick() {
         return this.ticks;
-    }
-
-    /**
-     * Gets the status of whether the level has been won.
-     *
-     * @return True if the level has been won, False otherwise.
-     */
-    public boolean getLevelWon() {
-        return this.levelWon;
-    }
-
-    /**
-     * Sets the status of whether the level has been won and toggles the pause state.
-     *
-     * @param won True if the level has been won, False otherwise.
-     */
-    public void setLevelWon(boolean won) {
-        togglePause();
-        this.levelWon = won;
-    }
-
-    /**
-     * Gets the status of whether the level has been lost.
-     *
-     * @return True if the level has been lost, False otherwise.
-     */
-    public boolean getLevelLost() {
-        return this.levelLost;
-    }
-
-    /**
-     * Sets the status of whether the level has been lost and toggles the pause state.
-     *
-     * @param lost True if the level has been lost, False otherwise.
-     */
-    public void setLevelLost(boolean lost) {
-        togglePause();
-        this.levelLost = lost;
-    }
-
-    /**
-     * Checks if the game is currently paused.
-     *
-     * @return True if the game is paused, False otherwise.
-     */
-    public boolean checkPause() {
-        return paused;
-    }
-
-    /**
-     * Toggles the pause state of the game.
-     */
-    public void togglePause() {
-        paused = !paused;
-        // Include method body for pausing ticks
-        
     }
 
     /**
