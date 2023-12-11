@@ -53,12 +53,4 @@ public class Tile {
         this.walkable = walk;
     }
 
-    /**
-     * 
-     * Change the push boolean.
-     */
-    public void setPushable(boolean push) {
-        this.pushable = push;
-    }
-
 }

@@ -13,10 +13,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
+
+import java.io.File;
 
 
 /**
@@ -968,6 +972,13 @@ public class Main extends Application {
                     canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
+
+                    String musicFile = "SaveTube.io_-_MapleStory_BGM_Moonbridge__Wave_of_Emptiness_128_kbps.mp3";     // For example
+
+                    Media sound = new Media(new File(musicFile).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
+
                 } else {
                     message.setAlertType(Alert.AlertType.ERROR);
                     message.setContentText("you have not unlocked this level");

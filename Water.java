@@ -13,7 +13,7 @@ public class Water extends Tile {
     /**
      * Placeholder for handling events when a player walks on the Water tile.
      */
-    public Boolean onPlayerWalk; // PLACEHOLDER FOR BLOCK CLASS
+    public Boolean onPlayerWalk;
 
 
     /**
@@ -32,26 +32,13 @@ public class Water extends Tile {
      * @param walk True if the tile should be walkable, false otherwise.
      */
     public void setWalkable(boolean walk) {
+
         super.setWalkable(walk);
+
         if (walk) {
             onPlayerWalk = true;
         } else {
             onPlayerWalk = false;
         }
-
-        /*
-         * Placeholder for handling events when a mob walks on the Water tile.
-         */
-        /*
-        public Mobs onMobWalk;
-        {
-          super.setWalkable(walk);
-          if (walk == true) {
-            onMobWalk = false;
-          } else {
-            onMobWalk = true;
-          }
-        }
-        */
     }
 }

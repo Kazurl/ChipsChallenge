@@ -53,7 +53,7 @@ public class Actor {
     }
 
     /**
-     * Sets the X and Y Coordinates of the actor.
+     * Sets the X-Coordinates and Y-Coordinates of the actor.
      *
      * @param x The X-coordinate.
      * @param y The Y-coordinate.

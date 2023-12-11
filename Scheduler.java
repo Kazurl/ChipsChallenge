@@ -48,8 +48,6 @@ public class Scheduler {
      */
     public void pause() {
         paused = true;
-        // Include method body for pausing ticks
-
     }
 
     /**
@@ -57,15 +55,13 @@ public class Scheduler {
      */
     public void unPause() {
         paused = false;
-        // Include method body for pausing ticks
-
     }
+
     /**
      * Updates the game tick if the game is not paused and the level has not been won.
      *
      * @return The updated game tick if successful, or -1 if the game is paused or the level has been won.
      */
-    // Include method for ticks incrementation and send to map
     public int updateTick() {
         if (!paused && !levelWon) {
             this.ticks++;

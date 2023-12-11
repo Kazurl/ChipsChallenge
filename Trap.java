@@ -36,15 +36,6 @@ public class Trap extends Tile {
     private int identifier;
 
     /**
-     * Creates the default Trap.
-     * This was used for testing.
-     */
-    public Trap() {
-        super(true, true);
-        deactivate(); // Initialize Trap as closed
-    }
-
-    /**
      * Constructor for the Trap class.
      * Initializes a Trap at the specified coordinates
      * and sets it as initially closed.
@@ -56,7 +47,7 @@ public class Trap extends Tile {
         super(true, true);
         this.x = x;
         this.y = y;
-        deactivate(); // Initialize Trap as closed
+        deactivate();
     }
 
     /**
@@ -71,7 +62,7 @@ public class Trap extends Tile {
     public Trap(int x, int y, Buttons button) {
         super(true, true);
         this.connectButton = button;
-        deactivate(); // Initialize Trap as closed
+        deactivate();
     }
 
     /**

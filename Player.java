@@ -10,16 +10,6 @@
  */
 public class Player extends Actor {
 
-    /**
-     * Enumeration representing the
-     * different directions that the Player can move.
-     */
-    enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    }
 
     /**
      * The username of the Player.
@@ -28,8 +18,9 @@ public class Player extends Actor {
 
     /**
      * The number of Keys that the Player has in their inventory.
+     * The order of the array is {red key, green key, blue key, yellow key, amount of chips}
      */
-    private int[] inventory = {/*has red key?*/0,/*has green key?*/0,/*has blue key?*/0,/*has yellow key?*/0,/*how many chips?*/0};
+    private int[] inventory = { 0, 0, 0, 0, 0};
 
     /**
      * Checks if the Player is alive.
@@ -64,7 +55,8 @@ public class Player extends Actor {
     public String getUserName() {
         return userName;
     }
-/**
+
+    /**
      * Sets the X-coordinate of the player's location.
      *
      * @param locationX The X-coordinate to set.
@@ -141,6 +133,7 @@ public class Player extends Actor {
             return false;
         }
     }
+
     /**
      * Uses a key of the specified color from the player's inventory.
      *

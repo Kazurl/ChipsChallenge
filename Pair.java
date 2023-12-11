@@ -1,19 +1,19 @@
 /**
  *<ol>
  *     <li>File-name: Pair.java</li>
- *     <li>Purpose of the program: IDK.</li>
+ *     <li>Purpose of the program: Coordinates to be included in every element.</li>
  *
  *</ol>
  */
 public class Pair {
 
     /**
-     * The Player?
+     * X-Coordinate.
      */
     int Item1;
 
     /**
-     * The Frog?
+     * Y-Coordinate.
      */
     int Item2;
 

@@ -16,13 +16,4 @@ public class PinkBall extends Mob {
      */
     public PinkBall() {
     }
-
-    /**
-     * Creates a PinkBall that will spawn on that specific tile.
-     *
-     * @param tile The initial tile where PinkBall will spawn.
-     */
-    public PinkBall(Tile tile) {
-        super(tile);
-    }
 }

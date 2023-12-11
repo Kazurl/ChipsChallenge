@@ -142,8 +142,10 @@ public class GameLogic {
      */
     private static void changeMapProgress() {
         if (levelNum > FileConverter.levelProgressSaved) {
-            String oldString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + "," + FileConverter.levelProgressSaved;
-            String newString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + "," + (FileConverter.levelProgressSaved + 1);
+            String oldString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + ","
+                    + FileConverter.levelProgressSaved;
+            String newString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + ","
+                    + (FileConverter.levelProgressSaved + 1);
 
             File fileToBeModified = new File("Credentials.txt");
 
@@ -257,7 +259,8 @@ public class GameLogic {
      */
     public static boolean movePlayer(KeyCode direction) {
         // Check if the provided direction is valid
-        if (!(direction == KeyCode.LEFT || direction == KeyCode.RIGHT || direction == KeyCode.DOWN || direction == KeyCode.UP)) {
+        if (!(direction == KeyCode.LEFT || direction == KeyCode.RIGHT || direction == KeyCode.DOWN
+                || direction == KeyCode.UP)) {
             return false;
         }
         // Check if the player can move in the specified direction
@@ -321,10 +324,12 @@ public class GameLogic {
                 return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX-1,playerY)).getCornerType() == Ice.CornerType.TOP_RIGHT
-                    || ((Ice) gameMap.getPosTile(playerX-1,playerY)).getCornerType() == Ice.CornerType.BOTTOM_RIGHT)) {
+                    || ((Ice) gameMap.getPosTile(playerX-1,playerY)).getCornerType() ==
+                    Ice.CornerType.BOTTOM_RIGHT)) {
                 return false;// Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof LockedDoor
-                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX-1,playerY)).getDoorColour())) {
+                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX-1,playerY)).
+                    getDoorColour())) {
                 gameMap.setPosTile(playerX-1,playerY, new Path());
                 return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX-1,playerY) instanceof ChipSocket
@@ -358,7 +363,8 @@ public class GameLogic {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
                 return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof ChipSocket
-                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX+1,playerY)).getChipAmountNeeded())) {
+                    && gameMap.getPlayer().useChips(((ChipSocket)
+                    gameMap.getPosTile(playerX+1,playerY)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX+1,playerY, new Path());
                 return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX+1,playerY) instanceof Dirt) {
@@ -380,15 +386,19 @@ public class GameLogic {
                 hasDied("water");
                 return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof Ice
-                    && (((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType() == Ice.CornerType.BOTTOM_RIGHT
-                    || ((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType() == Ice.CornerType.BOTTOM_LEFT)) {
+                    && (((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType()
+                    == Ice.CornerType.BOTTOM_RIGHT
+                    || ((Ice) gameMap.getPosTile(playerX,playerY-1)).getCornerType()
+                    == Ice.CornerType.BOTTOM_LEFT)) {
                 return false;// Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof LockedDoor
-                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY-1)).getDoorColour())) {
+                    && gameMap.getPlayer().useKey(((LockedDoor)
+                    gameMap.getPosTile(playerX,playerY-1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
                 return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof ChipSocket
-                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX,playerY-1)).getChipAmountNeeded())) {
+                    && gameMap.getPlayer().useChips(((ChipSocket)
+                    gameMap.getPosTile(playerX,playerY-1)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX,playerY-1, new Path());
                 return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX,playerY-1) instanceof Dirt) {
@@ -411,14 +421,17 @@ public class GameLogic {
                 return true;// Player encounters Water
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Ice
                     && (((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_RIGHT
-                    || ((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType() == Ice.CornerType.TOP_LEFT)) {
+                    || ((Ice) gameMap.getPosTile(playerX,playerY+1)).getCornerType()
+                    == Ice.CornerType.TOP_LEFT)) {
                 return false; //Player encounters Ice with incorrect movement direction
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof LockedDoor
-                    && gameMap.getPlayer().useKey(((LockedDoor) gameMap.getPosTile(playerX,playerY+1)).getDoorColour())) {
+                    && gameMap.getPlayer().useKey(((LockedDoor)
+                    gameMap.getPosTile(playerX,playerY+1)).getDoorColour())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
                 return true;// Player unlocks a LockedDoor
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof ChipSocket
-                    && gameMap.getPlayer().useChips(((ChipSocket) gameMap.getPosTile(playerX,playerY+1)).getChipAmountNeeded())) {
+                    && gameMap.getPlayer().useChips(((ChipSocket)
+                    gameMap.getPosTile(playerX,playerY+1)).getChipAmountNeeded())) {
                 gameMap.setPosTile(playerX,playerY+1, new Path());
                 return true;// Player uses Chips on a ChipSocket
             } else if (gameMap.getPosTile(playerX,playerY+1) instanceof Dirt) {
@@ -479,8 +492,10 @@ public class GameLogic {
                 convertWaterToPath(blockX, blockY, blockX-1, blockY);
                 return true;
             } else if (gameMap.getPosTile(blockX - 1, blockY) instanceof Ice
-                    && (((Ice) gameMap.getPosTile(blockX - 1, blockY)).getCornerType() == Ice.CornerType.TOP_RIGHT
-                    || ((Ice) gameMap.getPosTile(blockX - 1, blockY)).getCornerType() == Ice.CornerType.BOTTOM_RIGHT)) {
+                    && (((Ice) gameMap.getPosTile(blockX - 1, blockY)).getCornerType() ==
+                    Ice.CornerType.TOP_RIGHT
+                    || ((Ice) gameMap.getPosTile(blockX - 1, blockY)).getCornerType()
+                    == Ice.CornerType.BOTTOM_RIGHT)) {
                 // Ice is at the target position with specific corner type, block cannot move
                 return false;
             } else {
@@ -519,8 +534,10 @@ public class GameLogic {
                 convertWaterToPath(blockX, blockY, blockX+1, blockY);
                 return true;
             } else if (gameMap.getPosTile(blockX + 1, blockY) instanceof Ice
-                    && (((Ice) gameMap.getPosTile(blockX + 1, blockY)).getCornerType() == Ice.CornerType.TOP_LEFT
-                    || ((Ice) gameMap.getPosTile(blockX + 1, blockY)).getCornerType() == Ice.CornerType.BOTTOM_LEFT)) {
+                    && (((Ice) gameMap.getPosTile(blockX + 1, blockY)).getCornerType()
+                    == Ice.CornerType.TOP_LEFT
+                    || ((Ice) gameMap.getPosTile(blockX + 1, blockY)).getCornerType()
+                    == Ice.CornerType.BOTTOM_LEFT)) {
                 return false;
             } else {
                 if (gameMap.getPosTile(blockX + 1, blockY).getPushable()) {
@@ -595,8 +612,10 @@ public class GameLogic {
                 convertWaterToPath(blockX, blockY, blockX, blockY+1);
                 return true;
             } else if (gameMap.getPosTile(blockX, blockY + 1) instanceof Ice
-                    && (((Ice) gameMap.getPosTile(blockX, blockY + 1)).getCornerType() == Ice.CornerType.TOP_RIGHT
-                    || ((Ice) gameMap.getPosTile(blockX, blockY + 1)).getCornerType() == Ice.CornerType.TOP_LEFT)) {
+                    && (((Ice) gameMap.getPosTile(blockX, blockY + 1)).getCornerType()
+                    == Ice.CornerType.TOP_RIGHT
+                    || ((Ice) gameMap.getPosTile(blockX, blockY + 1)).getCornerType()
+                    == Ice.CornerType.TOP_LEFT)) {
                 return false;
             } else {
                 if (gameMap.getPosTile(blockX, blockY+1).getPushable()) {
@@ -609,10 +628,6 @@ public class GameLogic {
                 }
             }
         }
-       /* if(gameMap.getPosTile(blockX, blockY) instanceof Ice) {
-            blockMove(block, swapDirection(direction, ((Ice) gameMap.getPosTile(blockX, blockY)).getCornerType()));
-        }*/
-        // Return false by default (no movement occurred)
         return false;
     }
 
