@@ -423,9 +423,6 @@ public class FileConverter {
                 }
             }
 
-            for (int i = 0; i <givenFrogs.length; i++) {
-                givenFrogs[i].setMap(actorFile, tileFile);
-            }
             return new Map(timeLeft, width,height,actorFile, itemFile, tileFile,
                     givenPlayer, givenFrogs, givenBugs, givenPinkBalls,givenBlocks
                     , givenButtons, givenTopScores, givenTopNames, original);

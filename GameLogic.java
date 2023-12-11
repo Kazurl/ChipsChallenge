@@ -2,6 +2,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class GameLogic {
@@ -1127,8 +1129,7 @@ public class GameLogic {
     public static void moveFrogs() {
         Frog[] frogs = gameMap.getFrogsStored();
         for (int i = 0; i < frogs.length; i++) {
-            frogs[i].setMap(gameMap.getActorLayerMap(),gameMap.getTileLayerMap());
-            int[] newCords = frogs[i].isPath(frogs[i].getX(),frogs[i].getY(),
+            int[] newCords = isPath(frogs[i].getX(),frogs[i].getY(),
                   gameMap.getPlayer().getX(),gameMap.getPlayer().getY());
             gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), null);
             frogs[i].setX(newCords[0]);
@@ -1136,6 +1137,84 @@ public class GameLogic {
             gameMap.setPosActor(frogs[i].getX(),frogs[i].getY(), frogs[i]);
         }
 
+    }
+    public static int[] isPath(int startx, int starty, int playerx, int playery) {
+
+        boolean[][] visited = new boolean[gameMap.getBoardWidth()][gameMap.getBoardHeight()];
+
+        for (int i = 0; i< gameMap.getBoardWidth(); i++) {
+            for (int j =0; j< gameMap.getBoardHeight(); j++) {
+                visited[i][j] = false;
+            }
+        }
+
+        Pair[][] parent = new Pair[gameMap.getBoardWidth()][gameMap.getBoardHeight()];
+        for (int i = 0; i< gameMap.getBoardWidth(); i++) {
+            for (int j = 0; j < gameMap.getBoardHeight(); j++) {
+                parent[i][j] = null;
+            }
+        }
+        Queue<Pair> Q = new LinkedList<>();
+        int[][] directions = {{-1,0}, {0,1}, {1,0}, {0, -1}};
+
+        Q.add(new Pair(startx, starty));
+        visited[startx][starty] = true;
+        parent[startx][starty] = new Pair(startx, starty);
+        int destx = Q.peek().Item1;
+        int desty = Q.peek().Item2;
+
+        while (Q.size() > 0) {
+            Pair p = (Q.peek());
+            Q.remove();
+
+            if (p.Item1 == playerx && p.Item2 == playery) {
+                int tempx = p.Item1, tempy = p.Item2;
+                // Backtracking to find the path from the player pos
+                while (parent[tempx][tempy].Item1 != startx || parent[tempx][tempy].Item2 != starty){
+                    destx = parent[tempx][tempy].Item1;
+                    desty = parent[tempx][tempy].Item2;
+                    tempx = destx;
+                    tempy = desty;
+                }
+                if (parent[tempx][tempy].Item1 == startx && parent[tempx][tempy].Item2 == starty){
+                    destx = tempx;
+                    desty = tempy;
+                }
+                return new int[] {destx, desty};
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int nextRow = p.Item1 + directions[i][0];
+                int nextCol = p.Item2 + directions[i][1];
+
+                if (walkableActor(nextRow, nextCol) && walkableTile(nextRow, nextCol) && visited[nextRow][nextCol] == false) {
+                    visited[nextRow][nextCol] = true;
+                    Q.add(new Pair(nextRow, nextCol));
+                    parent[nextRow][nextCol] = new Pair(p.Item1, p.Item2);
+                }
+            }
+        }
+
+        return new int[] {destx, desty};
+    }
+
+    public static boolean validWidth(int col, int width) {
+        return col >= 0 && col < width;
+    }
+
+    public static boolean validHeight(int row, int height) {
+        return row >= 0 && row < height;
+    }
+
+    public static boolean walkableActor(int xcoord, int ycoord) {
+        if (validHeight(xcoord, gameMap.getBoardWidth()) && validWidth(ycoord, gameMap.getBoardHeight())){
+            if (gameMap.getPosActor(xcoord, ycoord) == null || gameMap.getPosActor(xcoord, ycoord) instanceof Player) return true;
+        }
+        return false;
+    }
+    public static boolean walkableTile(int xcoord, int ycoord) {
+        if (gameMap.getPosTile(xcoord, ycoord) instanceof Buttons || gameMap.getPosTile(xcoord, ycoord) instanceof Path) return true;
+        return false;
     }
 
     /**

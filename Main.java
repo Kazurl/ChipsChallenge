@@ -31,22 +31,22 @@ public class Main extends Application {
     /**
      * The width of the window.
      */
-    private static int WINDOW_WIDTH = 800;
+    private static int windowWidth = 800;
 
     /**
      * The height of the window.
      */
-    private static int WINDOW_HEIGHT = 500;
+    private static int windowHeight = 500;
 
     /**
     * Width of the canvas.
     */
-    private static int CANVAS_WIDTH;
+    private static int canvasWidth;
 
     /**
      * Height of the canvas.
      */
-    private static int CANVAS_HEIGHT;
+    private static int canvasHeight;
 
     /** 
     * The width in pixels of each cell that makes up the game.
@@ -61,12 +61,12 @@ public class Main extends Application {
     /**
     * The width of the grid in number of cells.
     */
-    private static int GRID_WIDTH;
+    private static int gridWidth;
 
     /**
      * The height of the grid in number of cells.
      */
-    private static int GRID_HEIGHT;
+    private static int gridHeight;
     
     /**
     * The canvas in the GUI. This needs to be a global variable
@@ -639,7 +639,9 @@ public class Main extends Application {
                     System.out.println("valid file path");
                     Platform.exit();
                 } else {
-                    System.out.println("INVALID FILE PATH");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("INVALID FILE PATH");
+                    message.show();
                 }
             }
         });
@@ -828,7 +830,6 @@ public class Main extends Application {
         newMapButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("new map chosen");
                 newMap(stage, userName);
             }
         });
@@ -836,7 +837,6 @@ public class Main extends Application {
         loadButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("new map chosen");
                 loadMap(stage, userName);
             }
         });
@@ -876,7 +876,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(loadedMap);
                     runGame(stage);
                 } else {
-                    System.out.println("INVALID FILE PATH");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("INVALID FILE PATH");
+                    message.show();
                 }
             }
         });
@@ -927,10 +929,10 @@ public class Main extends Application {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
                 Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
-                GRID_WIDTH = newMap.getBoardWidth();
-                GRID_HEIGHT = newMap.getBoardHeight();
-                CANVAS_HEIGHT = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
-                CANVAS_WIDTH = newMap.getBoardWidth() * GRID_CELL_WIDTH;
+                gridWidth = newMap.getBoardWidth();
+                gridHeight = newMap.getBoardHeight();
+                canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
+                canvasWidth = newMap.getBoardWidth() * GRID_CELL_WIDTH;
                 GameLogic.setGameMap(newMap);
                 runGame(stage);
             }
@@ -948,7 +950,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
-                    System.out.println("you have not unlocked this level");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("you have not unlocked this level");
+                    message.show();
                 }
             }
         });
@@ -965,7 +969,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
-                    System.out.println("you have not unlocked this level");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("you have not unlocked this level");
+                    message.show();
                 }
             }
         });
@@ -982,7 +988,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
-                    System.out.println("you have not unlocked this level");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("you have not unlocked this level");
+                    message.show();
                 }
             }
         });
@@ -999,7 +1007,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
-                    System.out.println("you have not unlocked this level");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("you have not unlocked this level");
+                    message.show();
                 }
             }
         });
@@ -1016,7 +1026,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
-                    System.out.println("you have not unlocked this level");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("you have not unlocked this level");
+                    message.show();
                 }
             }
         });
@@ -1033,7 +1045,9 @@ public class Main extends Application {
                     GameLogic.setGameMap(newMap);
                     runGame(stage);
                 } else {
-                    System.out.println("you have not unlocked this level");
+                    message.setAlertType(Alert.AlertType.ERROR);
+                    message.setContentText("you have not unlocked this level");
+                    message.show();
                 }
             }
         });
