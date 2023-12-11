@@ -29,7 +29,6 @@ public class GameLogic {
      */
     private static int levelNum;
 
-
     /**
      * Next move for the Player.
      */

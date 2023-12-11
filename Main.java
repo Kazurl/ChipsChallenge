@@ -223,20 +223,21 @@ public class Main extends Application {
     private TextField usernameInput;
 
     /**
-     * Label for the GUI.
+     * Text Label for GUI
      */
     private Label label;
 
 
     /**
-     * another label used for when there are two simultaneous labels needed.
+     * In the case where {@code label} is used,
+     * this one is used to display another text label for the GUI so
+     * that both labels appear on the GUI.
      */
     private Label label2;
 
     /**
      * PasswordField for Password.
      */
-
     private PasswordField passwordInput;
 
     /**
@@ -244,31 +245,10 @@ public class Main extends Application {
      */
     private Button submitButton;
 
-
-    /**
-     * Login button for the GUI.
-     */
-    private Button loginButton;
-
-    /**
-     * Register button for the GUI.
-     */
-    private Button registerButton;
-
     /**
      * Error Alert Message.
      */
     private Alert message = new Alert(Alert.AlertType.NONE);
-
-    /**
-    * X-Coordinate of player on the grid.
-    */
-    private int playerX;
-
-    /**
-     * Y-Coordinate of player on the grid.
-     */
-    private int playerY;
 
     /**
     * Timeline which will cause tick method to be called periodically.
@@ -312,30 +292,6 @@ public class Main extends Application {
 
 
         loginGUI(primaryStage);
-        /*
-        // Build the GUI
-        Pane root = buildGUI();
-
-        // Create a scene from the GUI
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        // Register an event handler for key presses.
-        // This causes the processKeyEvent method to be called each time a key is pressed.
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
-
-        // Register a tick method to be called periodically.
-        // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> tick()));
-        // Loop the timeline forever
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
-        // We start the timeline upon a button press.
-
-        // Display the scene on the stage
-        drawGame();
-        login();
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        */
     }
 
     /**
@@ -531,7 +487,6 @@ public class Main extends Application {
      * Changes behavior based on the pressed key.
      * @param event The key event.
      */
-
     public void processKeyEvent(KeyEvent event) {
         // We change the behaviour depending on the actual key that was pressed.
         if(!(GameLogic.getGameMap().getPosTile(GameLogic.getGameMap().getPlayer().getX(),GameLogic.getGameMap().getPlayer().getY()) instanceof Ice)) {
@@ -540,6 +495,7 @@ public class Main extends Application {
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
         event.consume();
     }
+
     /**
      * Builds the graphical user interface (GUI) for the game.
      *
@@ -564,17 +520,10 @@ public class Main extends Application {
 
         // Tick Timeline buttons
         Button pauseButton = new Button("Start");
-        /*
-        Button startTickTimelineButton = new Button("Start Ticks");
-        Button stopTickTimelineButton = new Button("Stop Ticks");
-         */
+
         Button saveButton = new Button("Save & Quit");
         // We add both buttons at the same time to the timeline (we could have done this in two steps).
         toolbar.getChildren().addAll(saveButton, pauseButton);
-        // Stop button is disabled by default
-        /*
-        stopTickTimelineButton.setDisable(true);
-         */
 
         // save behaviour
         saveButton.setOnAction(e -> {
@@ -592,31 +541,7 @@ public class Main extends Application {
                 tickTimeline.play();
             }
         });
-        /*
-        // Set up the behaviour of the buttons.
-        startTickTimelineButton.setOnAction(e -> {
-            // Start the tick timeline and enable/disable buttons as appropriate.
-            startTickTimelineButton.setDisable(true);
-            GameLogic.getGameMap().getSchedule().unPause();
-            tickTimeline.play();
-            stopTickTimelineButton.setDisable(false);
-        });
 
-        stopTickTimelineButton.setOnAction(e -> {
-            // Stop the tick timeline and enable/disable buttons as appropriate.
-            stopTickTimelineButton.setDisable(true);
-            GameLogic.getGameMap().getSchedule().pause();
-            tickTimeline.stop();
-            startTickTimelineButton.setDisable(false);
-        });
-        // This code allows the canvas to receive a dragged object within its bounds.
-        // You probably don't need to change this (unless you wish to do more advanced things).
-
-
-        // This code allows the canvas to react to a dragged object when it is finally dropped.
-        // You probably don't need to change this (unless you wish to do more advanced things).
-    */
-        // Finally, return the border pane we built up.
         return root;
     }
 
@@ -790,10 +715,7 @@ public class Main extends Application {
         int [] newScores;
         gc.setFont(Font.font(60));
         if(GameLogic.getGameWon()) {
-            /*
-            FileConverter.changeScore();
-            GameLogic.getGameMap().setTopScores(GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft()));
-            */
+
             newScores = GameLogic.getGameMap().newScore(GameLogic.getGameMap().getTimeLeft(),GameLogic.getGameMap().getPlayer().getUserName());
             gc.fillText("Game Won!", windowWidth / 7.0, windowHeight / 4.0);
             GameLogic.endGameChanges();

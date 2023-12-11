@@ -151,26 +151,6 @@ public class Map {
     }
 
     /**
-     * Gets the 2D array of Actor Layer for the Map.
-     *
-     * @return The Actor Layer.
-     */
-    public Actor[][] getActorLayerMap() {
-        return actorLayerMap;
-    }
-
-    /**
-     * Gets the 2D array of Tile Layer for the Map.
-     *
-     * @return The Tile Layer.
-     */
-    public Tile[][] getTileLayerMap() {
-        return tileLayerMap;
-    }
-
-
-
-    /**
      * Gets the time left for the Player to complete
      * the Map.
      *
@@ -274,29 +254,6 @@ public class Map {
     }
 
     /**
-     * Gets the specific Map in the game.
-     *
-     * @return The Map.
-     */
-    public Map getBoard() {
-        return this;
-    }
-
-    /**
-     * Replaces the current Map with a new one.
-     *
-     * @param newMap New map that will replace the current one.
-     */
-    public void setBoard(Map newMap) {
-        this.boardWidth = newMap.boardWidth;
-        this.boardHeight = newMap.boardHeight;
-        this.actorLayerMap = newMap.actorLayerMap;
-        this.tileLayerMap = newMap.tileLayerMap;
-        this.itemLayerMap = newMap.itemLayerMap;
-        this.timeLeft = newMap.timeLeft;
-    }
-
-    /**
      * Gets the list of Frogs on the Mpa.
      *
      * @return List of Frogs on the Map.
@@ -332,14 +289,6 @@ public class Map {
         return schedule;
     }
 
-    /**
-     * Sets the Scheduler for the Map.
-     *
-     * @param schedule The Scheduler.
-     */
-    public void setSchedule(Scheduler schedule) {
-        this.schedule = schedule;
-    }
 
     /**
      * Gets the list of Blocks on the Map.
@@ -348,15 +297,6 @@ public class Map {
      */
     public Block[] getBlocksStored() {
         return blocksStored;
-    }
-
-    /**
-     * Sets the list of Blocks on the Map.
-     *
-     * @param blocksStored List of Blocks on the Map.
-     */
-    public void setBlocksStored(Block[] blocksStored) {
-        this.blocksStored = blocksStored;
     }
 
     /**
@@ -369,30 +309,12 @@ public class Map {
     }
 
     /**
-     * Sets the list of Buttons on the Map.
-     *
-     * @param buttonsStored List of Buttons on the Map.
-     */
-    public void setButtonsStored(Buttons[] buttonsStored) {
-        this.buttonsStored = buttonsStored;
-    }
-
-    /**
      * Gets the Top-10 scorers of the Map.
      *
      * @return List of Top-10 scorers.
      */
     public int[] getTopScores() {
         return topScores;
-    }
-
-    /**
-     * Sets a List of Top-10 scorers of the Map.
-     *
-     * @param scores List of Top-10 scorers of the Map.
-     */
-    public void setTopScores(int[] scores) {
-        topScores = scores;
     }
 
     /**

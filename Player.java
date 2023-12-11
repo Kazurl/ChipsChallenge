@@ -22,21 +22,6 @@ public class Player extends Actor {
     }
 
     /**
-     * Checks if the Player is moving.
-     */
-    private boolean isMoving;
-
-    /**
-     * The current Tile the Player is on.
-     */
-    private Tile currTile;
-
-    /**
-     * The next Tile that the Player will move to.
-     */
-    private Tile nextTile;
-
-    /**
      * The username of the Player.
      */
     private String userName;
@@ -69,15 +54,6 @@ public class Player extends Actor {
         super();
         this.userName = name;
         this.isAlive = true;
-    }
-
-    /**
-     * Sets the direction the player is facing.
-     *
-     * @param direction The direction to set.
-     */
-    public void setDirection(Direction direction) {
-
     }
 
     /**
@@ -122,23 +98,6 @@ public class Player extends Actor {
      */
     public int getY() {
         return this.playerLocationY;
-    }
-/**
-     * Gets the current tile the player is on.
-     *
-     * @return The current tile.
-     */
-    public Tile getCurrTile() {
-        return this.currTile;
-    }
-
-    /**
-     * Gets the next tile the player will move to.
-     *
-     * @return The next tile.
-     */
-    public Tile getNextTile() {
-        return this.nextTile;
     }
 
     /**
@@ -254,12 +213,4 @@ public class Player extends Actor {
         }
 
     }
-    /*
-    public void interactMob(Mobs mob) {
-        if ((playerLocationX == mob.mobLocationX)&&(playerLocationY == mob.mobLocationY)){
-            deadOrAlive = false;
-
-        }
-    }
-    */
 }
