@@ -1,11 +1,9 @@
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Scanner;
 
 
 /**
@@ -147,7 +145,7 @@ public class GameLogic {
             String newString = FileConverter.userNameSaved + "," + FileConverter.passwordSaved + ","
                     + (FileConverter.levelProgressSaved + 1);
 
-            File fileToBeModified = new File("Credentials.txt");
+            File fileToBeModified = new File("resources/Credentials.txt");
 
             String oldContent = "";
 

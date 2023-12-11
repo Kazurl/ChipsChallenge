@@ -262,33 +262,33 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) {
 
-        playerImage = new Image("player.png");
-        dirtImage = new Image("dirt2.png");
-        bugImage = new Image("Bug.png");
-        buttonImage = new Image("Button.png");
-        chipSocketImage = new Image("Socket.png");
-        compChipImage = new Image("computer chip.png");
-        exitImage = new Image("Exit.png");
-        frogImage = new Image("Frog.png");
-        iceImage = new Image("Ice.png");
-        redKeyImage = new Image("redKey.png");
-        greenKeyImage = new Image("greenKey.png");
-        blueKeyImage = new Image("blueKey.png");
-        yellowKeyImage = new Image("yellowKey.png");
-        redLockedDoorImage = new Image("RedLock.png");
-        greenLockedDoorImage = new Image("GreenLock.png");
-        blueLockedDoorImage = new Image("BlueLock.png");
-        yellowLockedDoorImage = new Image("YellowLock.png");
-        pinkBallImage = new Image("PinkBall.png");
-        trapImage = new Image("Trap.png");
-        wallImage = new Image("Wall.png");
-        waterImage = new Image("Water.png");
-        pathImage = new Image("path.png");
-        TLIceImage = new Image("IceTopLeft.png");
-        TRIceImage = new Image("IceTopRight.png");
-        BLIceImage = new Image("IceaBottomLeft.png");
-        BRIceImage = new Image("IceBottomRight.png");
-        blockImage = new Image("Block.png");
+        playerImage = new Image("resources/player.png");
+        dirtImage = new Image("resources/dirt2.png");
+        bugImage = new Image("resources/Bug.png");
+        buttonImage = new Image("resources/Button.png");
+        chipSocketImage = new Image("resources/Socket.png");
+        compChipImage = new Image("resources/computer chip.png");
+        exitImage = new Image("resources/Exit.png");
+        frogImage = new Image("resources/Frog.png");
+        iceImage = new Image("resources/Ice.png");
+        redKeyImage = new Image("resources/redKey.png");
+        greenKeyImage = new Image("resources/greenKey.png");
+        blueKeyImage = new Image("resources/blueKey.png");
+        yellowKeyImage = new Image("resources/yellowKey.png");
+        redLockedDoorImage = new Image("resources/RedLock.png");
+        greenLockedDoorImage = new Image("resources/GreenLock.png");
+        blueLockedDoorImage = new Image("resources/BlueLock.png");
+        yellowLockedDoorImage = new Image("resources/YellowLock.png");
+        pinkBallImage = new Image("resources/PinkBall.png");
+        trapImage = new Image("resources/Trap.png");
+        wallImage = new Image("resources/Wall.png");
+        waterImage = new Image("resources/Water.png");
+        pathImage = new Image("resources/path.png");
+        TLIceImage = new Image("resources/IceTopLeft.png");
+        TRIceImage = new Image("resources/IceTopRight.png");
+        BLIceImage = new Image("resources/IceaBottomLeft.png");
+        BRIceImage = new Image("resources/IceBottomRight.png");
+        blockImage = new Image("resources/Block.png");
 
 
         loginGUI(primaryStage);
@@ -852,7 +852,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 FileConverter.checkLevels(userName);
                 GameLogic.setLevelNum(1);
-                Map newMap = FileConverter.convertFromFile("Map1.txt", userName); // change
+                Map newMap = FileConverter.convertFromFile("resources/Map1.txt", userName); // change
                 gridWidth = newMap.getBoardWidth();
                 gridHeight = newMap.getBoardHeight();
                 canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -866,7 +866,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 1) {
                     GameLogic.setLevelNum(2);
-                    Map newMap = FileConverter.convertFromFile("Map2.txt", userName);
+                    Map newMap = FileConverter.convertFromFile("resources/Map2.txt", userName);
                     gridWidth = newMap.getBoardWidth();
                     gridHeight = newMap.getBoardHeight();
                     canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -885,7 +885,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 2) {
                     GameLogic.setLevelNum(3);
-                    Map newMap = FileConverter.convertFromFile("Map3.txt", userName);
+                    Map newMap = FileConverter.convertFromFile("resources/Map3.txt", userName);
                     gridWidth = newMap.getBoardWidth();
                     gridHeight = newMap.getBoardHeight();
                     canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -904,7 +904,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 3) {
                     GameLogic.setLevelNum(4);
-                    Map newMap = FileConverter.convertFromFile("Map4.txt", userName);
+                    Map newMap = FileConverter.convertFromFile("resources/Map4.txt", userName);
                     gridWidth = newMap.getBoardWidth();
                     gridHeight = newMap.getBoardHeight();
                     canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -923,7 +923,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 4) {
                     GameLogic.setLevelNum(5);
-                    Map newMap = FileConverter.convertFromFile("Map5.txt", userName);
+                    Map newMap = FileConverter.convertFromFile("resources/Map5.txt", userName);
                     gridWidth = newMap.getBoardWidth();
                     gridHeight = newMap.getBoardHeight();
                     canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -942,7 +942,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 5) {
                     GameLogic.setLevelNum(6);
-                    Map newMap = FileConverter.convertFromFile("Map6.txt", userName);
+                    Map newMap = FileConverter.convertFromFile("resources/Map6.txt", userName);
                     gridWidth = newMap.getBoardWidth();
                     gridHeight = newMap.getBoardHeight();
                     canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;
@@ -961,7 +961,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 if(FileConverter.checkLevels(userName) >= 6) {
                     GameLogic.setLevelNum(7);
-                    Map newMap = FileConverter.convertFromFile("Map7.txt", userName);
+                    Map newMap = FileConverter.convertFromFile("resources/Map7.txt", userName);
                     gridWidth = newMap.getBoardWidth();
                     gridHeight = newMap.getBoardHeight();
                     canvasHeight = newMap.getBoardHeight() * GRID_CELL_HEIGHT + 20;

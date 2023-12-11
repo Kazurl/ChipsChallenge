@@ -62,7 +62,7 @@ public class FileConverter {
     public static void registerAccount(String username, String password) {
         password = encrypt(password);
 
-        try (FileWriter f = new FileWriter("Credentials.txt", true);
+        try (FileWriter f = new FileWriter("resources/Credentials.txt", true);
              BufferedWriter b = new BufferedWriter(f);
              PrintWriter p = new PrintWriter(b);) {
             p.println(username + "," + password + ",0");
@@ -80,7 +80,7 @@ public class FileConverter {
      */
     public static int checkLevels(String username) {
         try {
-            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            Scanner fileReader = new Scanner(new File("resources/Credentials.txt"));
             fileReader.useDelimiter(",|\r\n|\n");
             while (fileReader.hasNext()) {
                 String currentName = fileReader.next();
@@ -107,7 +107,7 @@ public class FileConverter {
     public static int checkUsername(String username) {
         try {
             int usernameIndex = 0;
-            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            Scanner fileReader = new Scanner(new File("resources/Credentials.txt"));
             fileReader.useDelimiter(",|\r\n|\n");
             while (fileReader.hasNext()) {
                 String currentName = fileReader.next();
@@ -137,7 +137,7 @@ public class FileConverter {
         password = encrypt(password);
         String truePassword;
         try {
-            Scanner fileReader = new Scanner(new File("Credentials.txt"));
+            Scanner fileReader = new Scanner(new File("resources/Credentials.txt"));
             fileReader.useDelimiter("\r\n|\n");
             for (int i = 0; i < index; i++) {
                 fileReader.next();
