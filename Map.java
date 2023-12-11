@@ -7,7 +7,7 @@ import java.util.Arrays;
  *     The map will be created with all the information needed for that level.</li>
  *
  *</ol>
- * @author [Code - Freddie, Bernard. JavaDoc - Ffi, Enrique]
+ * @author [Code - Freddie. JavaDoc - Ffi, Enrique]
  */
 public class Map {
 

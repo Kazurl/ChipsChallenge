@@ -5,6 +5,7 @@
  *     The chip is collected by the Player and saved in the Inventory to unlock the ChipSocket.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Azmeera, Ffi. JavaDoc - Ffi, Enrique]
  */
 public class ComputerChip extends Item {
 

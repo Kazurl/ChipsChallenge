@@ -8,6 +8,7 @@ import java.util.*;
  *     It will find the shortest path from a point on the map and move accordingly.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard. JavaDoc - Ffi, Enrique]
  */
 public class Frog extends Mob {
 

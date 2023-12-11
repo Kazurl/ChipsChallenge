@@ -4,6 +4,8 @@
  *      <li>Purpose of the program: Creates the tiles for map, consists of multiple subclasses
  *      each with different behaviours.
  *</ol>
+ *
+ *  @author [Code - Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Tile {
 

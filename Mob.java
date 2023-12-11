@@ -5,6 +5,7 @@
  *     the Mobs can move around the Map and interact with other entities.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard. JavaDoc - Ffi, Enrique]
  */
 public class Mob extends Actor{
 

@@ -5,6 +5,7 @@
  *     It has different colours and it extends the Tile class.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class LockedDoor extends Tile {
 

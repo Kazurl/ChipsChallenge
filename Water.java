@@ -5,6 +5,8 @@
  *     contains information about walk ability and events triggered when a player walks on it.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class Water extends Tile {
 

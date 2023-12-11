@@ -4,6 +4,7 @@
  *     <li>Purpose of the program: Creates the Bug for the game, it inherits from the Actor Ckass.</li>
  *
  *</ol>
+ * @author [Code - Freddie. JavaDoc - Ffi, Enrique]
  */
 public class Bug extends Mob {
 

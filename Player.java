@@ -5,6 +5,8 @@
  *     attributes such as location, inventory, and methods for interacting with the game world.</li>
  *
  *</ol>
+ *
+ * @author [Code - Freddie, Bernard, Olwen. JavaDoc - Ffi, Enrique]
  */
 public class Player extends Actor {
 

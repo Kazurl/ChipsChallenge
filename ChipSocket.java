@@ -4,6 +4,7 @@
  *     <li>Purpose of the program: Creates the ChipSocket tile  for the game.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Ffi, Azmeera. JavaDoc - Ffi, Enrique]
  */
 public class ChipSocket extends Tile {
 
