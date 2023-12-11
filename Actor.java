@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
  *     it's a superclass for Player, Mobs and Blocks.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard, Olwen. JavaDoc - Ffi, Enrique]
  */
 public class Actor {
 

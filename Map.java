@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-
 /**
  *<ol>
  *     <li>File-name: Map.java</li>
@@ -8,6 +7,7 @@ import java.util.Arrays;
  *     The map will be created with all the information needed for that level.</li>
  *
  *</ol>
+ * @author [Code - Freddie, Bernard. JavaDoc - Ffi, Enrique]
  */
 public class Map {
 
@@ -33,7 +33,7 @@ public class Map {
     private Scheduler schedule = new Scheduler();
 
     /**
-     * The pLayer.
+     * The Player.
      */
     private Player playerStored;
 
@@ -445,6 +445,12 @@ public class Map {
     public String[] getNewNames() {
         return newNames;
     }
+
+    /**
+     * Gets the new Score for the Player.
+     *
+     * @return List of new Scores for the Map.
+     */
     public int[] getNewScore() {return newScores;}
 
 }

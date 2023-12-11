@@ -11,7 +11,7 @@ public class Key extends Item {
     /**
      * Enumeration representing the different colours for Key.
      */
-    enum Colour {
+    public enum Colour {
         RED,
         BLUE,
         YELLOW,
